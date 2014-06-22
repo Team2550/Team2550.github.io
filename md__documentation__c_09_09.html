@@ -18,8 +18,11 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { searchBox.OnSelectItem(0); });
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 </script>
+<link rel="search" href="search-opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="Team 2550"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -49,18 +52,14 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
+          <div class="left">
+            <form id="FSearchBox" action="search.php" method="get">
+              <img id="MSearchSelect" src="search/mag.png" alt=""/>
+              <input type="text" id="MSearchField" name="query" value="Search" size="20" accesskey="S" 
+                     onfocus="searchBox.OnSearchFieldFocus(true)" 
+                     onblur="searchBox.OnSearchFieldFocus(false)"/>
+            </form>
+          </div><div class="right"></div>
         </div>
       </li>
     </ul>
@@ -80,20 +79,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 $(document).ready(function(){initNavTree('md__documentation__c_09_09.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Pages</a></div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="header">
   <div class="headertitle">
 <div class="title">C++ </div>  </div>
@@ -340,13 +325,13 @@ Comparison Operators</h2>
 <td>!= </td><td>not equal </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true of false). <div class="fragment"><div class="line"><span class="comment">//Here is ! as a binary operator...</span></div>
-<div class="line">1&lt;2;<span class="comment">//evaluates to true</span></div>
-<div class="line">1&gt;2;<span class="comment">//false</span></div>
-<div class="line">!(1&lt;2);<span class="comment">//false</span></div>
-<div class="line">!(1&gt;2);<span class="comment">//true</span></div>
+<div class="line">1&lt;2; <span class="comment">//evaluates to true</span></div>
+<div class="line">1&gt;2; <span class="comment">//false</span></div>
+<div class="line">!(1&lt;2); <span class="comment">//false</span></div>
+<div class="line">!(1&gt;2); <span class="comment">//true</span></div>
 <div class="line"><span class="comment">//...which is different from using it as a binary operator:</span></div>
-<div class="line">1 != 2;<span class="comment">//true</span></div>
-<div class="line">1 != 1;<span class="comment">//false</span></div>
+<div class="line">1 != 2; <span class="comment">//true</span></div>
+<div class="line">1 != 1; <span class="comment">//false</span></div>
 </div><!-- fragment --></dd></dl>
 <dl class="section warning"><dt>Warning</dt><dd>It is important that you use the == operator to test and = to declare variables. They are completely different. <pre class="fragment">a == b; //evaluates to true, checks to see if a is equal to b
 a = b; //copies the value of b into a
@@ -371,26 +356,42 @@ Automatic Type Selection</h3>
 <tr>
 <th>Condition (If...) </th><th>The result...  </th></tr>
 <tr>
-<td>all operands (numbers) are of type int. </td><td>is an integer. </td></tr>
+<td>all operands (numbers) are of type int. </td><td>is an integer.  </td></tr>
 <tr>
-<td>all operands are float. </td><td>is a float. </td></tr>
+<td>all operands are of type float. </td><td>is a float.  </td></tr>
 <tr>
-<td>the expression has multiple types of operands. </td><td>The compiler will detect that there is a floating point number in the expression, and automatically use floating point math. <dl class="section note"><dt>Note</dt><dd>3.0 / 2 evaluates to 1.5 </dd>
-<dd>
-3 / 2 evaluates to 1 </dd></dl>
+<td>the expression has multiple types of operands. </td><td>The compiler will detect that there is a floating point number in the expression, and automatically use floating point math. <blockquote class="doxtable">
+<p>3.0 / 2 evaluates to 1.5<br/>
+3 / 2 evaluates to 1</p>
+<p></p>
+</blockquote>
 </td></tr>
 <tr>
-<td>the value of a float is assigned to an int </td><td>the number is truncated (cut off) at the decimal. 2.95 becomes 2 5.37 becomes 5 </td></tr>
+<td>the value of a float is assigned to an int. </td><td>the number is truncated (cut off) at the decimal. <blockquote class="doxtable">
+<p>2.95 becomes 2<br/>
+5.37 becomes 5</p>
+<p></p>
+</blockquote>
+</td></tr>
 <tr>
-<td>an integer expression is stored into a float variable. </td><td>Integer math will be preformed, even if the result has a decimal value. int a, b = 2, 3; float x = b / a; // x has a value of 0 </td></tr>
+<td>an integer expression is stored into a float variable. </td><td>Integer math will be preformed, even if the result has a decimal value. <div class="fragment"><div class="line"><span class="keywordtype">int</span> a, b = 2, 3;</div>
+<div class="line"><span class="keywordtype">float</span> x = b / a;</div>
+<div class="line"><span class="comment">// x has a value of 0</span></div>
+</div><!-- fragment -->   </td></tr>
 </table>
-<p>Integer operations and float variables: As shown in the chart above, 3 / 2 evaluates to 1. This applies even if you are storing the value in a float variable. This could cause some issues, as you cannot always be sure that the numbers you are entering into the float have a decimal place. If they may not, then it is best to surround your expression in a static_cast statement. float x = static_cast&lt;float&gt;(3) / 2; // this will evaluate to 1.5 and store it to x x = static_cast&lt;float&gt;(3 / 2); // will evaluate to 1 and then convert the type, //meaning that 1 is stored to x </p>
+<dl class="section user"><dt>Integer operations and float variables:</dt><dd>As shown in the chart above <blockquote class="doxtable">
+<p>3 / 2 evaluates to 1.</p>
+<p></p>
+</blockquote>
+This applies even if you are storing the value in a float variable. This could potentially cause some issues because you cannot always be sure that the numbers you are entering into the float have a decimal place. If they may not, then it is best to surround your expression in a static_cast statement. <div class="fragment"><div class="line"><span class="keywordtype">float</span> x = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(3) / 2; <span class="comment">// this will evaluate to 1.5 and store it to x</span></div>
+<div class="line">x = <span class="keyword">static_cast&lt;</span><span class="keywordtype">float</span><span class="keyword">&gt;</span>(3 / 2); <span class="comment">// will evaluate to 1 and then convert the type, meaning that 1 is stored to x</span></div>
+</div><!-- fragment --> </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Jun 21 2014 20:41:19 for Team 2550 by
+    <li class="footer">Generated on Sat Jun 21 2014 22:14:31 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

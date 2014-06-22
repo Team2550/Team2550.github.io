@@ -238,13 +238,13 @@ Operator | Action
 \note ! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true of false).
 ~~~{.cc}
 //Here is ! as a binary operator...
-1<2;//evaluates to true
-1>2;//false
-!(1<2);//false
-!(1>2);//true
+1<2; //evaluates to true
+1>2; //false
+!(1<2); //false
+!(1>2); //true
 //...which is different from using it as a binary operator:
-1 != 2;//true
-1 != 1;//false
+1 != 2; //true
+1 != 1; //false
 ~~~
 
 \warning It is important that you use the == operator to test and = to declare variables. They are completely different.
@@ -273,15 +273,53 @@ There are certain cases where the C++ compiler will automatically determine the 
 
 \note Integer math is much faster than floating point, therefore, you want to use integers as much as possible.
 
-Condition (If...) | The result...
-------------------|----------------
-all operands (numbers) are of type int. | is an integer.
-all operands are float. | is a float.
-the expression has multiple types of operands. | The compiler will detect that there is a floating point number in the expression, and automatically use floating point math. \note 3.0 / 2 evaluates to 1.5 \note 3 / 2 evaluates to 1
-the value of a float is assigned to an int | the number is truncated (cut off) at the decimal. 2.95 becomes 2 5.37 becomes 5
-an integer expression is stored into a float variable. | Integer math will be preformed, even if the result has a decimal value. int a, b = 2, 3; float x = b / a; // x has a value of 0
+<table>
+    <tr>
+        <th>Condition (If...)</th>
+        <th>The result...</th>
+    </tr>
+    <tr>
+        <td>all operands (numbers) are of type int.</td>
+        <td>is an integer.</td>
+    </tr>
+    <tr>
+        <td>all operands are of type float.</td>
+        <td>is a float.</td>
+    </tr>
+    <tr>
+        <td>the expression has multiple types of operands.</td>
+        <td>
+            The compiler will detect that there is a floating point number in the expression, and automatically use floating point math.
+> 3.0 / 2 evaluates to 1.5\n
+> 3 / 2 evaluates to 1
+        </td>
+    </tr>
+    <tr>
+        <td>the value of a float is assigned to an int.</td>
+        <td>the number is truncated (cut off) at the decimal.
+> 2.95 becomes 2\n
+> 5.37 becomes 5
+        </td>
+    </tr>
+    <tr>
+        <td>an integer expression is stored into a float variable.</td>
+        <td>
+            Integer math will be preformed, even if the result has a decimal value.
+~~~{.cc}
+int a, b = 2, 3;
+float x = b / a;
+// x has a value of 0
+~~~
+        </td>
+    </tr>
+</table>
 
-Integer operations and float variables:
-As shown in the chart above, 3 / 2 evaluates to 1. This applies even if you are storing the value in a float variable. This could cause some issues, as you cannot always be sure that the numbers you are entering into the float have a decimal place. If they may not, then it is best to surround your expression in a static_cast statement.
+
+\par Integer operations and float variables:
+As shown in the chart above
+> 3 / 2 evaluates to 1.
+This applies even if you are storing the value in a float variable. This could potentially cause some issues because you cannot always be sure that the numbers you are entering into the float have a decimal place. If they may not, then it is best to surround your expression in a static_cast statement.
+~~~{.cc}
 float x = static_cast<float>(3) / 2; // this will evaluate to 1.5 and store it to x
-x = static_cast<float>(3 / 2); // will evaluate to 1 and then convert the type, 	//meaning that 1 is stored to x
+x = static_cast<float>(3 / 2); // will evaluate to 1 and then convert the type, meaning that 1 is stored to x
+~~~
