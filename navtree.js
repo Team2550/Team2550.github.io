@@ -1,6 +1,19 @@
 var NAVTREE =
 [
-  [ "Team 2550", "index.html", ]
+  [ "Team 2550", "index.html", [
+    [ "C++", "md__documentation__c_09_09.html", [
+      [ "Build Process", "md__documentation__c_09_09.html#cppbuild", null ],
+      [ "Simple Data Types", "md__documentation__c_09_09.html#cppdatatypes", [
+        [ "Variables", "md__documentation__c_09_09.html#cppvars", null ],
+        [ "Constants", "md__documentation__c_09_09.html#cppconst", null ],
+        [ "Arithmetic Operations", "md__documentation__c_09_09.html#cpparithops", null ],
+        [ "Comparison Operators", "md__documentation__c_09_09.html#cppcompare", null ],
+        [ "Type Conversion", "md__documentation__c_09_09.html#cppcast", [
+          [ "Automatic Type Selection", "md__documentation__c_09_09.html#cppautotype", null ]
+        ] ]
+      ] ]
+    ] ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
