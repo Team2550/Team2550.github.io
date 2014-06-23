@@ -1,11 +1,13 @@
 var NAVTREE =
 [
-  [ "Team 2550", "index.html", ]
+  [ "Team 2550", "index.html", [
+    [ "C++", "cpp.html", "cpp" ]
+  ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"index.html"
+"cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
