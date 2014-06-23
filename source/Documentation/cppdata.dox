@@ -1,0 +1,238 @@
+/**
+\page cppdata Simple Data Types
+\tableofcontents
+
+C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations you can subject them to.
+
+The data types are...
+* * Integer: data types that are stored as number with no decimal point
+	* * int: a whole number that can be any value between -4,000,000,000 (billion) and 4 billion
+	\note These ranges can change from system to system. A 64 bit system will store longer variables than a 32 bit system.
+	* * long: a longer version of int that can store numbers much larger and smaller, as a consequence, it also takes up more RAM.
+	* * long long: self explanatory
+	* * char: a single ASCII character. This type is stored as a value between 0 and 127. An ASCII character table showing the characters that correspond to the numbers is shown below. You can preform mathematical operations on them like normal integers.
+	* * bool: a logical (true or false) value, it can either be 1 or 0.
+	\note C++ has associated the keywords “true” and “false” with 1 and 0, so you can use the actual words in logical tests.
+* * Floating point: data types that contain a decimal value, these are always stored in scientific notation
+	* * float: a number that can have a decimal value. It has 7 significant digits and can have a power of ±38
+	* * double: a larger version of float with 15 significant digits. It also can have a power of up to ±308
+	* * long double: a longer version of double
+* * string: a user defined variable type, it can be any size, but you cannot preform mathematical operations in the same way that you can with any of the above variables.
+
+You can put an “unsigned” in front of any of these variable types in order to make the numbers positive only. This allows them to be twice as large, but be careful, if you do an operation that turns it into a negative value, it will turn into an extremely large number.
+
+Example:
+
+    unsigned int num = 5; // creates a variable of type integer called num and sets it to 5
+
+\note As mentioned earlier, you a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as 'A'3. To see an ASCII table, go to http://en.cppreference.com/w/cpp/language/ascii.
+
+\section cppvars Variables
+You can create a variable in C++ by specifying the type and name.
+
+    int num; // this is valid code, you can declare variables in C++ without giving them a value
+
+The reason allocation without initialization is possible is because assigning a value to a variable takes a significant amount of time, so it is pointless to assign every variable you create to 0 if you are going to make it nonzero before it is used. For instance, if you are using a variable for user input, then you can create (allocate) it and give it a value later. Long story short, don't assign an initial value to a variable unless you are going to be doing calculations on it directly.
+
+\note
+* * It is customary to name variables using camelCase likeThis
+* * A variable name cannot include a space
+* * The variable name must start with either a letter of an underscore '_'
+* * You can only use letters, numbers, and underscores when naming variables
+* * Variables are typically declared as locally as possible for debugging reasons (I will explain this later)
+* * **Name your variables something that makes sense!** Example: don't name a variable that holds user input x, call it something like userInput. Its name should be self-explanatory.
+
+\section cppconst Constants
+Declaring a constant is almost the same as declaring a variable. Just put a “const” in front of the type.
+
+    const float PI = 3.14f; //I put the f at the end because sometimes C++ associates 
+	//the float and double types, meaning that floats are treated as doubles
+	//when you declare them. The f tells the compiler that the value must have
+	//no more than 5 significant digits
+	//Unlike variables, you have to define constants when you create them.
+
+\note
+* * It is customary to name constants using ALL_CAPS, using underscores to separate words
+* * All of the naming restrictions for variables also apply to constants
+* * Typically constants are declared at the very top of your code,  before anything else happens
+* * **Use names that are self-explanatory!** I cannot repeat that enough.
+
+\section cpparithops Arithmetic Operations
+You can perform all of the basic math operations on numeric variables. The following operations are built into C++, they are sorted by the PEMDAS order of operations.
+\note For those who were not paying attention in math class, PEMDAS stands for **Parenthesis, Exponents, Multiplication, Division, Addition, Subtraction.** * However, C++ does not have a single operator for exponents, I will talk more about that later.
+
+**C++ Order of Precedence**
+
+1. **Parenthesis:** operations inside () are always evaluated first
+2. **Function calls** (more on those later)
+3. **Multiplication, division, modulus (remainder):** done in order from left to right
+4. **Addition, subtraction:** done in order from left to right
+5. **Comparison operations**
+6. **Logical operations**
+7. **Assignment operator**
+
+Note that exponents are not on this list, that is because C++ does not have an operator for raising numbers to a power. However, there is a function called "pow" that fills this role.
+
+**C++ Operators**
+Name           | Symbol
+---------------|-------
+Assignment     | =
+Addition       | +
+Subtraction    | -
+Multiplication | *
+Division       | /
+Modulus        | %
+
+
+The mod[ulus] operator calculates the remainder. If you divide an equation with a decimal value using integer math (14/4 is a good example), you will end up with a whole number answer that is not estimated, it simply ignores any decimal digits.
+
+We know:
+
+> 14/4 = 3.5
+
+However, using integer math, this expression evaluates to 3, but there is still a remainder of 2.
+
+In order to get the remainder, use the expression 14 % 4, the resulting value will be 2.
+
+The mod operator can be useful in many different situations... you can use it to...
+* * Detect whether a number is odd or even: x % 2, if the mod is 0, then you know the number is even
+* * Look at only the last digit or digits of a number: x % 10 gets the last digit, x % 100 gets the last two digits, x % 1000 gets the last 3, and so on.
+
+When programming, you often want to add a certain value to a variable and store the result back into that same variable. C++ has a few operators to do that. These shorthand expressions can be seen to the left.
+
+One thing worth noting is that x++ and ++x evaluate to the same thing, but there is a difference in some cases, as shown in the code below.
+
+**Shorthand Operations**
+Shorthand | Action
+----------|-----------
+x++;      | x = x + 1;
+x--;      | x = x - 1;
+++x;      | x = x + 1;
+--x;      | x = x - 1;
+x += 5;   | x = x + 5;
+x -= 5;   | x = x - 5;
+x *= 5;   | x = x * 5;
+x /= 5;   | x = x / 5;
+
+~~~{.cc}
+int a, b = 1, 1; // creates variables a and b and
+	             //initializes them both to 1
+int c, d;
+c = a++; //c=1
+/*long version:
+c = a;
+a++;
+*/
+d = ++b; //d=2
+/*long version:
+b++;
+d = b;
+*/
+~~~
+
+\note It is generally a good idea to avoid code like this. Small errors are very difficult to find.
+
+\warning This is when you need to make sure that the appropriate variables are initialized. If they are not, they can be any arbitrary value.
+
+\section cppcompare Comparison Operators
+Comparison operators can compare two different values.
+
+**Comparison operators**
+Operator | Action
+---------|-------------------------------------------------
+\>       | greater than
+<        | less than
+\>=      | greater than or equal
+<=       | less than or equal
+==       | equal, evaluates to true if values are the same
+!=       | not equal
+
+\note ! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true of false).
+~~~{.cc}
+//Here is ! as a binary operator...
+1<2; //evaluates to true
+1>2; //false
+!(1<2); //false
+!(1>2); //true
+//...which is different from using it as a binary operator:
+1 != 2; //true
+1 != 1; //false
+~~~
+
+\warning It is important that you use the == operator to test and = to declare variables. They are completely different.
+
+    a == b; //evaluates to true, checks to see if a is equal to b
+    a = b; //copies the value of b into a
+
+\section cppcast Type Conversion
+To temporarily change the type of a variable, use the following code.
+
+    static_cast<type_to_convert_to>(variable_name);
+
+The following code is valid...
+~~~{.cc}
+// Let's say you want to convert a character into an integer so that
+// you have the exact ASCII value of it...
+char ch = 'B';
+int chInt = static_cast<int>(ch);
+// The resulting value of chInt is 66 in this case, 66 is the ASCII value of 'B'.
+// There are many reasons you may want to convert variable types.
+// This is just a simple example.
+~~~
+
+\subsection cppautotype Automatic Type Selection
+There are certain cases where the C++ compiler will automatically determine the type of math to use.
+
+\note Integer math is much faster than floating point, therefore, you want to use integers as much as possible.
+
+<table>
+    <tr>
+        <th>Condition (If...)</th>
+        <th>The result...</th>
+    </tr>
+    <tr>
+        <td>all operands (numbers) are of type int.</td>
+        <td>is an integer.</td>
+    </tr>
+    <tr>
+        <td>all operands are of type float.</td>
+        <td>is a float.</td>
+    </tr>
+    <tr>
+        <td>the expression has multiple types of operands.</td>
+        <td>
+            The compiler will detect that there is a floating point number in the expression, and automatically use floating point math.
+> 3.0 / 2 evaluates to 1.5\n
+> 3 / 2 evaluates to 1
+        </td>
+    </tr>
+    <tr>
+        <td>the value of a float is assigned to an int.</td>
+        <td>the number is truncated (cut off) at the decimal.
+> 2.95 becomes 2\n
+> 5.37 becomes 5
+        </td>
+    </tr>
+    <tr>
+        <td>an integer expression is stored into a float variable.</td>
+        <td>
+            Integer math will be preformed, even if the result has a decimal value.
+~~~{.cc}
+int a, b = 2, 3;
+float x = b / a;
+// x has a value of 0
+~~~
+        </td>
+    </tr>
+</table>
+
+
+\par Integer operations and float variables:
+As shown in the chart above
+> 3 / 2 evaluates to 1.
+This applies even if you are storing the value in a float variable. This could potentially cause some issues because you cannot always be sure that the numbers you are entering into the float have a decimal place. If they may not, then it is best to surround your expression in a static_cast statement.
+~~~{.cc}
+float x = static_cast<float>(3) / 2; // this will evaluate to 1.5 and store it to x
+x = static_cast<float>(3 / 2); // will evaluate to 1 and then convert the type, meaning that 1 is stored to x
+~~~
+*/

@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: File Members</title>
+<title>Team 2550: Logic Gates</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -49,7 +49,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
           <div class="left">
@@ -64,18 +64,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
-  <div id="navrow2" class="tabs2">
-    <ul class="tablist">
-      <li class="current"><a href="globals.html"><span>File&#160;Members</span></a></li>
-    </ul>
-  </div>
-  <div id="navrow3" class="tabs2">
-    <ul class="tablist">
-      <li><a href="globals.html"><span>All</span></a></li>
-      <li class="current"><a href="globals_func.html"><span>Functions</span></a></li>
-      <li><a href="globals_vars.html"><span>Variables</span></a></li>
-    </ul>
-  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -88,27 +76,31 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('globals_func.html','');});
+$(document).ready(function(){initNavTree('cpplogic.html','');});
 </script>
 <div id="doc-content">
+<div class="header">
+  <div class="headertitle">
+<div class="title">Logic Gates </div>  </div>
+</div><!--header-->
 <div class="contents">
-&#160;<ul>
-<li>Java()
-: <a class="el" href="cpp_8dox.html#a309d245df4159177f564da586c7aaaa7">cpp.dox</a>
-</li>
-<li>line()
-: <a class="el" href="cpp_8dox.html#a53937a6c45a5081002c635c44f5c2d4d">cpp.dox</a>
-</li>
-<li>semicolon()
-: <a class="el" href="cpp_8dox.html#af408255295963e3f351cb52ec6afc0a9">cpp.dox</a>
-</li>
-</ul>
-</div><!-- contents -->
+<div class="textblock"><p>One useful capability of almost any programming language is the ability to take multiple tests and put them into a single boolean (true/false) result. This is done through logic gates.</p>
+<p>An OR statement takes two values as input and, if either value is true, the or statement will be true. Note that "either" also includes both values as shown in the truth table. An OR operation uses short-circuit evaluation, meaning that the computer will not run any more comparisons then necessary. For instance, if the first value in the OR statement is TRUE, then the output will be TRUE regardless of the second operand - the computer will skip the second comparison if it can.</p>
+<dl class="section note"><dt>Note</dt><dd>A truth table is a simple table which shows the behavior of a logic gate by showing the output for every possible value of inputs (in order to show the behavior in any situation, you only need two inputs).</dd></dl>
+<p>1 = TRUE</p>
+<p>0 = FALSE</p>
+<p>An AND statement is only true if all of the inputs are true. Short-circuit evaluation is not possible when using the AND operator.</p>
+<p>The NOT operator returns the opposite of the actual result of an evaluation so that TRUE = FALSE and FALSE = TRUE. This can be very useful, as you can put the "!" operator in front of any logical statement. For instance, !(2 &gt; 3) will return FALSE.</p>
+<p>NOTE: It is very important that you remember to type in "||" for "OR" and "&amp;&amp;" for "AND" - putting a single | or &amp; character will use the logic gate in bitwise mode, which will mess up the results.</p>
+<p>Order of Operations: When evaluating an expression, C++ has a defined order of operations for logic gates. The complete order of operations for expression evaluation in C++ is as follows... 1) Parenthesis 2) Multiplication and division from left to right 3) Addition and subtraction from left to right 4) Comparison operations (inequalities), includes &lt;, &lt;=, &gt;, &gt;= 5) Comparison operations (equalities), includes ==, != 6) Logical AND "&amp;&amp;" 7) Logical OR "||"</p>
+<p>A more complete table can be found at cppreference.com: <a href="http://en.cppreference.com/w/cpp/language/operator_precedence">http://en.cppreference.com/w/cpp/language/operator_precedence</a></p>
+<p>Even though C++ has a set order of operations, adding parenthesis often makes it easier to understand. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sun Jun 22 2014 15:26:57 for Team 2550 by
+    <li class="footer">Generated on Sun Jun 22 2014 19:15:05 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>

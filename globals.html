@@ -18,8 +18,11 @@
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/search.js"></script>
 <script type="text/javascript">
-  $(document).ready(function() { searchBox.OnSelectItem(0); });
+  $(document).ready(function() {
+    if ($('.searchresults').length > 0) { searchBox.DOMSearchField().focus(); }
+  });
 </script>
+<link rel="search" href="search-opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="Team 2550"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
@@ -46,20 +49,17 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   <div id="navrow1" class="tabs">
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
-        <span class="left">
-          <img id="MSearchSelect" src="search/mag_sel.png"
-               onmouseover="return searchBox.OnSearchSelectShow()"
-               onmouseout="return searchBox.OnSearchSelectHide()"
-               alt=""/>
-          <input type="text" id="MSearchField" value="Search" accesskey="S"
-               onfocus="searchBox.OnSearchFieldFocus(true)" 
-               onblur="searchBox.OnSearchFieldFocus(false)" 
-               onkeyup="searchBox.OnSearchFieldChange(event)"/>
-          </span><span class="right">
-            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
-          </span>
+          <div class="left">
+            <form id="FSearchBox" action="search.php" method="get">
+              <img id="MSearchSelect" src="search/mag.png" alt=""/>
+              <input type="text" id="MSearchField" name="query" value="Search" size="20" accesskey="S" 
+                     onfocus="searchBox.OnSearchFieldFocus(true)" 
+                     onblur="searchBox.OnSearchFieldFocus(false)"/>
+            </form>
+          </div><div class="right"></div>
         </div>
       </li>
     </ul>
@@ -74,35 +74,6 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       <li class="current"><a href="globals.html"><span>All</span></a></li>
       <li><a href="globals_func.html"><span>Functions</span></a></li>
       <li><a href="globals_vars.html"><span>Variables</span></a></li>
-      <li><a href="globals_type.html"><span>Typedefs</span></a></li>
-    </ul>
-  </div>
-  <div id="navrow4" class="tabs3">
-    <ul class="tablist">
-      <li><a href="#index__"><span>_</span></a></li>
-      <li><a href="#index_a"><span>a</span></a></li>
-      <li><a href="#index_b"><span>b</span></a></li>
-      <li><a href="#index_c"><span>c</span></a></li>
-      <li><a href="#index_d"><span>d</span></a></li>
-      <li><a href="#index_e"><span>e</span></a></li>
-      <li><a href="#index_f"><span>f</span></a></li>
-      <li><a href="#index_g"><span>g</span></a></li>
-      <li><a href="#index_h"><span>h</span></a></li>
-      <li><a href="#index_i"><span>i</span></a></li>
-      <li><a href="#index_j"><span>j</span></a></li>
-      <li><a href="#index_l"><span>l</span></a></li>
-      <li><a href="#index_m"><span>m</span></a></li>
-      <li><a href="#index_n"><span>n</span></a></li>
-      <li><a href="#index_o"><span>o</span></a></li>
-      <li><a href="#index_p"><span>p</span></a></li>
-      <li><a href="#index_r"><span>r</span></a></li>
-      <li><a href="#index_s"><span>s</span></a></li>
-      <li><a href="#index_t"><span>t</span></a></li>
-      <li><a href="#index_v"><span>v</span></a></li>
-      <li><a href="#index_w"><span>w</span></a></li>
-      <li><a href="#index_x"><span>x</span></a></li>
-      <li><a href="#index_“"><span>0x201c</span></a></li>
-      <li class="current"><a href="#index_”"><span>0x201d</span></a></li>
     </ul>
   </div>
 </div><!-- top -->
@@ -120,317 +91,52 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 $(document).ready(function(){initNavTree('globals.html','');});
 </script>
 <div id="doc-content">
-<!-- window showing the filter options -->
-<div id="MSearchSelectWindow"
-     onmouseover="return searchBox.OnSearchSelectShow()"
-     onmouseout="return searchBox.OnSearchSelectHide()"
-     onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Typedefs</a></div>
-
-<!-- iframe showing the search results (closed by default) -->
-<div id="MSearchResultsWindow">
-<iframe src="javascript:void(0)" frameborder="0" 
-        name="MSearchResults" id="MSearchResults">
-</iframe>
-</div>
-
 <div class="contents">
-<div class="textblock">Here is a list of all file members with links to the files they belong to:</div>
-
-<h3><a class="anchor" id="index__"></a>- _ -</h3><ul>
-<li>__pad0__
-: <a class="el" href="_c_09_09_8dox.html#a7f69560b45d2868c90647dc18e847731">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_a"></a>- a -</h3><ul>
-<li>a
-: <a class="el" href="_c_09_09_8dox.html#a4124bc0a9335c27f086f24ba207a4912">C++.dox</a>
-</li>
-<li>Also
-: <a class="el" href="_c_09_09_8dox.html#a2f8046b4a3e5d5dd468436b2f4ff81a2">C++.dox</a>
-</li>
-<li>and
-: <a class="el" href="_c_09_09_8dox.html#a6f4d48684b7da0431be75b8e6f7d01c9">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_b"></a>- b -</h3><ul>
-<li>byte
-: <a class="el" href="_c_09_09_8dox.html#af052c76c1c44801d0871e05bae13bfea">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_c"></a>- c -</h3><ul>
-<li>c
-: <a class="el" href="_c_09_09_8dox.html#ae0323a9039add2978bf5b49550572c7c">C++.dox</a>
-</li>
+<div class="textblock">Here is a list of all file members with links to the files they belong to:</div><ul>
 <li>C
-: <a class="el" href="_c_09_09_8dox.html#a74e482d838c9f87e221bb85aec666d96">C++.dox</a>
-</li>
-<li>cases
-: <a class="el" href="_c_09_09_8dox.html#a8d6ba4ccaaee4a661dbd934f0fd26a8d">C++.dox</a>
-</li>
-<li>ch
-: <a class="el" href="_c_09_09_8dox.html#a714f1fe1603782ef2b6f4f30122e9af6">C++.dox</a>
-</li>
-<li>chInt
-: <a class="el" href="_c_09_09_8dox.html#a117c66170d115dbc1217a79dd1415b1b">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a143ae683cc68ad00b95d6140d3dcbad9">cpp.dox</a>
 </li>
 <li>code
-: <a class="el" href="_c_09_09_8dox.html#aee85013fa4b04b1c471d9ca010cb0270">C++.dox</a>
-</li>
-<li>coherent
-: <a class="el" href="_c_09_09_8dox.html#adadcdd28e11fce7e2ef33259fa822ab0">C++.dox</a>
-</li>
-<li>Condition()
-: <a class="el" href="_c_09_09_8dox.html#a94f95ef7dd913b2eae3120b6fbed3deb">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_d"></a>- d -</h3><ul>
-<li>d
-: <a class="el" href="_c_09_09_8dox.html#a1aabac6d068eef6a7bad3fdf50a05cc8">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#abe7b91d1d80befccfc1ac5a83d904de9">cpp.dox</a>
 </li>
 <li>devices
-: <a class="el" href="_c_09_09_8dox.html#ae26e739c4ec254132f6cc7686346d5be">C++.dox</a>
-</li>
-<li>digits
-: <a class="el" href="_c_09_09_8dox.html#aed3be471ed3d4615b1b27f9ce4a7d534">C++.dox</a>
-</li>
-<li>division
-: <a class="el" href="_c_09_09_8dox.html#a219397093cb49f058e6991885c5b3de4">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_e"></a>- e -</h3><ul>
-<li>editor
-: <a class="el" href="_c_09_09_8dox.html#a6a3d5f75d4e86b1700934b0d9252d695">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a6ec06ca973a40b3f829dd9066156e946">cpp.dox</a>
 </li>
 <li>efficient
-: <a class="el" href="_c_09_09_8dox.html#ae17e2dbf04884b07c5355d9c68c122bc">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#af21c56d4b4abb260bcf1592b752d2a51">cpp.dox</a>
 </li>
 <li>engines
-: <a class="el" href="_c_09_09_8dox.html#a405121138375ef64a9b821a41f434580">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#ac1ed3f76dc52e64d1e77ab186915206b">cpp.dox</a>
 </li>
-<li>estimated
-: <a class="el" href="_c_09_09_8dox.html#a9693834e44492c758e768605821e9937">C++.dox</a>
-</li>
-<li>expression
-: <a class="el" href="_c_09_09_8dox.html#a6f5ff3d7ec898b2550bb29fb65070975">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_f"></a>- f -</h3><ul>
 <li>fast
-: <a class="el" href="_c_09_09_8dox.html#ae86f8fb453c6656b08d508b66c487ff9">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a25f4d6e39e7526982bf62424a692eb21">cpp.dox</a>
 </li>
-<li>Fortran()
-: <a class="el" href="_c_09_09_8dox.html#a7b511932cf4379a3fab985257b41c9f2">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_g"></a>- g -</h3><ul>
-<li>gap
-: <a class="el" href="_c_09_09_8dox.html#ab4391cc9f07a82968159b028c92b6ba6">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_h"></a>- h -</h3><ul>
 <li>However
-: <a class="el" href="_c_09_09_8dox.html#a712e3e610d6d0b5eff9446a2c32b660c">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a0a793be90e769f6e11b442bd05381a4c">cpp.dox</a>
 </li>
-<li>http
-: <a class="el" href="_c_09_09_8dox.html#a7ed482f9ca25c814a6be88ba8ec5131e">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_i"></a>- i -</h3><ul>
 <li>in
-: <a class="el" href="_c_09_09_8dox.html#a780ea402c3209657f0385c1611f15ee7">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#aa457ccbb1b94a335c2e54cf60633e533">cpp.dox</a>
 </li>
-<li>instance
-: <a class="el" href="_c_09_09_8dox.html#acf19e5c2dd925cb7767e81076efd8677">C++.dox</a>
+<li>Java()
+: <a class="el" href="cpp_8dox.html#a309d245df4159177f564da586c7aaaa7">cpp.dox</a>
 </li>
-<li>issues
-: <a class="el" href="_c_09_09_8dox.html#a2051c0d52826f044c0ff3b60e49711fa">C++.dox</a>
-</li>
-<li>it
-: <a class="el" href="_c_09_09_8dox.html#ac3178561e06bfbdbf7cf9d895442b987">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_j"></a>- j -</h3><ul>
-<li>Java
-: <a class="el" href="_c_09_09_8dox.html#a2476e17698c43c1e71c43b4f08eac1c8">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_l"></a>- l -</h3><ul>
 <li>languages
-: <a class="el" href="_c_09_09_8dox.html#a1ede15ec2d7cd7e56911697d2769f7cf">C++.dox</a>
-</li>
-<li>level
-: <a class="el" href="_c_09_09_8dox.html#a346bd5a31ae8e2740fd1d5d2d1694dcd">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a4e0f4baf34e4c5577c278f411e58f6e2">cpp.dox</a>
 </li>
 <li>line()
-: <a class="el" href="_c_09_09_8dox.html#a322fe9f7455b4039e77a310d826a21a7">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_m"></a>- m -</h3><ul>
-<li>machine()
-: <a class="el" href="_c_09_09_8dox.html#a0a41b65d5cd18150d2221b1a0616b972">C++.dox</a>
-</li>
-<li>modulus
-: <a class="el" href="_c_09_09_8dox.html#a535a4e08e9fb034d67177500f1469214">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_n"></a>- n -</h3><ul>
-<li>not
-: <a class="el" href="_c_09_09_8dox.html#a1ac8867d3a822f016a3377c6f98d2b2b">C++.dox</a>
-</li>
-<li>NOTE
-: <a class="el" href="_c_09_09_8dox.html#a00693b0a9bfa128ab8cc4408a22daf7a">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_o"></a>- o -</h3><ul>
-<li>Operations
-: <a class="el" href="_c_09_09_8dox.html#ac100af6e4c49dafc4e6cce7825313272">C++.dox</a>
-</li>
-<li>operator can be useful in many different situations...you can use it to...Detect whether a number is odd or even:x%2, if the mod is 0, then you know the number is even
-Look at only the last digit of a number:x%10
-x%100 gets the last two digits, x%1000 gets the last 3, etcWhen programming, you often want to add a certain value to a variables and store the result back into that same variable.C++has a few operators to do that.These shorthand expressions can be seen to the left.One thing worth noting is that x++and++x evaluate to the same thing, but there is a difference in some cases, as shown in the code below.int a, b=1, 1
-: <a class="el" href="_c_09_09_8dox.html#a9a24fa31cca81d5eb996f5d4ea8bae19">C++.dox</a>
-</li>
-<li>operator for raising numbers to a power.However, there is a function called&quot;pow&quot;that fills this role.The mod[ulus] operator calculates the remainder...If you divide an equation with a decimal value using integer math()
-: <a class="el" href="_c_09_09_8dox.html#af47f0760972632c772cc5e1eb4531760">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_p"></a>- p -</h3><ul>
-<li>Perl
-: <a class="el" href="_c_09_09_8dox.html#acb6ff30f4cd4fc0df1390c1d283a651f">C++.dox</a>
-</li>
-<li>PI
-: <a class="el" href="_c_09_09_8dox.html#ae77d3f15d782901c2d62b54d4bd6527e">C++.dox</a>
-</li>
-<li>point
-: <a class="el" href="_c_09_09_8dox.html#a64559b429eb07e3bf6a91024ec818f0e">C++.dox</a>
-</li>
-<li>preformed
-: <a class="el" href="_c_09_09_8dox.html#afb1e9b7ffaf36e46023de2340c06074f">C++.dox</a>
-</li>
-<li>Preprocessor
-: <a class="el" href="_c_09_09_8dox.html#adf253972c8c73fcd22ab29c55af99d2d">C++.dox</a>
-</li>
-<li>programs
-: <a class="el" href="_c_09_09_8dox.html#adf6b96861c26ffa28a908f90d5609cf1">C++.dox</a>
-</li>
-<li>Python
-: <a class="el" href="_c_09_09_8dox.html#a4d96e5c4dd46b3c6832f0d27d2f67750">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_r"></a>- r -</h3><ul>
-<li>remainder
-: <a class="el" href="_c_09_09_8dox.html#a5148b19487c12e65ef914f236808ac70">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a53937a6c45a5081002c635c44f5c2d4d">cpp.dox</a>
 </li>
 <li>robotics
-: <a class="el" href="_c_09_09_8dox.html#a506319ec20c111d5637276ff1b52ae65">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#af51de751f21f8027838ed419368cf24b">cpp.dox</a>
 </li>
-</ul>
-
-
-<h3><a class="anchor" id="index_s"></a>- s -</h3><ul>
 <li>semicolon()
-: <a class="el" href="_c_09_09_8dox.html#ab3e31d31b234678abcdd3e4aab21bdc3">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#af408255295963e3f351cb52ec6afc0a9">cpp.dox</a>
 </li>
 <li>simple
-: <a class="el" href="_c_09_09_8dox.html#a4dfaaff280663f3cc8343cbdb8233841">C++.dox</a>
-</li>
-<li>static_cast&lt; type_to_convert_to &gt;()
-: <a class="el" href="_c_09_09_8dox.html#af63ebba7591e5c0346d72ac0bb8ea16f">C++.dox</a>
-</li>
-<li>subtraction
-: <a class="el" href="_c_09_09_8dox.html#aa65ce8e924b4865ece37b0288a463bc8">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#aae9151209954f58dc08ffa223c93a0ea">cpp.dox</a>
 </li>
 <li>system
-: <a class="el" href="_c_09_09_8dox.html#abc1cd87b3a3264b17aa0ac9d956dca3c">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_t"></a>- t -</h3><ul>
-<li>them
-: <a class="el" href="_c_09_09_8dox.html#a301ae944028a840fd2f3973c1b8a214e">C++.dox</a>
-</li>
-<li>therefore
-: <a class="el" href="_c_09_09_8dox.html#ae0b7ab99456e96d4bf82e2f1d45c34a3">C++.dox</a>
-</li>
-<li>time
-: <a class="el" href="_c_09_09_8dox.html#aa1eddb5d7b7468831cfbab77d1ff7ee5">C++.dox</a>
-</li>
-<li>to
-: <a class="el" href="_c_09_09_8dox.html#ab9b7f8ecc7840091535c4b002f4e3292">C++.dox</a>
-</li>
-<li>types
-: <a class="el" href="_c_09_09_8dox.html#acdb37a640c5d33b5714195d7270c3996">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_v"></a>- v -</h3><ul>
-<li>value()
-: <a class="el" href="_c_09_09_8dox.html#af0c188923fa21a5bcf671aa07c012bb3">C++.dox</a>
-</li>
-<li>variable
-: <a class="el" href="_c_09_09_8dox.html#ad28a6102cc19285e68d943da7e17df7f">C++.dox</a>
-</li>
-<li>variables
-: <a class="el" href="_c_09_09_8dox.html#a3dfed4a69e779915272e76d4480e87d1">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_w"></a>- w -</h3><ul>
-<li>write
-: <a class="el" href="_c_09_09_8dox.html#a8108a96af2c075c94b80d98a5addadef">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_x"></a>- x -</h3><ul>
-<li>x
-: <a class="el" href="_c_09_09_8dox.html#a9336ebf25087d91c818ee6e9ec29f8c1">C++.dox</a>
-</li>
-</ul>
-
-
-<h3><a class="anchor" id="index_0x201c"></a>- “ -</h3><ul>
-<li>“
-: <a class="el" href="_c_09_09_8dox.html#ab8ccacfb2e43f481bd4adba9dd477afb">C++.dox</a>
-</li>
-<li>”
-: <a class="el" href="_c_09_09_8dox.html#a26969f15e79f3dc326a292f199644ab2">C++.dox</a>
+: <a class="el" href="cpp_8dox.html#a8800883ab9e117d412f783f4cd68ba76">cpp.dox</a>
 </li>
 </ul>
 </div><!-- contents -->
@@ -438,7 +144,7 @@ x%100 gets the last two digits, x%1000 gets the last 3, etcWhen programming, you
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Jun 21 2014 17:42:47 for Team 2550 by
+    <li class="footer">Generated on Sun Jun 22 2014 15:26:57 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.6 </li>
   </ul>
