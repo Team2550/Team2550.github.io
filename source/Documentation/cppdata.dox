@@ -1,5 +1,4 @@
-/**
-\page cppdata Simple Data Types
+/** \page cppdata Simple Data Types
 \tableofcontents
 
 C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations you can subject them to.

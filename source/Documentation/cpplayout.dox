@@ -1,5 +1,4 @@
-/**
-\page cpplayout Program Layout
+/** \page cpplayout Program Layout
 All C++ programs have a basic layout that does not really change. Even programs as trivial as "hello world" have a basic layout.
 
 #include <iostream>

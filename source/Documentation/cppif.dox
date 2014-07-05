@@ -1,0 +1,149 @@
+/** \page cppif If Statements
+\tableofcontents
+
+Up until now, any code written here runs and then exits, it does not have abilitiy to make decisions. The if statement changes that...
+
+~~~
+if (condition_is_met)
+{
+    //do stuff
+}
+//continue the program
+~~~
+
+The condition can be any logical expression or comparison.
+
+\section cppelse else
+You can also add an "else" statement that runs if the condition is not met...
+
+~~~
+if (condition_is_met)
+	//do action
+else
+	//do action
+//You don't need to add in curly brackets {} if only one line of code is being run after the if or else statement.
+~~~
+
+\section cppelif else if
+These are great for simple tests, but what if you want to check multiple conditions and run different actions based on those? The answer is the "else if" statement...
+
+~~~
+if (condition)
+{
+	//do stuff
+	//do something else
+}
+else if (another_condition)
+	//do something not done before
+else if (yet_another_condition)
+{
+	//do something
+	//and another thing
+	//and another
+}
+//you can add as many else if statements as you want
+else
+	//do this if none of the above conditions are met
+~~~
+
+\section cppswitch switch
+The switch statement is a shorthand version of the if... else if... else statement. However, it does have a handicap.
+~~~{.cc}
+switch (variable) {
+case value:
+	//do something
+	//value can be any valid type
+	break; //break statements are important, they keep other 
+		//things from executing after you have met a condition
+case another_value:
+	//do something else
+	break;
+case yet_another_value:
+	//do another thing
+	break;
+case value:
+case value:
+case value:
+	//the above 3 conditions all execute here, this is the equivalent of an OR statement
+	break;
+default:
+	//this is the equivalent of an else statement the default section is optional
+	break;
+// You may have noticed that I said "value" instead of "condition" after each case. This is the limitation of a switch statement. You cannot run a full logical test.
+}
+~~~
+
+A switch statement is simply shorthand for some else-if statements. In fact, you can attain the same behavior in an else-if statement.
+~~~{.cc}
+if (variable == value)
+	//do 1 action
+else if (variable == value)
+	//do another action
+else if (variable == value)
+	//do yet another action
+else if (variable == value || variable == value || variable == value)
+{
+	//do an action
+	//do another action
+	//the test here is the same as the 3 blank "case value" lines
+	//	in the switch
+}
+else
+	//again optional, this is the "default" code
+~~~
+
+##Example
+The following code is a real-life(ish) example of when you would use an if statement... It also demonstrates nesting (putting one if statement inside another). You can copy and paste this code into your IDE and it will run...
+
+~~~{.cc}
+//Determines if a char is in the alphabet, if it is lower or uppercase, and whether it is a vowel
+
+#include <iostream>
+//this line includes a part of the standard C++ library, allowing you
+//	to output data to the screen and input it through the keyboard
+
+using namespace std;
+
+int main() {
+	char UsrInput;
+	cout << "Please enter an ASCII character: ";//part of iostream
+	cin >> UsrInput;//another part of iostream
+	cout << endl;
+
+	if ((UsrInput >= 'A' && UsrInput <= 'Z') ||
+			(UsrInput >= 'a' && UsrInput <= 'z'))//this line continues the if statement
+			//The code here could be done with a switch, but it is far easier and more efficient to use logic gates
+	{
+		cout << "The character you entered is a letter." << endl;
+		if (UsrInput >= 'A' && UsrInput <= 'Z')
+			cout << "The letter you entered is a UPPERCASE."
+				<< endl;
+		//remember that the statement above and below here are actually 2 lines
+		else cout << "The letter you entered is lowercase." << endl;
+		switch (UsrInput)
+		{ 
+			//a switch is easier to type and less cluttered here because you only have to name the variable once;
+			//if you were working with multiple variables, you would need an if... else if... else statement.
+			case 'A':
+			case 'a':
+			case 'E':
+			case 'e':
+			case 'I':
+			case 'i':
+			case 'O':
+			case 'o':
+			case 'U':
+			case 'u':
+				cout << "The letter you entered is a vowel."
+					<< endl;
+				break;
+			default:
+				cout << "The letter you entered is NOT a vowel." << endl;
+				break;
+		}
+	}
+	else cout << "The character you entered is NOT a letter.";
+	//C++ ignores most whitespace, so it is completely valid to put code on the same line as an else or if statement.
+}
+~~~
+*/

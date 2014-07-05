@@ -1,0 +1,76 @@
+/** \page cppconsole Console I/O
+\tableofcontents
+
+As you work with code, outputting information is critical. The console (aka: terminal, command line, command prompt) is the easiest way to do this - and C++ has a standard syntax for streaming I/O - including the console and files.
+
+\section output Output
+You can output any single value by using the << operator.
+
+~~~
+#include <iostream> //enables console I/O
+using namespace std;
+
+int main() {
+    int x = 10;
+    cout << "The value of x is: " << x; //outputs the value of x to the console
+    /*Final Output:
+      The value of x is: 10
+    */
+}
+~~~
+\note `using namespace std;` is important here. The namespace feature of C++ exists in order to prevent name conflicts. If that line is omitted, every instace of something within the `std` namespace must be prefixed with `std::`. For example, `std::cout << x;`. For now, this is fairly insignificant, but namespaces become important when working with multiple files.
+
+Any operation that yields a simple data type (boolean, integer, float) will be evaluated before it is output, so, the `cout << 2 + 2;` will output `4`. If you want a statement to be output literally (such as `2 + 2` instead of `4`), place the text in double quotes (`cout << "2 + 2";`).
+
+Another feature worth noting is that the char datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast<int>('a')`.
+
+\note Single and double quotes are completely different. Single quotes allow only one character which it is treated as a char constant (`const char ...`). Double quotes allow entire for entire strings of text and are much more complex.
+
+\subsection escape Escape Codes
+Escape codes are single characters that allow you to output nonprinting characters. For example, in C++, strings are always enclosed in quotes. Placing a quote prematurely will terminate the string. Escape codes fix this.
+
+Escape Sequence | Output
+-----|-------------------
+`\'` | single quote
+`\"` | double quote
+`\?` | question mark
+`\\` | backslash
+`\0` | null character, this is often used to denote the end of a transmission
+`\a` | audible bell - sends a system beep sound
+`\b` | backspace
+`\f` | form feed - new page
+`\n` | new line, this is very useful
+`\r` | carriage return
+`\t` | horizontal tab
+`\v` | vertical tab
+`\unnnn` | outputs a unicode character
+
+    "this string \"has a quotation\" and make the computer beep\a"
+
+\section input Input
+
+\section modify I/O Manipulators
+There are also several operations that you can run on the stream itslef. Assumes that the line `using namespace std;` is at the top of the file.
+
+Command | Action | Example
+--------|--------|----------
+`boolalpha` & `noboolalpha` | toggles the numeric and text format for bool values | `cout << boolalpha << true;` will output `true` insetad of `1`.
+`showpoint` & `noshowpoint` | toggles the decimal point on x.0 values | `cout << showpoint << 0;` outputs `0.0` instead of `0`
+`showpos` & `noshowpos` | shows the `+` sign in front of positive numbers | `cout << showpos << 3.14;` outputs `+3.14`
+`fixed` & `scientific` | outputs floating point numbers in either scientific or fixed notation | `cout << scientific << 0.01;` outputs `1.000000e-02`
+`left` | sets the alignment of fixed width output to left | `cout << left ...;`
+`right` | sets the alignment of fixed width output to right | `cout << right ...;`
+`internal` | sets the alignment of fixed width output with multiple components to have whitespace in the middle | `cout << internal << scientific << 0.01` outputs `1.000000*****e-2` where `*` is set as the fill character (see iomanip)
+`uppercase` & `nouppercase` | toggles uppercase letters for values expressed in scientific notation | `cout << uppercase << scientific << 23.145;` outputs `2.3145E-1`
+`flush` | outputs the buffer early, which be used for long processes | `cout << "this is output first" << flush << "and this is output later";`
+`endl` | creates a new line and runs flush | `cout << a << endl << b;` outputs `a` and `b` on separate lines assuming they are defined
+
+\subsection iomanip iomanip
+Including `iomanip` (`#include <iomanip`) allows for even finer control of the output. Here are the most notable features.
+
+Command | Action | Example
+--------|--------|---------
+`setfill` | sets the fill character for numeric output (often used in combination with setw) | `cout << setfill(`'`\*`'`);` sets the fill character to be an asterisk, note that the argument is a character (enclosed in single quotes) and not a string (enclosed in double quotes)
+`setprecision` | sets the precision of floating point numbers, estimates | `cout << setprecision(2) << 1.25;` outputs `1.3`
+`setwidth` | sets the width of the next input or output field | `cout << setfill(`'`0`'`) << setw(5) << 2;` outputs `00002`
+*/

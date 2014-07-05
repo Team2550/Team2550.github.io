@@ -1,5 +1,4 @@
-/**
-\page cppbuild Build Process
+/** \page cppbuild Build Process
 \tableofcontents
 
 A computer does not understand C++ or any other programming language alone. It has to be turned into machine (binary) code first. Binary is extremely tedious and error-prone. Coding in binary was extremely difficult and error-prone, and it was soon realized that there needed to be something that humans could write easily. Also, machine code that could run on one CPU could not run on a newer version of that same processor. This is where Assembly comes in. Assembly is written in text and is a 1:1 equivalent to machine code. Assembly code is fed into a program called an assembler that converts the keywords into their binary counterparts. However, you still need to manually manipulate each individual byte, and Assembly is still difficult to read. You can't tell what an Assembly program is going to do just be looking at it, and once you start writing large programs, Assembly easily becomes confusing. Both Assembly and machine code are considered to be low-level languages because you are controlling everything in the program directly.

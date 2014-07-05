@@ -11,14 +11,5 @@ var cpp =
       ] ]
     ] ],
     [ "Program Layout", "cpplayout.html", null ],
-    [ "Program Flow", "cppflow.html", [
-      [ "Boolean Logic", "cppflow.html#logicgates", [
-        [ "Order of Operations", "cppflow.html#logicorder", null ]
-      ] ],
-      [ "If Statements", "cppflow.html#cppif", [
-        [ "else", "cppflow.html#cppelse", null ],
-        [ "else if", "cppflow.html#cppelif", null ],
-        [ "switch", "cppflow.html#cppswitch", null ]
-      ] ]
-    ] ]
+    [ "Program Flow", "cppflow.html", "cppflow" ]
 ];
