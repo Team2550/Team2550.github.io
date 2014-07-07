@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.8.6-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +21,7 @@
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -103,6 +104,7 @@ $(document).ready(function(){initNavTree('cppif.html','');});
 <ul><li class="level1"><a href="#cppelse">else</a></li>
 <li class="level1"><a href="#cppelif">else if</a></li>
 <li class="level1"><a href="#cppswitch">switch</a></li>
+<li class="level1"><a href="#assert">assert</a></li>
 </ul>
 </div>
 <div class="textblock"><p>Up until now, any code written here runs and then exits, it does not have abilitiy to make decisions. The if statement changes that...</p>
@@ -164,7 +166,7 @@ switch</h1>
 <div class="line"><span class="comment">// You may have noticed that I said &quot;value&quot; instead of &quot;condition&quot; after each case. This is the limitation of a switch statement. You cannot run a full logical test.</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><p>A switch statement is simply shorthand for some else-if statements. In fact, you can attain the same behavior in an else-if statement. </p><div class="fragment"><div class="line"><span class="keywordflow">if</span> (variable == value)</div>
-<div class="line">    <span class="comment">//do 1 action</span></div>
+<div class="line">    <span class="comment">//do a single action action</span></div>
 <div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span> (variable == value)</div>
 <div class="line">    <span class="comment">//do another action</span></div>
 <div class="line"><span class="keywordflow">else</span> <span class="keywordflow">if</span> (variable == value)</div>
@@ -174,7 +176,7 @@ switch</h1>
 <div class="line">    <span class="comment">//do an action</span></div>
 <div class="line">    <span class="comment">//do another action</span></div>
 <div class="line">    <span class="comment">//the test here is the same as the 3 blank &quot;case value&quot; lines</span></div>
-<div class="line">    <span class="comment">//  in the switch</span></div>
+<div class="line">    <span class="comment">//in the switch</span></div>
 <div class="line">}</div>
 <div class="line"><span class="keywordflow">else</span></div>
 <div class="line">    <span class="comment">//again optional, this is the &quot;default&quot; code</span></div>
@@ -229,13 +231,27 @@ switch</h1>
 <div class="line">    <span class="keywordflow">else</span> cout &lt;&lt; <span class="stringliteral">&quot;The character you entered is NOT a letter.&quot;</span>;</div>
 <div class="line">    <span class="comment">//C++ ignores most whitespace, so it is completely valid to put code on the same line as an else or if statement.</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><h1><a class="anchor" id="assert"></a>
+assert</h1>
+<p>Assert statements will stop your code immediately if the given condition is met. Their primary use is debugging (checking for problems). Assert can be very useful for finding invalid values.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cassert&gt;</span> <span class="comment">//enables the assert function</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> input;</div>
+<div class="line">    cin &gt;&gt; input;</div>
+<div class="line">    assert(input &lt; -100); <span class="comment">//the argument can be any operation that yields a `bool` value</span></div>
+<div class="line">    <span class="comment">//more code</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>When the code is deployed, you don't usually want to leave assert statements enabled. You can put the line <code>#define NDEBUG</code> anywhere above the <code>#include &lt;cassert&gt;</code> line and all of the assertions in that file will be disabled. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="md__documentation__c_09_09.html">C++</a></li><li class="navelem"><a class="el" href="cppflow.html">Program Flow</a></li>
-    <li class="footer">Generated on Fri Jul 4 2014 11:24:30 for Team 2550 by
+    <li class="footer">Generated on Sun Jul 6 2014 10:46:31 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

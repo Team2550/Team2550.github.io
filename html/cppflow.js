@@ -6,9 +6,10 @@ var cppflow =
     [ "If Statements", "cppif.html", [
       [ "else", "cppif.html#cppelse", null ],
       [ "else if", "cppif.html#cppelif", null ],
-      [ "switch", "cppif.html#cppswitch", null ]
+      [ "switch", "cppif.html#cppswitch", null ],
+      [ "assert", "cppif.html#assert", null ]
     ] ],
     [ "Loops", "cpploop.html", [
-      [ "while Loops", "cpploop.html#while", null ]
+      [ "while", "cpploop.html#while", null ]
     ] ]
 ];

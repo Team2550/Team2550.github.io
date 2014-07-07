@@ -1,6 +1,8 @@
 /** \page cpploop Loops
 Iteration, or looping, refers to the repetition of a group of commands. Looping allows blocks of code to be repeated indefinately. This is especially useful for robotics - the code that runs is almost always some for of loop.
 
-\section while while Loops
-A while loop allows you to repeat code based on a condition.
+\note The process of looping is known as iteration (or iterating).
+
+\section while while
+A `while` loop allows you to repeat code based on a condition.
 */

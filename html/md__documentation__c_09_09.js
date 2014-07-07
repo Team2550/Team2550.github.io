@@ -15,9 +15,12 @@ var md__documentation__c_09_09 =
       [ "Output", "cppconsole.html#output", [
         [ "Escape Codes", "cppconsole.html#escape", null ]
       ] ],
-      [ "Input", "cppconsole.html#input", null ],
       [ "I/O Manipulators", "cppconsole.html#modify", [
         [ "iomanip", "cppconsole.html#iomanip", null ]
+      ] ],
+      [ "Input", "cppconsole.html#input", [
+        [ "Input Functions", "cppconsole.html#ifn", null ],
+        [ "Input Errors", "cppconsole.html#ierr", null ]
       ] ]
     ] ],
     [ "Program Flow", "cppflow.html", "cppflow" ]

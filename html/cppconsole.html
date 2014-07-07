@@ -1,3 +1,4 @@
+<!-- HTML header for doxygen 1.8.6-->
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -20,7 +21,7 @@
 <script type="text/javascript">
   $(document).ready(function() { searchBox.OnSelectItem(0); });
 </script>
-<link href="doxygen.css" rel="stylesheet" type="text/css" />
+<link href="customdoxygen.css" rel="stylesheet" type="text/css" />
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -103,8 +104,11 @@ $(document).ready(function(){initNavTree('cppconsole.html','');});
 <ul><li class="level1"><a href="#output">Output</a><ul><li class="level2"><a href="#escape">Escape Codes</a></li>
 </ul>
 </li>
-<li class="level1"><a href="#input">Input</a></li>
 <li class="level1"><a href="#modify">I/O Manipulators</a><ul><li class="level2"><a href="#iomanip">iomanip</a></li>
+</ul>
+</li>
+<li class="level1"><a href="#input">Input</a><ul><li class="level2"><a href="#ifn">Input Functions</a></li>
+<li class="level2"><a href="#ierr">Input Errors</a></li>
 </ul>
 </li>
 </ul>
@@ -160,9 +164,9 @@ Escape Codes</h2>
 <tr>
 <td><code>\unnnn</code> </td><td>outputs a unicode character </td></tr>
 </table>
-<pre class="fragment">"this string \"has a quotation\" and make the computer beep\a"
-</pre><h1><a class="anchor" id="input"></a>
-Input</h1>
+<blockquote class="doxtable">
+<p>"this string \"has a quotation" and make the computer beep<em></em> " </p>
+</blockquote>
 <h1><a class="anchor" id="modify"></a>
 I/O Manipulators</h1>
 <p>There are also several operations that you can run on the stream itslef. Assumes that the line <code>using namespace std;</code> is at the top of the file.</p>
@@ -197,19 +201,80 @@ iomanip</h2>
 <tr>
 <th>Command </th><th>Action </th><th>Example  </th></tr>
 <tr>
-<td><code>setfill</code> </td><td>sets the fill character for numeric output (often used in combination with setw) </td><td><code>cout &lt;&lt; setfill(</code>'<code>\*</code>'<code>);</code> sets the fill character to be an asterisk, note that the argument is a character (enclosed in single quotes) and not a string (enclosed in double quotes) </td></tr>
+<td><code>setfill</code> </td><td>Sets the fill character for numeric output (often used in combination with setw). </td><td><code>cout &lt;&lt; setfill(</code>'<code>\*</code>'<code>);</code> sets the fill character to be an asterisk, note that the argument is a character (enclosed in single quotes) and not a string (enclosed in double quotes). </td></tr>
 <tr>
-<td><code>setprecision</code> </td><td>sets the precision of floating point numbers, estimates </td><td><code>cout &lt;&lt; setprecision(2) &lt;&lt; 1.25;</code> outputs <code>1.3</code> </td></tr>
+<td><code>setprecision</code> </td><td>Sets the precision of floating point numbers, estimates </td><td><code>cout &lt;&lt; setprecision(2) &lt;&lt; 1.25;</code> outputs <code>1.3</code>. </td></tr>
 <tr>
-<td><code>setwidth</code> </td><td>sets the width of the next input or output field </td><td><code>cout &lt;&lt; setfill(</code>'<code>0</code>'<code>) &lt;&lt; setw(5) &lt;&lt; 2;</code> outputs <code>00002</code> </td></tr>
+<td><code>setwidth</code> </td><td>Sets the width of the next input or output field </td><td><code>cout &lt;&lt; setfill(</code>'<code>0</code>'<code>) &lt;&lt; setw(5) &lt;&lt; 2;</code> outputs <code>00002</code>. </td></tr>
 </table>
-</div></div><!-- contents -->
+<h1><a class="anchor" id="input"></a>
+Input</h1>
+<p>Input is very similar to output, but it has some quirks. With the following code segment... </p><pre class="fragment">int x, y, z;
+cin &gt;&gt; x, y, z;
+</pre><p>The input should be formatted like this</p>
+<blockquote class="doxtable">
+<p>1 2 3 </p>
+</blockquote>
+<p>The data can then be used for any purpose later in the program.</p>
+<dl class="section note"><dt>Note</dt><dd><code>cin</code> is whitespace delimited. There can be any number of tabs, spaces, or new lines in the input. Once all of the values have been entered, the user must press enter one last time to send the data.</dd></dl>
+<p>Finally, the user is also able to input data before it is even asked. See the example below.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="comment">//because, I am not using namespace std, I need to put std:: in front of anything included from iostream</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">//This program is a simple calculator. I will expand this later. Right now, it can only add.</span></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a, b;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Enter the first operand: &quot;</span>;</div>
+<div class="line">    std::cin &gt;&gt; a;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;Enter the second operand: &quot;</span>;</div>
+<div class="line">    std::cin &gt;&gt; b;</div>
+<div class="line">    std::cout &lt;&lt; <span class="stringliteral">&quot;The answer is: &quot;</span> &lt;&lt; a + b;</div>
+<div class="line">}</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>&lt;&lt;</code> is known as the insertion operator and <code>&gt;&gt;</code> is the extraction operator. They are evaluated after other operations.</dd></dl>
+<p>There will not be an error if the user inputs both operands at the first <code>cin</code> statement. The input is a stream (hence, iostream). Once the first value is read in, the second is stored until it is requested by the program. If it is not needed, it is simply discarded.</p>
+<h2><a class="anchor" id="ifn"></a>
+Input Functions</h2>
+<p>In addition to <code>cin</code>, which is whitespace-delimited, there are also several functions that can be used with the input stream.</p>
+<dl class="section note"><dt>Note</dt><dd>Functions are named chunks of code.<br />
+ They are called (run) as follows: <code>SomeFunction();</code>.<br />
+ They can be passed data: <code>SomeFunction(x);</code>.<br />
+ They can also return data, which can be placed into a variable as follows: <code>a = SomeFunction(x, y);</code>.</dd></dl>
+<table class="doxtable">
+<tr>
+<th>Example </th><th>Action  </th></tr>
+<tr>
+<td><code>cin.get();</code> </td><td>Reads one value from the buffer (stream) and discards it. </td></tr>
+<tr>
+<td><code>cin.get(x);</code> </td><td>Reads one value into x. </td></tr>
+<tr>
+<td><code>cin.ignore();</code> </td><td>Ignores the next character in the buffer. </td></tr>
+<tr>
+<td><code>cin.ignore(100);</code> </td><td>Ignores the next 100 characters in the buffer. </td></tr>
+<tr>
+<td><code>cin.ignore(100,</code>'<code>\n</code>'<code>);</code> </td><td>Ignores the next 100 characters, stops early if a newline is found. </td></tr>
+<tr>
+<td><code>z=cin.peek();</code> </td><td>Copies the value at the top of the stream into z without discarding it from the buffer. <code>cin.get()</code>. removes the value from the stream, <code>cin.peek()</code> does not. </td></tr>
+<tr>
+<td><code>cin.putback(x);</code> </td><td>Puts x back into the stream. </td></tr>
+</table>
+<h2><a class="anchor" id="ierr"></a>
+Input Errors</h2>
+<p>If invalid data is provided when reading into cin, the stream will enter a "fail" state and stop reading data. The <code>.clear()</code> function will return the stream to a usable state. You'll then need to clear the buffer using the <code>.ignore()</code> function. </p><pre class="fragment">cin.clear();
+cin.ignore();
+</pre><p>An input buffer enters the fail state if the user provides the wrong type of data. For instance, if a <code>float</code> is supposed to be an <code>int</code>, the stream will enter a fail state and not read data until the problem is fixed.</p>
+<p>The following code will check to make sure that <code>cin</code> is not in the fail state... </p><pre class="fragment">if (!cin) //checks to see if cin is in a fail state
+{
+    cin.clear();
+    cin.ignore();
+}</pre> </div></div><!-- contents -->
 </div><!-- doc-content -->
+<!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="md__documentation__c_09_09.html">C++</a></li>
-    <li class="footer">Generated on Fri Jul 4 2014 11:24:30 for Team 2550 by
+    <li class="footer">Generated on Sun Jul 6 2014 10:46:31 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

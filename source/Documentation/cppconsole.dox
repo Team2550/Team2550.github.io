@@ -45,9 +45,7 @@ Escape Sequence | Output
 `\v` | vertical tab
 `\unnnn` | outputs a unicode character
 
-    "this string \"has a quotation\" and make the computer beep\a"
-
-\section input Input
+> "this string \"has a quotation\" and make the computer beep\a"
 
 \section modify I/O Manipulators
 There are also several operations that you can run on the stream itslef. Assumes that the line `using namespace std;` is at the top of the file.
@@ -70,7 +68,74 @@ Including `iomanip` (`#include <iomanip`) allows for even finer control of the o
 
 Command | Action | Example
 --------|--------|---------
-`setfill` | sets the fill character for numeric output (often used in combination with setw) | `cout << setfill(`'`\*`'`);` sets the fill character to be an asterisk, note that the argument is a character (enclosed in single quotes) and not a string (enclosed in double quotes)
-`setprecision` | sets the precision of floating point numbers, estimates | `cout << setprecision(2) << 1.25;` outputs `1.3`
-`setwidth` | sets the width of the next input or output field | `cout << setfill(`'`0`'`) << setw(5) << 2;` outputs `00002`
+`setfill` | Sets the fill character for numeric output (often used in combination with setw). | `cout << setfill(`'`\*`'`);` sets the fill character to be an asterisk, note that the argument is a character (enclosed in single quotes) and not a string (enclosed in double quotes).
+`setprecision` | Sets the precision of floating point numbers, estimates | `cout << setprecision(2) << 1.25;` outputs `1.3`.
+`setwidth` | Sets the width of the next input or output field | `cout << setfill(`'`0`'`) << setw(5) << 2;` outputs `00002`.
+
+\section input Input
+Input is very similar to output, but it has some quirks. With the following code segment...
+
+    int x, y, z;
+    cin >> x, y, z;
+
+The input should be formatted like this
+
+> 1 2 3
+
+The data can then be used for any purpose later in the program.
+
+\note `cin` is whitespace delimited. There can be any number of tabs, spaces, or new lines in the input. Once all of the values have been entered, the user must press enter one last time to send the data.
+
+Finally, the user is also able to input data before it is even asked. See the example below.
+
+~~~
+#include <iostream>
+//because, I am not using namespace std, I need to put std:: in front of anything included from iostream
+
+//This program is a simple calculator. I will expand this later. Right now, it can only add.
+
+int main() {
+    int a, b;
+    std::cout << "Enter the first operand: ";
+    std::cin >> a;
+    std::cout << "Enter the second operand: ";
+    std::cin >> b;
+    std::cout << "The answer is: " << a + b;
+}
+~~~
+
+\note `<<` is known as the insertion operator and `>>` is the extraction operator. They are evaluated after other operations.
+
+There will not be an error if the user inputs both operands at the first `cin` statement. The input is a stream (hence, iostream). Once the first value is read in, the second is stored until it is requested by the program. If it is not needed, it is simply discarded.
+
+\subsection ifn Input Functions
+In addition to `cin`, which is whitespace-delimited, there are also several functions that can be used with the input stream.
+
+\note Functions are named chunks of code.\n They are called (run) as follows: `SomeFunction();`.\n They can be passed data: `SomeFunction(x);`.\n They can also return data, which can be placed into a variable as follows: `a = SomeFunction(x, y);`.
+
+Example | Action
+--------|--------
+`cin.get();` | Reads one value from the buffer (stream) and discards it.
+`cin.get(x);` | Reads one value into x.
+`cin.ignore();` | Ignores the next character in the buffer.
+`cin.ignore(100);` | Ignores the next 100 characters in the buffer.
+`cin.ignore(100, `'`\n`'`);` | Ignores the next 100 characters, stops early if a newline is found.
+`z=cin.peek();` | Copies the value at the top of the stream into z without discarding it from the buffer. `cin.get()`. removes the value from the stream, `cin.peek()` does not.
+`cin.putback(x);` | Puts x back into the stream.
+
+\subsection ierr Input Errors
+If invalid data is provided when reading into cin, the stream will enter a "fail" state and stop reading data. The `.clear()` function will return the stream to a usable state. You'll then need to clear the buffer using the `.ignore()` function.
+
+    cin.clear();
+    cin.ignore();
+
+An input buffer enters the fail state if the user provides the wrong type of data. For instance, if a `float` is supposed to be an `int`, the stream will enter a fail state and not read data until the problem is fixed.
+
+The following code will check to make sure that `cin` is not in the fail state...
+
+    if (!cin) //checks to see if cin is in a fail state
+    {
+        cin.clear();
+        cin.ignore();
+    }
 */

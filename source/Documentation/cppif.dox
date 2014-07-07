@@ -76,7 +76,7 @@ default:
 A switch statement is simply shorthand for some else-if statements. In fact, you can attain the same behavior in an else-if statement.
 ~~~{.cc}
 if (variable == value)
-	//do 1 action
+	//do a single action action
 else if (variable == value)
 	//do another action
 else if (variable == value)
@@ -86,7 +86,7 @@ else if (variable == value || variable == value || variable == value)
 	//do an action
 	//do another action
 	//the test here is the same as the 3 blank "case value" lines
-	//	in the switch
+	//in the switch
 }
 else
 	//again optional, this is the "default" code
@@ -146,4 +146,21 @@ int main() {
 	//C++ ignores most whitespace, so it is completely valid to put code on the same line as an else or if statement.
 }
 ~~~
+
+\section assert assert
+Assert statements will stop your code immediately if the given condition is met. Their primary use is debugging (checking for problems). Assert can be very useful for finding invalid values.
+
+~~~
+#include <cassert> //enables the assert function
+using namespace std;
+
+int main() {
+    int input;
+    cin >> input;
+    assert(input < -100); //the argument can be any operation that yields a `bool` value
+    //more code
+}
+~~~
+
+\note When the code is deployed, you don't usually want to leave assert statements enabled. You can put the line `#define NDEBUG` anywhere above the `#include <cassert>` line and all of the assertions in that file will be disabled.
 */
