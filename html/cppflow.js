@@ -10,6 +10,10 @@ var cppflow =
       [ "assert", "cppif.html#assert", null ]
     ] ],
     [ "Loops", "cpploop.html", [
-      [ "while", "cpploop.html#while", null ]
+      [ "while", "cpploop.html#while", [
+        [ "do-while", "cpploop.html#dowhile", null ]
+      ] ],
+      [ "for", "cpploop.html#for", null ],
+      [ "Pitfalls", "cpploop.html#loopproblems", null ]
     ] ]
 ];
