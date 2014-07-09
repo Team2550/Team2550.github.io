@@ -89,4 +89,5 @@ int main() {
 \note `main()` must always return an `int`. Unless otherwise specified, it will return 0, which signals the operating system that it exited successfully. If there are error conditions in your program that require it to exit early, you should return a nonzero value along with a message saying what is wrong.
 
 \subpage cppfnarg Argument Passing
+\subpage cppfnmore Scope, overloading, default parameters, and `static` variables
 */

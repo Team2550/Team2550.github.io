@@ -1,0 +1,93 @@
+/** \page cppfnmore Scope & More
+\tableofcontents
+
+\section fnscope Scope
+Scope refers to the time period in which a value exists and where it is accessible. 
+
+Long story short: make data (variables) as local as possible.
+
+* * It is usually a good idea to declare variables as locally as possible. Doing this localizes potential bugs, meaning that problems are much easier to find.
+* * When data is localized, the code is easier to understand.
+
+The scope of a variable is the block of code that has access to that variable...
+
+* * **Global Variables** (i.e. variables with global scope) are...
+	* * declared *above* main
+	* * *accessible and modifiable* by *any* routine in the current module (source file)
+	* * to be avoided as they make problems more difficult to find since the variable could have been modifed anywhere
+* * Local Variables (i.e. variables with local scope)
+	* * are *declared inside a block* (between { })
+	* * are *only available within that block*
+	* * make errors easier to find because there's a smaller chunk of code in which the error can exist
+* * Constants are typically declared globally but since they can't be modified, declaring them global is not a problem statement.
+
+\section fnoverload Function Overloading
+Function overloading allows for multiple functions to have the same name as long as the argument lists are different (this allows the compiler to tell them apart). The return type does not matter.
+
+The following prototypes are all legal overloads:
+
+    int add(int a, int b);
+    int add(int a, int b, int c);
+    float add(int a, float b);
+    float add(float a, float b);
+    float add(int a, int b, float c);
+
+\note In this example, you have to add a decimal value (even if it is `x.0`) in order to trigger overloads involving float instead of int.
+
+The only illegal overloads are those that the compiler cannot tell the difference between. The next section can cause this problem.
+
+\note As convention, all function overloads should do basically the same thing. No overloaded functions should be substantially different.
+
+\section fndefparam Default Arguments
+Default arguments (parameter values) exist as a convenience. An example should suffice.
+
+\note Default arguments must be defined in the prototype.
+
+###Example
+
+    int f(int a, int b = 1);
+
+As you can see, all default parameters do is provide a value for an argument not defined in the function call.
+
+\note Default arguments must be defined at the end of the argument list.
+
+\warning You can sometimes run into issues when you have overloads. This is demonstrated below.
+
+    int add(int a, int b = 1);
+    int add(int a); //The compiler can't tell the difference between a call to this and the previous overload.
+
+\section fnstatic Static Variables
+
+Variables can be either automatic or Static...
+
+* * Automatic Variables
+	* * are the most common
+	* * are created when declared (`int x;`)
+	* * are destroyed when they go out of scope
+* * Static Variables
+	* * are used rarely
+	* * are created when declared (`static int x;`)
+	* * are NOT destroyed when they go out of scope
+	* * are destroyed when the program ends
+
+###Example
+The following code prints out `1 2`.
+~~~
+void funcA();    
+
+int main() {
+	funcA();  
+	funcA();
+	return 0;
+}
+
+void funcA() {
+	static int x = 1; //initialization is only done first time
+	cout << x << " "
+	x++;
+} 
+
+// when functions end local auto variables are destroyed...
+// but not static!  x lives on!  Until the program ends!
+~~~
+*/

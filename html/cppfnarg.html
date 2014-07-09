@@ -114,7 +114,7 @@ Pass by Value</h1>
 <p>###Example </p><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> add(<span class="keywordtype">int</span> num1, <span class="keywordtype">int</span> num2); <span class="comment">//prototype, num1 and num2 are parameters   </span></div>
+<div class="line"><span class="keywordtype">int</span> add(<span class="keywordtype">int</span> num1, <span class="keywordtype">int</span> num2); <span class="comment">//prototype, num1 and num2 are parameters</span></div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main()</div>
 <div class="line">{</div>
@@ -138,7 +138,7 @@ Pass by Value</h1>
 <ul>
 <li>Write a function named isEven() that:<ul>
 <li>accepts an integer as an argument</li>
-<li>returns true if it's even [[(note: 0 is even)!http://en.wikipedia.org/wiki/Parity_of_zero]]</li>
+<li>returns true if it's even</li>
 <li>returns false if it's odd</li>
 </ul>
 </li>
@@ -151,6 +151,42 @@ Pass by Value</h1>
 </ul>
 <h1><a class="anchor" id="byref"></a>
 Pass by Reference</h1>
+<p>Passing by reference sends the address of a variable into a function instead of a copy of the variable. In order to pass a parameter by reference, place a <code>&amp;</code> after the datatype of the parameter in the prototype and header. This small syntax detail can completely change the behavior of a program, so pay attention!</p>
+<h3>Examples</h3>
+<p>Passing by value, outputs <code>1 1</code> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span> x);   </div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a=1;</div>
+<div class="line">    funcA(a); <span class="comment">// passes contents of variable a (1)</span></div>
+<div class="line">    cout &lt;&lt; a &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span> x) {</div>
+<div class="line">    cout &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">    x++;             <span class="comment">//modifies local variable x</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p> Passing by reference, outputs <code>1 2</code> </p><div class="fragment"><div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span>&amp; x);  <span class="comment">//&amp; makes is &quot;pass by ref&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a=1;</div>
+<div class="line">    funcA(a);        <span class="comment">// passes reference to variable a</span></div>
+<div class="line">    cout &lt;&lt; a &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">    <span class="keywordflow">return</span> 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span>&amp; x) {</div>
+<div class="line">    cout &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
+<div class="line">    x++;             <span class="comment">//modifies variable a in main</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>When to use pass by reference</h3>
+<p>Pass by reference is used in two instances</p><ol type="1">
+<li>When you want to get more than one piece of data out of a function. Pass by reference allows you to get data out of a function without it being "returned" via the return statement, which is limited to returning one item.</li>
+<li>When you're passing in a LARGE piece of data (like an array of a zillion values) and don't want to have to copy it (which takes time and memory). For now, we focus on the first reason (getting more data out of function)</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>The C language didn't have pass by reference, it used "pass by address", which is identical in concept to pass-by-reference but utilizes a different syntax. And this is also still supported in C++ as it's a superset of C, so beware of code you find on the internet.</dd></dl>
+<h3>Practice</h3>
+<p>Write a function that takes two variables by reference and swaps their contents. Call it <code>swapVars</code>. Test it to make sure it works. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
@@ -158,7 +194,7 @@ Pass by Reference</h1>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="md__documentation__c_09_09.html">C++</a></li><li class="navelem"><a class="el" href="cppfn.html">Functions</a></li>
-    <li class="footer">Generated on Wed Jul 9 2014 09:05:56 for Team 2550 by
+    <li class="footer">Generated on Wed Jul 9 2014 14:27:38 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>
