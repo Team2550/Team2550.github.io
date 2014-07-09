@@ -23,5 +23,6 @@ var md__documentation__c_09_09 =
         [ "Input Errors", "cppconsole.html#ierr", null ]
       ] ]
     ] ],
-    [ "Program Flow", "cppflow.html", "cppflow" ]
+    [ "Program Flow", "cppflow.html", "cppflow" ],
+    [ "Functions", "cppfn.html", "cppfn" ]
 ];

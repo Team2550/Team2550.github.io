@@ -1,0 +1,53 @@
+/** \page cppfnarg Argument Passing
+\tableofcontents
+
+The data passed into a function is referred to as arguments. An argument is an actual value, but it can be attained from variables or even other function calls (assuming that it returns the correct data type).
+
+\note You have already used a few functions that accept arguments. `setw()` in `iomanip` accepts a single integer and `cin.get()` accepts several different argument configurations. `pow()` in `cmath` also accepts two arguments.
+
+The argument list consists of a list of variable declarations, called parameters. The data is copied into the parameters, and you can refer to them within the function by name.
+
+\section byvalue Pass by Value
+In a pass by value parameter, the external data is copied into the function.
+
+###Example
+~~~
+#include <iostream>
+using namespace std;
+
+int add(int num1, int num2); //prototype, num1 and num2 are parameters   
+
+int main()
+{
+	int x=1, y=2, z;
+	
+	z = add(2, 3);      // 2 and 3 are arguments
+	cout << z << endl;
+	z = add(x, y);      // 1 & 2 (contents of x & y) are args
+	cout << z << endl;
+	z = add(1, y);      // 1 and 2 (content of y) are args
+	cout << z << endl;
+}
+
+// Function implementation (header + body)
+int add( int num1, int num2)
+{
+	return num1 + num2;
+}
+~~~
+
+\warning If you give a function too many arguments or the wrong data types (a `float` instead of an `int`, for example), the code will not compile.
+
+###Practice
+* * Write a function named isEven() that:
+    * * accepts an integer as an argument
+    * * returns true if it's even [[(note: 0 is even)!http://en.wikipedia.org/wiki/Parity_of_zero]]
+    * * returns false if it's odd
+* * Write a function named lowest that:
+    * * receives two integer values as arguments
+    * * returns: Whichever of the two arguments is lowest
+    * * Call it from main a few times with different values to verify it works in all cases
+
+\section byref Pass by Reference
+Passing by reference sends the address of a variable into a function instead of the variable itself.
+*/

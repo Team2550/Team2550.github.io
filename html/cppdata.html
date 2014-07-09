@@ -113,23 +113,24 @@ $(document).ready(function(){initNavTree('cppdata.html','');});
 <div class="textblock"><p>C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations you can subject them to.</p>
 <p>The data types are...</p><ul>
 <li>Integer: data types that are stored as number with no decimal point<ul>
-<li>int: a whole number that can be any value between -4,000,000,000 (billion) and 4 billion <dl class="section note"><dt>Note</dt><dd>These ranges can change from system to system. A 64 bit system will store longer variables than a 32 bit system.</dd></dl>
+<li><code>int</code>: a whole number that can be any value between -4,000,000,000 (billion) and 4 billion <dl class="section note"><dt>Note</dt><dd>These ranges can change from system to system. A 64 bit system will store longer variables than a 32 bit system.</dd></dl>
 </li>
-<li>long: a longer version of int that can store numbers much larger and smaller, as a consequence, it also takes up more RAM.</li>
-<li>long long: self explanatory</li>
-<li>char: a single ASCII character. This type is stored as a value between 0 and 127. An ASCII character table showing the characters that correspond to the numbers is shown below. You can preform mathematical operations on them like normal integers.</li>
-<li>bool: a logical (true or false) value, it can either be 1 or 0. <dl class="section note"><dt>Note</dt><dd>C++ has associated the keywords “true” and “false” with 1 and 0, so you can use the actual words in logical tests.</dd></dl>
+<li><code>long</code>: a longer version of int that can store numbers much larger and smaller, as a consequence, it also takes up more RAM.</li>
+<li><code>long long</code>: self explanatory</li>
+<li><code>char</code>: a single ASCII character. This type is stored as a value between 0 and 127. An ASCII character table showing the characters that correspond to the numbers is shown below. You can preform mathematical operations on them like normal integers.</li>
+<li><code>bool</code>: a logical (true or false) value, it can either be 1 or 0. <dl class="section note"><dt>Note</dt><dd>C++ has associated the keywords “true” and “false” with 1 and 0, so you can use the actual words in logical tests.</dd></dl>
 </li>
 </ul>
 </li>
 <li>Floating point: data types that contain a decimal value, these are always stored in scientific notation<ul>
-<li>float: a number that can have a decimal value. It has 7 significant digits and can have a power of ±38</li>
-<li>double: a larger version of float with 15 significant digits. It also can have a power of up to ±308</li>
-<li>long double: a longer version of double</li>
+<li><code>float</code>: a number that can have a decimal value. It has 7 significant digits and can have a power of ±38</li>
+<li><code>double</code>: a larger version of float with 15 significant digits. It also can have a power of up to ±308</li>
+<li><code>long double</code>: a longer version of double</li>
 </ul>
 </li>
-<li>string: a user defined variable type, it can be any size, but you cannot preform mathematical operations in the same way that you can with any of the above variables.</li>
+<li><code>string</code>: a user defined variable type, it can be any size, but you cannot preform mathematical operations in the same way that you can with any of the above variables.</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd>From here on, floating point or float values refer to either <code>float</code> or <code>double</code> values.</dd></dl>
 <p>You can put an “unsigned” in front of any of these variable types in order to make the numbers positive only. This allows them to be twice as large, but be careful, if you do an operation that turns it into a negative value, it will turn into an extremely large number.</p>
 <p>Example: </p><pre class="fragment">unsigned int num = 5; // creates a variable of type integer called num and sets it to 5
 </pre><dl class="section note"><dt>Note</dt><dd>As mentioned earlier, you a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as 'A'3. To see an ASCII table, go to <a href="http://en.cppreference.com/w/cpp/language/ascii">http://en.cppreference.com/w/cpp/language/ascii</a>.</dd></dl>
@@ -318,7 +319,7 @@ This applies even if you are storing the value in a float variable. This could p
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="md__documentation__c_09_09.html">C++</a></li>
-    <li class="footer">Generated on Mon Jul 7 2014 15:41:58 for Team 2550 by
+    <li class="footer">Generated on Wed Jul 9 2014 09:05:56 for Team 2550 by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.7 </li>
   </ul>

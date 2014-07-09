@@ -1,0 +1,92 @@
+/** \page cppfn Functions
+\tableofcontents
+
+A function (also known as a method, procedure, routine, subroutine, or subprogram) is a named block of code capable of taking inputs and outputting information. You have already used several functions.
+
+\section stdfn Using Predefined Functions
+In order to use predefined functions, you must:
+
+* * Include the header file that contains the prototype (a prototype tells the compiler that the function exists).
+* * Provide the correct arguments
+
+###Example
+
+~~~
+//The pow() function is included with every C++ compiler (as a part of the C++ Standard Library).
+//It raises the first argument to the power of the second.
+
+#include <iostream>
+#include <cmath> //Standard library functions that provide various math functions
+using namespace std;
+
+int main() {
+    cout << pow(2, 3); //2^3
+}
+~~~
+
+\note For documentation on these functions, I reccomend [en.cppreference.com](http://en.cppreference.com) and [www.cplusplus.com/reference](http://www.cplusplus.com/reference).
+
+\section fnprototypes Defining Your Own Functions
+You can also create your own functions. In order to do this, you need:
+
+* * Write the prototype
+    * * The function name
+    * * The type of data that is being sent (passed into) the function
+    * * The type of data being returned function
+* * Write the function itself
+    * * The function header, identical to the prototype
+    * * The rest of the implementation
+
+Here is a very basic function.
+
+~~~
+#include <iostream>
+using namespace std;
+
+void printHello(); //This is the prototype. No arguments, returns nothing (void).
+/*The prototype needs to be placed somewhere at the top of the program. It tells
+    the compiler that the function is implemented later. This method has several
+    benefits that we will cover later.
+
+  It is possible to implement the functions above main, however, this is not recommended.
+*/
+
+int main() {
+    printHello();
+}
+
+void printHello() {
+    cout << "Hello.\n";
+}
+~~~
+
+\note Any variables instantiated (declared/defined/created) within a function are **local** to that function. In other words, they are deleted after the function exits.
+
+**Practice:** Write a void function named printname that prints out your name. Call it from main 10 times using a loop.
+
+\section fnreturn Return Values
+If you want your function to return something, change `void` to be a data type. **A function can only return one value.**
+
+In order to get the return value, assign the value of a variable to it or provide it as an input to something else.
+
+~~~
+//This function is almost useless, but it demonstrates a return statement well.
+//I have defined it above main for brevity.
+
+#include <iostream>
+
+int getFavoriteNumber() {
+    return 42;
+}
+
+int main() {
+    int n;
+    n = getFavoriteNumber(); //This copies the return value into n.
+    std::cout << getFavoriteNumber(); //This outputs the return value.
+}
+~~~
+
+\note `main()` must always return an `int`. Unless otherwise specified, it will return 0, which signals the operating system that it exited successfully. If there are error conditions in your program that require it to exit early, you should return a nonzero value along with a message saying what is wrong.
+
+\subpage cppfnarg Argument Passing
+*/

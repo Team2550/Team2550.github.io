@@ -5,18 +5,20 @@ C++ has several types of data that you can store while the code is running. Thes
 
 The data types are...
 * * Integer: data types that are stored as number with no decimal point
-	* * int: a whole number that can be any value between -4,000,000,000 (billion) and 4 billion
+	* * `int`: a whole number that can be any value between -4,000,000,000 (billion) and 4 billion
 	\note These ranges can change from system to system. A 64 bit system will store longer variables than a 32 bit system.
-	* * long: a longer version of int that can store numbers much larger and smaller, as a consequence, it also takes up more RAM.
-	* * long long: self explanatory
-	* * char: a single ASCII character. This type is stored as a value between 0 and 127. An ASCII character table showing the characters that correspond to the numbers is shown below. You can preform mathematical operations on them like normal integers.
-	* * bool: a logical (true or false) value, it can either be 1 or 0.
+	* * `long`: a longer version of int that can store numbers much larger and smaller, as a consequence, it also takes up more RAM.
+	* * `long long`: self explanatory
+	* * `char`: a single ASCII character. This type is stored as a value between 0 and 127. An ASCII character table showing the characters that correspond to the numbers is shown below. You can preform mathematical operations on them like normal integers.
+	* * `bool`: a logical (true or false) value, it can either be 1 or 0.
 	\note C++ has associated the keywords “true” and “false” with 1 and 0, so you can use the actual words in logical tests.
 * * Floating point: data types that contain a decimal value, these are always stored in scientific notation
-	* * float: a number that can have a decimal value. It has 7 significant digits and can have a power of ±38
-	* * double: a larger version of float with 15 significant digits. It also can have a power of up to ±308
-	* * long double: a longer version of double
-* * string: a user defined variable type, it can be any size, but you cannot preform mathematical operations in the same way that you can with any of the above variables.
+	* * `float`: a number that can have a decimal value. It has 7 significant digits and can have a power of ±38
+	* * `double`: a larger version of float with 15 significant digits. It also can have a power of up to ±308
+	* * `long double`: a longer version of double
+* * `string`: a user defined variable type, it can be any size, but you cannot preform mathematical operations in the same way that you can with any of the above variables.
+
+\note From here on, floating point or float values refer to either `float` or `double` values.
 
 You can put an “unsigned” in front of any of these variable types in order to make the numbers positive only. This allows them to be twice as large, but be careful, if you do an operation that turns it into a negative value, it will turn into an extremely large number.
 

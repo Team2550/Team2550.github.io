@@ -60,4 +60,5 @@ If you don't include this, two lines will be seen as the same line (which can be
 \subpage cpplayout "Program Layout"
 \subpage cppconsole "Console I/O"
 \subpage cppflow "Program Flow"
+\subpage cppfn "Functions"
 
