@@ -52,7 +52,7 @@ When evaluating an expression, C++ has a defined order of operations for logic g
 
 A more complete table can be found at [cppreference.com](http://en.cppreference.com/w/cpp/language/operator_precedence)
 
-* **Even though C++ has a set order of operations, adding parenthesis often makes it easier to understand.** The table below demonstrates this.
+-*Even though C++ has a set order of operations, adding parenthesis often makes it easier to understand.** The table below demonstrates this.
 <table>
     <tr>
         <th>Expression</th>

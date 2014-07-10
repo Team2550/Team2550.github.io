@@ -56,9 +56,9 @@ int main() {
 
 While loops can be especially useful for robotics. Here are a few more usage ideas.
 
-* * Move until a sensor's readings yield a certain value.
-* * If the robot is remote-controlled, the code that translates user inputs into actions is all in a loop.
-* * A combination of loops and functions can be used to multi-task. You can only run a single action at a time, but the program executes as fast as possible, meaning that you can work on one task, switch out of it, and move to another until they are all done.
+- Move until a sensor's readings yield a certain value.
+- If the robot is remote-controlled, the code that translates user inputs into actions is all in a loop.
+- A combination of loops and functions can be used to multi-task. You can only run a single action at a time, but the program executes as fast as possible, meaning that you can work on one task, switch out of it, and move to another until they are all done.
 
 \subsection dowhile do-while
 There are some situations where you want to ensure the code within the loop runs at least once. This is where a `do... while` loop is useful. Instead of running the test at the beginning of the loop, a `do... while` loop tests at the end. The basic format is very similar to that of a `while` loop.

@@ -6,20 +6,20 @@ Scope refers to the time period in which a value exists and where it is accessib
 
 Long story short: make data (variables) as local as possible.
 
-* * It is usually a good idea to declare variables as locally as possible. Doing this localizes potential bugs, meaning that problems are much easier to find.
-* * When data is localized, the code is easier to understand.
+- It is usually a good idea to declare variables as locally as possible. Doing this localizes potential bugs, meaning that problems are much easier to find.
+- When data is localized, the code is easier to understand.
 
 The scope of a variable is the block of code that has access to that variable...
 
-* * **Global Variables** (i.e. variables with global scope) are...
-	* * declared *above* main
-	* * *accessible and modifiable* by *any* routine in the current module (source file)
-	* * to be avoided as they make problems more difficult to find since the variable could have been modifed anywhere
-* * Local Variables (i.e. variables with local scope)
-	* * are *declared inside a block* (between { })
-	* * are *only available within that block*
-	* * make errors easier to find because there's a smaller chunk of code in which the error can exist
-* * Constants are typically declared globally but since they can't be modified, declaring them global is not a problem statement.
+- **Global Variables** (i.e. variables with global scope) are...
+	- declared *above* main
+	- *accessible and modifiable* by *any* routine in the current module (source file)
+	- to be avoided as they make problems more difficult to find since the variable could have been modifed anywhere
+- Local Variables (i.e. variables with local scope)
+	- are *declared inside a block* (between { })
+	- are *only available within that block*
+	- make errors easier to find because there's a smaller chunk of code in which the error can exist
+- Constants are typically declared globally but since they can't be modified, declaring them global is not a problem statement.
 
 \section fnoverload Function Overloading
 Function overloading allows for multiple functions to have the same name as long as the argument lists are different (this allows the compiler to tell them apart). The return type does not matter.
@@ -60,15 +60,15 @@ As you can see, all default parameters do is provide a value for an argument not
 
 Variables can be either automatic or Static...
 
-* * Automatic Variables
-	* * are the most common
-	* * are created when declared (`int x;`)
-	* * are destroyed when they go out of scope
-* * Static Variables
-	* * are used rarely
-	* * are created when declared (`static int x;`)
-	* * are NOT destroyed when they go out of scope
-	* * are destroyed when the program ends
+- Automatic Variables
+	- are the most common
+	- are created when declared (`int x;`)
+	- are destroyed when they go out of scope
+- Static Variables
+	- are used rarely
+	- are created when declared (`static int x;`)
+	- are NOT destroyed when they go out of scope
+	- are destroyed when the program ends
 
 ###Example
 The following code prints out `1 2`.

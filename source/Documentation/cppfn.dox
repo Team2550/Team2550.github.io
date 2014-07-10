@@ -6,8 +6,8 @@ A function (also known as a method, procedure, routine, subroutine, or subprogra
 \section stdfn Using Predefined Functions
 In order to use predefined functions, you must:
 
-* * Include the header file that contains the prototype (a prototype tells the compiler that the function exists).
-* * Provide the correct arguments
+- Include the header file that contains the prototype (a prototype tells the compiler that the function exists).
+- Provide the correct arguments
 
 ###Example
 
@@ -29,13 +29,13 @@ int main() {
 \section fnprototypes Defining Your Own Functions
 You can also create your own functions. In order to do this, you need:
 
-* * Write the prototype
-    * * The function name
-    * * The type of data that is being sent (passed into) the function
-    * * The type of data being returned function
-* * Write the function itself
-    * * The function header, identical to the prototype
-    * * The rest of the implementation
+- Write the prototype
+    - The function name
+    - The type of data that is being sent (passed into) the function
+    - The type of data being returned function
+- Write the function itself
+    - The function header, identical to the prototype
+    - The rest of the implementation
 
 Here is a very basic function.
 

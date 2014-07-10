@@ -39,14 +39,14 @@ int add( int num1, int num2)
 \warning If you give a function too many arguments or the wrong data types (a `float` instead of an `int`, for example), the code will not compile.
 
 ###Practice
-* * Write a function named isEven() that:
-    * * accepts an integer as an argument
-    * * returns true if it's even
-    * * returns false if it's odd
-* * Write a function named lowest that:
-    * * receives two integer values as arguments
-    * * returns: Whichever of the two arguments is lowest
-    * * Call it from main a few times with different values to verify it works in all cases
+- Write a function named isEven() that:
+    - accepts an integer as an argument
+    - returns true if it's even
+    - returns false if it's odd
+- Write a function named lowest that:
+    - receives two integer values as arguments
+    - returns: Whichever of the two arguments is lowest
+    - Call it from main a few times with different values to verify it works in all cases
 
 \section byref Pass by Reference
 Passing by reference sends the address of a variable into a function instead of a copy of the variable. In order to pass a parameter by reference, place a `&` after the datatype of the parameter in the prototype and header. This small syntax detail can completely change the behavior of a program, so pay attention!
