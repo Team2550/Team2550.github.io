@@ -21,34 +21,55 @@ $extrastylesheet
 
 <!--BEGIN TITLEAREA-->
 <div id="titlearea">
-<table cellspacing="0" cellpadding="0">
- <tbody>
- <tr style="height: 56px;">
-  <!--BEGIN PROJECT_LOGO-->
-  <td id="projectlogo"><img alt="Logo" src="$relpath^$projectlogo"/></td>
-  <!--END PROJECT_LOGO-->
-  <!--BEGIN PROJECT_NAME-->
-  <td style="padding-left: 0.5em;">
-   <div id="projectname">$projectname
-   <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber">$projectnumber</span><!--END PROJECT_NUMBER-->
-   </div>
-   <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
-  </td>
-  <!--END PROJECT_NAME-->
-  <!--BEGIN !PROJECT_NAME-->
-   <!--BEGIN PROJECT_BRIEF-->
-    <td style="padding-left: 0.5em;">
-    <div id="projectbrief">$projectbrief</div>
-    </td>
-   <!--END PROJECT_BRIEF-->
-  <!--END !PROJECT_NAME-->
-  <!--BEGIN DISABLE_INDEX-->
-   <!--BEGIN SEARCHENGINE-->
-   <td>$searchbox</td>
-   <!--END SEARCHENGINE-->
-  <!--END DISABLE_INDEX-->
- </tr>
- </tbody>
+<table cellspacing="1" cellpadding="1" style="width:100%">
+<tbody>
+    <tr>
+        <!--BEGIN PROJECT_LOGO-->
+        <td id="projectlogo" style="text-align:left; width:138px;"><img alt="Logo" src="$relpath^$projectlogo"/></td>
+        <!--END PROJECT_LOGO-->
+        <!--BEGIN PROJECT_NAME-->
+        <td style="padding-left: 0.5em; text-align:left;">
+            <div id="projectname">$projectname
+            <!--BEGIN PROJECT_NUMBER-->&#160;<span id="projectnumber">$projectnumber</span><!--END PROJECT_NUMBER-->
+            </div>
+            <!--BEGIN PROJECT_BRIEF--><div id="projectbrief">$projectbrief</div><!--END PROJECT_BRIEF-->
+        </td>
+        <!--END PROJECT_NAME-->
+        <!--BEGIN !PROJECT_NAME-->
+        <!--BEGIN PROJECT_BRIEF-->
+        <td style="padding-left: 0.5em;">
+            <div id="projectbrief">$projectbrief</div>
+        </td>
+        <!--END PROJECT_BRIEF-->
+        <!--END !PROJECT_NAME-->
+        <!--BEGIN DISABLE_INDEX-->
+        <!--BEGIN SEARCHENGINE-->
+        <td>$searchbox</td>
+        <!--END SEARCHENGINE-->
+        <!--END DISABLE_INDEX-->
+        <!--BEGIN SHARE BUTTONS-->
+        <td style="text-align:right;">
+            <table cellspacing="1" cellpadding="1" style="text-align:right; width:100%;">
+            <tbody>
+                <tr>
+                    <td><!--GitHub Follow-->
+                        <iframe src="http://ghbtns.com/github-btn.html?user=Team2550&type=follow&size=large" height="30" width="240" frameborder="0" scrolling="0" style="width:190px; height: 30px;" allowTransparency="true"></iframe>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <!--Google+-->
+                        <div class="g-plusone" data-size="tall" data-annotation="none"  data-href="http://team2550.github.io/"></div><script type="text/javascript">(function() {var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;po.src = 'https://apis.google.com/js/plusone.js';var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);})();</script>
+                        <!--GitHub Star-->
+                        <iframe src="http://ghbtns.com/github-btn.html?user=Team2550&repo=Team2550.github.io&type=watch" height="25" width="50" frameborder="0" scrolling="0" style="width:50px; height: 25px;" allowTransparency="true"></iframe>
+                    </td>
+                </tr>
+            </tbody>
+            </table>
+        </td>
+        <!--END SHARE BUTTONS-->
+    </tr>
+</tbody>
 </table>
 </div>
 <!--END TITLEAREA-->
