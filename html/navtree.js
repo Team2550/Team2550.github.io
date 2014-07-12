@@ -7,7 +7,7 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"cppbuild.html"
+"cpparray.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

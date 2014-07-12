@@ -24,5 +24,13 @@ var md__documentation__c_09_09 =
       ] ]
     ] ],
     [ "Program Flow", "cppflow.html", "cppflow" ],
-    [ "Functions", "cppfn.html", "cppfn" ]
+    [ "Functions", "cppfn.html", "cppfn" ],
+    [ "Enumeration", "cppenum.html", null ],
+    [ "Arrays", "cpparray.html", [
+      [ "Declaring Arrays", "cpparray.html#declarearray", null ],
+      [ "Accessing Elements", "cpparray.html#accessarray", null ],
+      [ "Initializing", "cpparray.html#arrayinit", null ],
+      [ "Arrays as Function Parameters", "cpparray.html#arrayparam", null ],
+      [ "Practice", "cpparray.html#arraypractice", null ]
+    ] ]
 ];

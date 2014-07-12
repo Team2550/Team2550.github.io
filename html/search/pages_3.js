@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['functions',['Functions',['../cppfn.html',1,'md_Documentation_C++']]]
+  ['enumeration',['Enumeration',['../cppenum.html',1,'md_Documentation_C++']]]
 ];

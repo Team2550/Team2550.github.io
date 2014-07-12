@@ -1,0 +1,132 @@
+/** \page cpparray Arrays
+\tableofcontents
+
+An array is a list of values that can all be accessed under a single variable name. They are commonly used to store related items (sensor values is one example).
+
+\note Arrays are fixed-size. The size must be known before the code is compiled.
+
+\section declarearray Declaring Arrays
+Declaring an array is almost the same as declaring any other variable. The only difference is that you put the number of items in the array in brackets.
+
+    int numbers[10]; //holds 10 integers
+    char letters[5]; //holds 5 chars
+
+\note You will often need to access the size of an array multiple times, so it is recommended that you store the size in a constant.
+
+    const int numbers_SIZE = 10;
+    int numbers[numbers_SIZE];
+
+\section accessarray Accessing Elements
+In order to access a value within an array, you have to provide an index. The index (of subscript) is a number enclosed in brackets tells the compiler which item in the array to access.
+
+\note The first element is index 0.
+
+~~~
+int num[10];
+num[0] = 5;
+num[1] = 10;
+num[9] = num[0] + num[1];
+cout << num[9]; //prints 15
+
+//To process all the elements of an array use a loop
+for (int index=0; index<10; index++)
+    num[x] = 42;
+~~~
+
+\warning Specifying an index that is too large (or negative) results in an "out of bounds" error. The C++ compiler will **not** catch this, so it's up to you to make sure the array index is not out of bounds. **Writing to an array elment that is out-of-bounds can alter other variables! Don't do it.**
+
+    int num[5];
+    num[0] = 7; //OK
+    num[4] = 3; //OK
+    num[5] = 4; //Out of bounds, remember that the 1st index is always 0.
+    num[10] = 7; //out of bounds
+    num[-1] = 8; //out of bounds
+
+\note Reading from an array can also result in an out of bounds error, but it is unpredictable. Your program may run without a problem, or behave erratically, or crash. It all depends on the state of the system at the time.
+
+\section arrayinit Initializing
+Like all other variables, array elements are not given default values. There are several methods you can use for initializing arrays.
+
+###Method 1: Initializing with a loop
+~~~
+int nums[10];'
+for (int i = 0; i < 10; i++) //Note the `<`, this loop exits after 9.
+    nums[i] = 0;
+~~~
+
+###Method 2: Provide values in curly braces (`{ }`)
+~~~
+int nums[3] = {2, 10, 44}; 
+int sides[100] = {4, 3}; //sides[0] and [1] are 4 and 3, all of the others are zero
+int counts[99] = {};     //size = 99, all 0
+int count[] = {0, 0, 0}; //size = 3, all 0
+int array[] = {5, 6, 7}; //size = 3, values are `5, 6, 7`
+~~~
+
+\section arrayparam Arrays as Function Parameters
+Arrays are passed into functions by reference for two reasons.
+
+1. Arrays can be very large, making them inefficient to copy.
+2. The compiler does not know the size of the array, so it has no way to copy it in a single operation.
+
+You do not have to use the `&`. The prototype and header of a function that accepts an array looks like this:
+
+    void print(int array[], int size);
+
+\note The `[ ]` tells the function it will be recieving an array by reference. You do **not** specify the array size between the `[ ]` However, the function needs to know the size, so it's typically sent in as a separate variable.
+
+Because the array and size are separate, the function can handle any size. In other words, you can use the same function for an array of 32, 67, 99, or 100 items without any problems.
+
+~~~
+void initialize(int data[], int size);
+
+void main() {
+    const int totals1_SIZE = 10;
+    const int totals2_SIZE = 5;
+    int totals1[ARRAY_SIZE];
+    int totals2[ARRAY2_SIZE];
+    //...
+    initialize(totals, ARRAY_SIZE);
+    initialize(totals2, ARRAY2_SIZE);
+    //...
+}
+
+void initialize(int data[], int size) {
+    //initialize all elements to -1
+    for(int x=0; x<size; x++)
+        data[x] = -1;
+}
+~~~
+
+\warning Passing by reference also allows you to write to the original variable. This can be useful in many cases, but sometimes you want to ensure that the original value of a variable is not changed. You can keep the array from being written by placing a **const** in front of the datatype.
+
+~~~
+void print(const int data[], int size);
+
+void main() {
+    const int totals_SIZE = 10;
+	int totals[ARRAY_SIZE];
+	//...
+	print(totals, ARRAY_SIZE);
+	//...
+}
+
+void print(const int data[], int size) { //`const` makes absolutely sure that data will not be overwritten
+	for(int x=0; x<size; x++)
+		cout << data[x] << endl;
+}
+~~~
+
+\section arraypractice Practice
+Write a program that:
+
+- declares an array of 5 ints called dataSet1
+- calls a function to initialize them to their index * 2 (0, 2, 4, 6...)
+    - You'll need to write that function it should recieve the array and the size as parameters
+- calls a function to print them out, space delimited, with a endl at the end.
+    - You'll need to write that function it should recieve the array and the size as parameters
+- Add another array of 100 ints to main called dataSet2.
+    - initialize and print them using the exact same functions that were used to process dataset1.
+- Write another function that computes and returns the average of the values in the given array.
+	- Add statements in main to call this and print out the results to cout for each of the arrays.
+*/

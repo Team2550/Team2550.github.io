@@ -1,0 +1,3 @@
+/** \page cppenum Enumeration
+An enumeration simply associates names with values. They can be used to make a program easier to read.
+*/

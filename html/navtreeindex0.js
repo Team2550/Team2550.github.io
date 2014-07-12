@@ -1,5 +1,11 @@
 var NAVTREEINDEX0 =
 {
+"cpparray.html":[0,7],
+"cpparray.html#accessarray":[0,7,1],
+"cpparray.html#arrayinit":[0,7,2],
+"cpparray.html#arrayparam":[0,7,3],
+"cpparray.html#arraypractice":[0,7,4],
+"cpparray.html#declarearray":[0,7,0],
 "cppbuild.html":[0,0],
 "cppconsole.html":[0,3],
 "cppconsole.html#escape":[0,3,0,0],
@@ -16,6 +22,7 @@ var NAVTREEINDEX0 =
 "cppdata.html#cppcompare":[0,1,3],
 "cppdata.html#cppconst":[0,1,1],
 "cppdata.html#cppvars":[0,1,0],
+"cppenum.html":[0,6],
 "cppflow.html":[0,4],
 "cppflow.html#logicgates":[0,4,0],
 "cppflow.html#logicorder":[0,4,0,0],
