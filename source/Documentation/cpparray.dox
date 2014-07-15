@@ -98,7 +98,7 @@ void initialize(int data[], int size) {
 }
 ~~~
 
-\warning Passing by reference also allows you to write to the original variable. This can be useful in many cases, but sometimes you want to ensure that the original value of a variable is not changed. You can keep the array from being written by placing a **const** in front of the datatype.
+\warning Passing by reference also allows you to write to the original variable. This can be useful in many cases, but sometimes you want to ensure that the original value of a variable is not changed. You can keep the array from being written by placing `const` in front of the datatype.
 
 ~~~
 void print(const int data[], int size);

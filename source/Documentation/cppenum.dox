@@ -1,3 +1,101 @@
 /** \page cppenum Enumeration
-An enumeration simply associates names with values. They can be used to make a program easier to read.
+An enumeration simply associates names with values. They can be used to make a program easier to read. The basic syntax is below.
+
+    enum Color {RED, GREEN, BLUE, YELLOW, WHITE};
+
+All an enumeration does is assign names to integer values. The only difference is that an enumeration creates its own datatype (in the above example, the enumeration creates a `Color` datatype. See the example at the bottom of this page.
+
+\note Becuase all `enum` does is map words to an integer, you can also assign specific values to enumerations.
+
+    enum Distance {
+        TOO_CLOSE = 10,
+        TOO_FAR = 20
+    };
+    
+Because they are easy to read and do not slow down the code, enumerations are great for `switch` statements.
+
+###Example
+~~~
+//This program performs actions based on user input, which can be a very good appliation for enumerations.
+
+#include <iostream>
+using namespace std;
+
+enum Distance {
+    TOO_CLOSE = 10,
+    TOO_FAR = 20,
+    OK
+};
+
+Distance checkDistance(int input);
+bool userDone();
+
+int main() {
+    Distance checked;
+    do {
+        int input;
+        cout << "Enter a distance: ";
+        cin >> input;
+        checked = checkDistance(input);
+        switch (checked) {
+        case OK:
+            cout << "You chose wisely.\n";
+            break;
+        case TOO_FAR:
+            cout << "You chose poorly: too far.\n";
+            break;
+        case TOO_CLOSE:
+            cout << "You chose poorly: too close.\n";
+        }
+    } while (checked != OK && !userDone());
+    cout << "Goodbye.\n";
+}
+
+Distance checkDistance(int input) {
+    if (input <= TOO_CLOSE) //comparing an `int` and a `Distance`
+        return TOO_CLOSE;
+    else if (input >= TOO_FAR)
+        return TOO_FAR;
+    else //OK does not have an associated value.
+        return OK;
+}
+
+bool userDone() {
+    char input;
+    cout << "Are you done? [y/n] ";
+    cin >> input;
+    cout << endl;
+    if (input == 'y')
+        return true;
+    else
+        return false;
+}
+~~~
+
+####Example Input/Output
+In order to demonstrate the capabilities of `cin`, I am am going to demonstrate this program.
+If you give it too much data, it just plugs it in in the future.
+
+    Enter a distance: 10
+    You chose poorly: too close.
+    Are you done? [y/n] n
+
+    Enter a distance: 20
+    You chose poorly: too far.
+    Are you done? [y/n] n
+
+    Enter a distance: 15
+    You chose wisely.
+    Goodbye.
+    
+This method, while not always apparent to the user, can be very useful for those who do know about it.
+You are actually able to provide a valid input set at the beginning of the program.
+
+    Enter a distance: 10 n 20 n 15
+    You chose poorly: too close.
+    Are you done? [y/n] 
+    Enter a distance: You chose poorly: too far.
+    Are you done? [y/n] 
+    Enter a distance: You chose wisely.
+    Goodbye.
 */
