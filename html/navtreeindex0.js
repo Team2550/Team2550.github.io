@@ -49,7 +49,12 @@ var NAVTREEINDEX0 =
 "cpploop.html#for":[0,4,2,1],
 "cpploop.html#loopproblems":[0,4,2,2],
 "cpploop.html#while":[0,4,2,0],
+"cppstr.html":[0,8],
+"cppstr.html#cppcstr":[0,8,0],
+"cppstr.html#cppcstrdeclare":[0,8,0,0],
+"cppstr.html#cppcstrfn":[0,8,0,1],
+"cppstr.html#cppstdstring":[0,8,1],
 "index.html":[],
-"md__documentation__c_09_09.html":[0],
+"md__documentation_cpp__c_09_09.html":[0],
 "pages.html":[]
 };

@@ -1,0 +1,76 @@
+/** \page cppstr Strings
+\tableofcontents
+
+Strings are not as simple to use in C++ as they are in many other languages. This page provides information about how to work with strings.
+
+\section cppcstr C-strings
+A c-string is simply a null-terminated array of characters. In other words, a c-string is an array of `char` variables containing an ASCII `\0` character at the end.
+
+\subsection cppcstrdeclare Declaration
+You have actually used c-strings already. Any time you placed text in quotes, the compiler treats it as an (anonymous) c-string. However, there are also other ways.
+
+~~~
+//Length: 6
+//A null character is automatically inserted at the end.
+char[] str1 = "Hello";
+
+//Length: 20
+//Be very careful, if you assign a string longer than 1 - length,
+//  you will overwrite memory outside of the array bounds.
+char[20] str2 = "Hello";
+
+//Length: 10
+//This is another way to declare a c-string. It is not usually very useful.
+//  NOTE: using this method, you have to insert the null character.
+char[10] str3 = {'H', 'e', 'l', 'l', 'o', '\0'};
+
+//Initializing empty strings
+char[10] str4 = "";
+char[10] str5 = {0};
+char[10] str6 = {'\0'};
+~~~
+
+\warning You always want to initialize c-strings. If you don't, there will be problems when you try to run the c-string-related functions.
+
+\subsection cppcstrfn Functions
+`#include <cstring>` provides various functions that can be used to manipulated c-strings.
+
+<table>
+    <tr>
+        <th>Function</th>
+        <th>Action</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`strcpy(destination, source)`</td>
+        <td>Copies the contents of one c-string into another</td>
+        <td>
+~~~
+#include <cstring>
+using namespace std;
+
+int main() {
+    char str1[] = "string to copy";
+    char str2[100] = {0};
+    strcpy(str2, str1); //copies str1 into str2
+}
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>`strcat(destination, source)`</td>
+        <td>Merges two strings, the result is added to the end of the destination string.</td>
+        <td>
+~~~
+char str1[] = "Hello";
+char str2[100] = " world";
+strcat(str1, str2);
+//Result: "Hello world"
+~~~
+\warning Be very careful with the length of these strings. It can be very easy to go out of bounds. Use `strlen` to make sure you will not go out of bounds.
+        </td>
+    </tr>
+</table>
+
+\section cppstdstring std::string
+*/
