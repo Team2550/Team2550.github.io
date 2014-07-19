@@ -30,7 +30,10 @@ char[10] str5 = {0};
 char[10] str6 = {'\0'};
 ~~~
 
-\warning You always want to initialize c-strings. If you don't, there will be problems when you try to run the c-string-related functions.
+\warning You always want to initialize c-strings (even if it is only a null character). If you don't, there will be problems when you try to run the c-string-related functions.
+
+\subsection cppcstrprint Printing
+You can output a c-string with `cout`. The null termination allows it to determine exactly how long it is.
 
 \subsection cppcstrfn Functions
 `#include <cstring>` provides various functions that can be used to manipulated c-strings.
@@ -70,7 +73,303 @@ strcat(str1, str2);
 \warning Be very careful with the length of these strings. It can be very easy to go out of bounds. Use `strlen` to make sure you will not go out of bounds.
         </td>
     </tr>
+    <tr>
+        <td>`strlen(string)`</td>
+        <td>Returns the length of a c-string up to the first null character</td>
+        <td>
+~~~
+char str[] = "Hello";
+strlen(str);
+//Result: 5
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>`strcmp(string1, string2)`</td>
+        <td>
+        Compares `string1` and `string2` lexographically.
+
+        \note Lexographic comparison is not important at this point.
+        
+        ####Returns
+        - 0 if the strings are equal
+        - Negative number if `string1` is less than `string2`
+        - Positive number if `string1` is greater than `string2`
+        </td>
+        <td>
+~~~
+char str1[10] = "hello";
+char str2[10] = "test";
+strcmp(str1, str2); //Result: -12
+strcpy(str1, "test");
+strcmp(str1, str2); //Result: 0
+strcpy(str2, "no");
+strcmp(str1, str2); //Result: 6
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `strchr(string, character)`
+            
+            `strrchr(string, character)`
+        </td>
+        <td>
+            `strchr`: Finds the first occurence of a character in the string and returns the remaining substring.
+
+            `strrchr`: Finds the last occurence of a character in the string and returns the remaining substring.
+            
+            Both return `NULL` if the substring was not found.
+        </td>
+        <td>
+
+`strchr`
+~~~
+char str[] = "hello";
+strchr(str, 'l'); //Result: "llo"
+strchr(str, '\n'); //Result: NULL
+~~~
+
+`strrchr`
+~~~
+char path[] = "/this/is/a/file/path/to/file.txt";
+strchr(path, '/'); //Result: /file.txt
+~~~
+
+\warning `NULL` cannot be printed via `cout`. Doing so will crash the program.
+        </td>
+    </tr>
+    <tr>
+        <td>`strstr(str, search)`</td>
+        <td>Searches for a substring in a string.</td>
+        <td>
+~~~
+char str[] = "this is a test string";
+strstr(str, "test"); //Result: "test string"
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `strncpy`<br>
+            `strncat`<br>
+            `strncmp`
+        </td>
+        <td>These functions are the same as their counterparts, `strcpy`, `strcat`, and `strcmp`. The only difference is that there is a third parameter which represents the number of characters upon which to perform the operation. For instance, `strncpy` will copy the first `n` characters from one string into another.</td>
+        <td>
+~~~
+//Copy a part of a string into another, smaller, string.
+char str1[] = "this is a test string";
+char str2[10];
+strncpy(str2, str1, 9);
+// str2 = "this is a"
+strlen(str2); //Result: 9
+~~~
+
+\warning Do not copy the full length of one array into another. The `NULL` character will be written out of bounds.
+        </td>
+    </tr>
 </table>
 
-\section cppstdstring std::string
+\warning It is very important to make sure that c-strings are null terminated. All of the above functions use the null character in order to determine the length of the string. They iterate through the array until a null character is reached.
+
+\subsection cppcstrio I/O
+The normal streaming operators work with c-strings. You can output with `cout << ...` and input with `cin >> ...`.
+
+\warning Using `cin` has one major problem. It is whitespace-delimited. The following code illustrates the problem.
+
+~~~
+char str[100];
+cin >> str;
+~~~
+
+If the user inputs something with whitespace, such as
+
+    this is my input
+
+`cin` will place the word "this" into `str` and leave the other words for later. In order to avoid this problem, you have to use `cin.get`. Problem solved.
+
+~~~
+char str[100];
+cin.get(str, 100);
+~~~
+
+The `cin.get(str, 100)` line accepts up to 99 characters from the user, whitespace included, and writes it all into `str`.
+
+\section cppstring std::string
+C-strings work, but they can be complicated, so the C++ standard library (the built-in tools that come with every C++ compiler) has a string datatype that manages c-strings for you. It is much easier to use, so it is preferable over c-strings.
+
+\note The primary use for c-strings is compatibility with C (hence, the name).
+
+A few of the benefits of `std::string`:
+- The length is managed automatically, no bounding issues
+- You can re-assign a string, no need to use a copy function in order to change the contents
+- Strings can be passed by value or reference
+- The normal comparison operators work
+
+\subsection cppstringmanip Basic String Manipulation
+You don't need functions to do basic operations with strings. The normal arithmetic operators work.
+
+\subsubsection cppstringassign Re-assigning
+You can use the assignment `=` operator to change the value of a string.
+
+~~~
+#include <string> //defines the string datatype
+using namespace std;
+
+int main() {
+    string str = "hi";
+    str = "there";
+}
+~~~
+
+The above code is valid. This would cause problems with c-strings.
+
+\subsubsection cppstringconcat Concatination
+The `+` operator concatinates (combines) two strings.
+~~~
+string str1 = "he";
+string str2 = "llo";
+string str3 = str1 + str2; //str3 = "hello"
+~~~
+
+You can also concatinate a string with a c-string.
+~~~
+string str = "he";
+str += "llo"; //str = "hello"
+~~~
+
+\subsubsection cppstringcompare Comparison Operators
+`==`, `!=`, `<`, `>`, `<=`, and `>=` all work with strings. For now, only `==` and `!=` are really useful.
+
+~~~
+string str1 = "not";
+string str2 = "true";
+
+bool equal = str1 == str2 ? true : false; //Result: false
+~~~
+
+\note The above code is the same as saying...
+~~~
+...
+bool equal;
+if (str1 == str2)
+    equal = true;
+else
+    equal = false;
+~~~
+
+\subsection cppstringio I/O
+Again, `cout << ...` and `cin >> ...` both work with `std::string` variables. However, the same input problem exists when using `cin >> ...` (see [c-string I/O](@ref cppcstrio)). However, the solution is slightly different.
+
+~~~
+string str;
+getline(cin, str); //Writes a line entered by the user to str
+getline(cin, str, ','); //Changes the delimiter from a `\n` to a comma, allowing for the user to input multiple lines.
+~~~
+
+\subsection cppstringmethods Methods
+A **method** is a function that operates on a specific variable (such as a string). The format for calling a method is `variable.method()`.
+
+<table>
+    <tr>
+        <th>Method</th>
+        <th>Action</th>
+        <th>Example</th>
+    </tr>
+    <tr>
+        <td>`at(index)`</td>
+        <td>Accesses a character in the string (array notation).</td>
+        <td>
+~~~
+string str = "hello";
+str.at(0) //Result: h
+~~~
+
+\note You can also use the standard array notation.
+~~~
+str[1]; //Result: e
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>`c_str()`</td>
+        <td>Returns an unmodifiable c-string. This can be useful for functions that take a c-string as an argument, for instance, opening files.</td>
+        <td>
+~~~
+string str = "test";
+str.c_str();
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>`empty()`</td>
+        <td>Checks whether the string is empty.</td>
+        <td>
+~~~
+string str = "";
+str.empty(); //Result: true
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `size()`<br>
+            `length()`
+        </td>
+        <td>Returns the length of the string.</td>
+        <td>
+~~~
+string str = "this is a string";
+str.size(); //Result: 16
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>`clear()`</td>
+        <td>Erases the contents of the string.</td>
+        <td>
+~~~
+string str = "this will be erased";
+str.clear(); //str = "";
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `insert(index, substring)`<br>
+            `insert(index, substring, count)`<br>
+            `insert(index, count, character)`
+        </td>
+        <td>Adds a character or substring starting at the given index in a string without erasing data. `count` sets the number of times a character or substring is repatedly added.</td>
+        <td>
+~~~
+string str = "forgot in this string";
+str.insert(6, " something");       //str = "forgot something in this string"
+str.insert(str.length(), 10, '.'); //str = "forgot something in this string.........."
+~~~
+        </td>
+    </tr>
+    <tr>
+        <td>
+            `erase(index, count)`
+            `replace(index, count)`
+            `substr(index, count)`
+        </td>
+        <td>
+            Removes or replaces characters in the string. `substr` returns a substring in the range.
+            
+            - `index`: where to start
+            - `count`: number of characters to remove after index
+        </td>
+        <td>
+~~~
+string str = "this is a string";
+str.erase(5, str.length()); //str = "is a string"
+~~~
+        </td>
+    </tr>
+</table>
+
+\note There are many more advanced methods available for string manipulation. For more information, see [cppreference.com](http://en.cppreference.com/w/cpp/string/basic_string).
 */

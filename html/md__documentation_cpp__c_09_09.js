@@ -36,8 +36,24 @@ var md__documentation_cpp__c_09_09 =
     [ "Strings", "cppstr.html", [
       [ "C-strings", "cppstr.html#cppcstr", [
         [ "Declaration", "cppstr.html#cppcstrdeclare", null ],
-        [ "Functions", "cppstr.html#cppcstrfn", null ]
+        [ "Printing", "cppstr.html#cppcstrprint", null ],
+        [ "Functions", "cppstr.html#cppcstrfn", null ],
+        [ "I/O", "cppstr.html#cppcstrio", null ]
       ] ],
-      [ "std::string", "cppstr.html#cppstdstring", null ]
-    ] ]
+      [ "std::string", "cppstr.html#cppstring", [
+        [ "Basic String Manipulation", "cppstr.html#cppstringmanip", [
+          [ "Re-assigning", "cppstr.html#cppstringassign", null ],
+          [ "Concatination", "cppstr.html#cppstringconcat", null ],
+          [ "Comparison Operators", "cppstr.html#cppstringcompare", null ]
+        ] ],
+        [ "I/O", "cppstr.html#cppstringio", null ],
+        [ "Methods", "cppstr.html#cppstringmethods", null ]
+      ] ]
+    ] ],
+    [ "File I/O", "cppfileio.html", [
+      [ "Output", "cppfileio.html#cppfileout", null ],
+      [ "Input", "cppfileio.html#cppfilein", null ]
+    ] ],
+    [ "Namespaces & Headers", "cppnamespace.html", null ],
+    [ "Structures", "cppstruct.html", null ]
 ];

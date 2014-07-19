@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['strings_2edox',['strings.dox',['../strings_8dox.html',1,'']]]
+  ['namespace_2edox',['namespace.dox',['../namespace_8dox.html',1,'']]]
 ];
