@@ -1,2 +1,140 @@
 /**\page cppnamespace Namespaces & Headers
+\tableofcontents
+
+Namespaces allow you to organize your code as if it were in a file system. The entire standard library of C++ has been placed within a namespace already: `std`. The idea is to allow naming conflicts: for instance, two graphics libraries may have the same function that does basically the same thing, but it was written by different people.
+
+\note By default, everything is placed in the global namespace (which has no name). This namespace is normally left for the user's code.
+
+If you have looked at any code online, you may have noticed that instead of including, for instance, `<cmath>`, they included `<math.h>`. Functionally, these are the same, but the .h version is obsolete. Due to the fact that C does not have namespace support, C++ also has all of the old header files (which are not a part of the `std` namespace) in order to maintain compatibility.
+
+\section cppnsdeclare Namespace Declaration & Usage
+A namespace is very easy to declare and use, here is some example code.
+~~~
+#include <iostream>
+#include <string>
+using namespace std;
+
+namespace mycode
+{
+    //You can put functions, variables, and even other namespaces within your namespace.
+    int x = 3;
+    void print();
+    namespace more
+    {
+        string x = "This is a string";
+        void print();
+    }
+}
+
+int main() {
+    //These are different functions...
+    mycode::print();
+    mycode::more::print();
+    //and these are different variables
+    cout << mycode::x << " ";
+    mycode::x++; //mycode::x is now 4
+    cout << mycode::x << endl
+         << mycode::more::x + "\n";
+    mycode::more::x += ". It has nothing to do with the x in the level above it.";
+    cout << mycode::more::x + "\n";
+}
+
+void mycode::print() {
+    cout << "This function is in the mycode namespace.\n";
+}
+
+void mycode::more::print() {
+    cout << "This function is in the sub namespace of mycode\n";
+}
+~~~
+
+\warning The above code is for example purposes only. It does work, but you should not attempt to create naming conflicts. The primary goal of namespaces is to allow libraries (developed by different people) to have naming conflicts.
+
+###New operator!!!
+The `::` is called the scope resolution operator. A namespace creates a new scope that can be accessed from anywhere using the `::` operator (assuming that the namespace is defined in that file). `::` is run before all of the arithmetic operators. See the [Scope](@ref fnscope) for a refresher.
+
+\section cppnsheader Header Files
+If you had to put all of your code in a single file, things would get messy very quickly. In addition, all of your namespace declarations and function prototypes would have to go to the top of the file. This is very unwieldy and would make it very difficult to reuse code. Fortunately, that is not the case.
+
+You can move the namespace declaration and all of your function prototypes to a header file (like the ones that you `#include` from the standard library.
+~~~
+//This file could be called mycode.hh (or .hpp)
+#ifndef MYCODE_HH //This is the include guard, it prevents the header from being included multiple times.
+#define MYCODE_HH //Still include guard
+
+#include <string>
+
+namespace mycode
+{
+    //You can put functions, variables, and even other namespaces within your namespace.
+    int x = 3;
+    void print();
+    namespace more
+    {
+        std::string x = "This is a string"; //see note
+        void print();
+    }
+}
+
+#endif //another part of the include guard
+~~~
+
+\warning It is generally a bad idea to put the `using namespace ...` line in a header. If you do, that setting will also apply to any file that includes the header. This can lead to naming conflicts.
+
+\note I used `std::string` here, the `string` datatype is a part of std and there is no `using namespace std;` line.
+
+There would also be two other files. One that has the definitions for the functions in the namespace (`mycode.cc`) and one that contains the `main` function (`projectname.cc`). Both would have a line `#include "mycode.hh"`
+
+\note I enclosed the name of my header in quotes (as opposed to angle brackets). The difference is simple: `#include <header>` searches in the system location for headers and `#include "header"` searches in the location of the source file containing `main()`.
+
+The purpose of a header file is to state that something exists before it is actually defined. This allows you to easily enable a group of functions and namespaces in some files and not in others. Typically, a project will look like this...
+
+    project.cc
+    util.hh
+    util.cc
+    customdatatype.hh
+    customdatatype.cc
+    morefunctions.hh
+    morefunctions.cc
+
+Anyways, you get the idea. Related functions go in their own files and that file has a corresponding header.
+
+\note The extensions technically do not matter, however, there are conventions:
+- `.cc` or `.cpp` for C++ source files
+- `.hh` or `.hpp` for C++ headers
+- `.c` for C source files
+- `.h` for C headers
+
+\note Almost all C headers work in C++ programs, but this is not the case for C++ headers in C programs. C++ has many features that don't exist in C. It is generally a bad idea to define things that require C++-specific features in a `.h` file.
+
+\section cppnspreprocessor Preprocessor
+The C++ preprocessor is basically a programming language that allows you to control how the code is compiled.
+
+\warning The proprocessor completely ignores scope. Be careful.
+
+All preprocessor directives (commands) are prefixed with a `#`:
+- `#include`: literally copies and pastes code from one file into another at the location the directive was placed
+- `#define CONSTANT` or `#define CONSTANT VALUE`: defines a constant that can be accessed during the preprocessing stage of the compilation
+- `#undef CONSTANT`: un-defines `CONSTANT`
+- `#ifdef CONSTANT`: checks to see if a constant is defined
+- `#ifndef CONSTANT`: the opposite of `#ifdef`
+- `#elif EXPRESSION`: an `else if` statement
+- `#else`: self explanatory
+- `#endif`: the code between this and a `#ifdef` or `#ifndef` is compiled only if the statement evaluates to true
+- `#warning message` and `#error message`: makes the compiler raise an error or warning with a custom message.
+
+\note `CONSTANT` has nothing to do with `const` data types in C++. However, it is worth noting that placing `DEFINED_VALUE` anywhere in the code will "paste" the value of the defined constant in that location.
+
+The above commands should be sufficient to explain why the `#ifndef` at the top of header files is necessary. Basically, here is what it says...
+
+    if HEADER_NAME is not defined
+    {
+        define HEADER_NAME
+        compile this code
+        ...
+    }
+    else
+        it is already compiled, don't do anything
+
+\note Many systems have built-in definitions that you can use to selectively compile code based on the system. Also, C++ compilers automatically define `_cplusplus`. Allowing you to selectively compile code based on whether it is being used in a C or C++ environment.
 */

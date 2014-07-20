@@ -1,4 +1,6 @@
 /** \page cppflow Program Flow
+\tableofcontents
+
 Programming would be almost useless if it were simply a list of actions to perform. This is where flow control comes in. Using flow control, you can allow your program to make decisions.
 
 \section logicgates Boolean Logic

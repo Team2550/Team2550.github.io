@@ -54,6 +54,10 @@ var md__documentation_cpp__c_09_09 =
       [ "Output", "cppfileio.html#cppfileout", null ],
       [ "Input", "cppfileio.html#cppfilein", null ]
     ] ],
-    [ "Namespaces & Headers", "cppnamespace.html", null ],
+    [ "Namespaces & Headers", "cppnamespace.html", [
+      [ "Namespace Declaration & Usage", "cppnamespace.html#cppnsdeclare", null ],
+      [ "Header Files", "cppnamespace.html#cppnsheader", null ],
+      [ "Preprocessor", "cppnamespace.html#cppnspreprocessor", null ]
+    ] ],
     [ "Structures", "cppstruct.html", null ]
 ];

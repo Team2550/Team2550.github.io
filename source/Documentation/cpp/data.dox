@@ -181,6 +181,12 @@ int chInt = static_cast<int>(ch);
 // This is just a simple example.
 ~~~
 
+\note You may sometimes see a different format for type conversion.
+
+    (type_to_convert_to)(variable_name)
+
+\note This is the older method. I do not reccomend using it because it is more system intensive.
+
 \subsection cppautotype Automatic Type Selection
 There are certain cases where the C++ compiler will automatically determine the type of math to use.
 
