@@ -1,8 +1,9 @@
 x (A) Arrays +cpp
-(A) Strings +cpp
-(B) Namespaces +cpp
-(C) Classes +cpp
-(C) Inheritance & Composition +cpp
+x (A) Strings +cpp
+x (B) Namespaces +cpp
+(A) Structs +cpp
+(A) Classes +cpp
+(B) Inheritance & Composition +cpp
 (C) Dynamic Memory & Pointers +cpp
 (C) Multidimensional Arrays +cpp
 (D) WPILib +cpp
