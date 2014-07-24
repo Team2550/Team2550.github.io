@@ -1,5 +1,106 @@
 /**\page cppstruct Structures
 \tableofcontents
 
+Everything in the world has information that goes along with it. Properties. This is where structures are useful. A structure (`struct`) allows you to associate variables with each other and create multiple instances of that dataset. An instance of a `struct` is an object - a variable of a user-defined datatype.
 
+\section structdeclare Declaration
+~~~
+#ifndef EMPLOYEE_HH
+#define EMPLOYEE_HH
+
+#include <string>
+
+//You can store any data type in a struct.
+struct Employee {
+    std::string name[2];
+    int id;
+    int age;
+    float income;
+    bool college;
+}; //You can add instance declarations before the semicolon here. Typically it is not useful to use this.
+
+#endif
+~~~
+
+\section structuse Usage
+You can declare an instance of a `struct` by using its name. You can also use the dot operator to access elements within the structure.
+~~~
+#include <iostream>
+using namespace std;
+
+struct Point { //It is convention to capitalize the first letter in custom datatypes.
+    double x;
+    double y;
+};
+
+int main() {
+    Point a; //Declare a Point
+    a.x = 3.14; //Assign a value to a member.
+    a.y = 1.27;
+    cout << a.x << ' ' << a.y; //Access members
+    Point b = a; //The assingment operator copies a struct
+}
+~~~
+You can also declare an array of structs...
+~~~
+//Assumes the point struct was defined eariler
+int main() {
+    Point dotToDot[27];
+    dotToDot[18].y = 30.3; //assigns y to be 30.3 in the 19th point
+}
+~~~
+
+\section structfn Functions
+Unlike arrays, structs can be passed into functions be either value or reference. Below are some example functions for working with points.
+~~~
+//Using the Point struct again.
+
+//Adds num to both components of Point p passed by reference.
+void add(Point& p, double num) {
+    p.x += num;
+    p.y += num;
+}
+
+//Basic vector addition, adds b to a and returns the result (now a).
+Point add(Point a, Point b) {
+    a.x += b.x;
+    a.y += b.y;
+    return a;
+}
+
+//Takes two doubles and stores them in a point
+Point makePoint(double x, double y) {
+    Point out;
+    out.x = x; //out.x is different than x
+    out.y = y;
+    return out;
+}
+~~~
+
+\section structarray Arrays
+A `struct` allows for a very simple means of returning and passing an array by value. The compiler knows the exact amount of memory needed to hold a struct.
+
+\note This is actually a very poor method of working with arrays. It will almost never be useful to create a struct that only contains an array.
+
+~~~
+struct Array10 {
+    int a[10];
+}
+
+//Set the entire array to be num
+void set(Array10& a, int num) {
+    for (int i = 0; i < 10; i++)
+        a.a[i] = num;
+}
+
+//Creates an array set to num
+Array10 set(int num) {
+    for (int i = 0; i < 10; i++)
+        a.a[i] = num;
+}
+~~~
+
+\warning Out of bounds errors still apply here.
+
+\note If an array is in a struct, it is also copied when the struct is copied.
 */

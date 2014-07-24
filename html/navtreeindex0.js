@@ -70,6 +70,10 @@ var NAVTREEINDEX0 =
 "cppstr.html#cppstringmanip":[0,8,1,0],
 "cppstr.html#cppstringmethods":[0,8,1,2],
 "cppstruct.html":[0,11],
+"cppstruct.html#structarray":[0,11,3],
+"cppstruct.html#structdeclare":[0,11,0],
+"cppstruct.html#structfn":[0,11,2],
+"cppstruct.html#structuse":[0,11,1],
 "index.html":[],
 "md__documentation_cpp__c_09_09.html":[0],
 "pages.html":[]

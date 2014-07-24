@@ -7,7 +7,7 @@ Namespaces allow you to organize your code as if it were in a file system. The e
 
 If you have looked at any code online, you may have noticed that instead of including, for instance, `<cmath>`, they included `<math.h>`. Functionally, these are the same, but the .h version is obsolete. Due to the fact that C does not have namespace support, C++ also has all of the old header files (which are not a part of the `std` namespace) in order to maintain compatibility.
 
-\section cppnsdeclare Namespace Declaration & Usage
+\section cppnsdeclare Namespaces
 A namespace is very easy to declare and use, here is some example code.
 ~~~
 #include <iostream>
