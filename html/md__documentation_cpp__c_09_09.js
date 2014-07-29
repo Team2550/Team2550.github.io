@@ -64,5 +64,6 @@ var md__documentation_cpp__c_09_09 =
       [ "Usage", "cppstruct.html#structuse", null ],
       [ "Functions", "cppstruct.html#structfn", null ],
       [ "Arrays", "cppstruct.html#structarray", null ]
-    ] ]
+    ] ],
+    [ "Classes", "cppclass.html", "cppclass" ]
 ];

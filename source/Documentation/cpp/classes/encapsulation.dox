@@ -1,0 +1,6 @@
+/** \page cppclassencap Encapsulation
+The protection of certain members of a class is called encapsulation.
+- Often, you want the user of the class to be able to read the contents of a variable but not change it.
+- Some methods may be implementation details, useful for writing the class but not useful for using it.
+- In many situations, you need to check a value before writing it to a variable (and notify the user if it is invalid). A setter method allows you to do this.
+*/
