@@ -1,9 +1,5 @@
 var searchData=
 [
-  ['simple_20data_20types',['Simple Data Types',['../cppdata.html',1,'md_Documentation_cpp_C++']]],
-  ['scope_20_26_20more',['Scope &amp; More',['../cppfnmore.html',1,'cppfn']]],
-  ['strings',['Strings',['../cppstr.html',1,'md_Documentation_cpp_C++']]],
-  ['structures',['Structures',['../cppstruct.html',1,'md_Documentation_cpp_C++']]],
-  ['strings_2edox',['strings.dox',['../strings_8dox.html',1,'']]],
-  ['struct_2edox',['struct.dox',['../struct_8dox.html',1,'']]]
+  ['program_20flow',['Program Flow',['../cppflow.html',1,'cpp']]],
+  ['program_20layout',['Program Layout',['../cpplayout.html',1,'cpp']]]
 ];

@@ -1,3 +1,5 @@
+C++ {#cpp}
+==========
 C++ is the programming language we use to program the robot and one of the most commonly used languages today. However, it is not an easy language to learn for a beginner due to the fact that it has a steep learning curve. This document is designed to help teach the basics of C++.
 
 ###You will learn

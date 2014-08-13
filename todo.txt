@@ -1,7 +1,7 @@
 x (A) Arrays +cpp
 x (A) Strings +cpp
 x (B) Namespaces +cpp
-(A) Structs +cpp
+x (A) Structs +cpp
 (A) Classes +cpp
 (B) Inheritance & Composition +cpp
 (C) Dynamic Memory & Pointers +cpp

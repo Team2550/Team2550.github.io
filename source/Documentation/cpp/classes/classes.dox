@@ -43,6 +43,8 @@ v.setX(1); //calling a method
 v.setY(3);
 ~~~
 
+\note Classes are used in object-oriented programming. An instance of a class is called an object, and classes often correspond to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.
+
 In order to declare a method, you use the scope resolution operator (`scope::item`).
 ~~~
 void Vector2d::setX(double value) {
@@ -174,9 +176,10 @@ int main() {
 
 --------------------------------------------------------------------------
 
-\section cppclassmoreinfo More Information
+More Information
+---------------------
 - \subpage cppclassencap "Encapsulation"
-- "Inheritance & Composition"
-- "friend, static, const, and virtual functions/methods"
-- "Operator Overloading"
+- \subpage cppclassinheritcomp "Inheritance & Composition"
+- \subpage cppclassfn "friend, static, const, and virtual functions/methods"
+- \subpage cppclassopoverload "Operator Overloading"
 */

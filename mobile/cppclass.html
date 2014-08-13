@@ -35,7 +35,7 @@
   </div>
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><a class="el" href="md__documentation_cpp__c_09_09.html">C++</a></li>  </ul>
+<li class="navelem"><a class="el" href="cpp.html">C++</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
@@ -50,7 +50,6 @@
 </ul>
 </li>
 <li class="level1"><a href="#cppclassv2dex">Example: Vector2d</a></li>
-<li class="level1"><a href="#cppclassmoreinfo">More Information</a></li>
 </ul>
 </div>
 <div class="textblock"><p>Classes are an extension of structs. Here a few useful features...</p>
@@ -92,7 +91,8 @@ Member Access</h1>
 <div class="line">Vector2d v;</div>
 <div class="line">v.setX(1); <span class="comment">//calling a method</span></div>
 <div class="line">v.setY(3);</div>
-</div><!-- fragment --><p>In order to declare a method, you use the scope resolution operator (<code>scope::item</code>). </p>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Classes are used in object-oriented programming. An instance of a class is called an object, and classes often correspond to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.</dd></dl>
+<p>In order to declare a method, you use the scope resolution operator (<code>scope::item</code>). </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> Vector2d::setX(<span class="keywordtype">double</span> value) {</div>
 <div class="line">    x = value; <span class="comment">//x refers to x within the class, be careful not to give arguments the same names as members</span></div>
 <div class="line">}</div>
@@ -203,13 +203,12 @@ Example: Vector2d</h1>
 <div class="line">         &lt;&lt; v.angle() &lt;&lt; endl;</div>
 <div class="line">}</div>
 </div><!-- fragment --> <hr/>
-<h1><a class="anchor" id="cppclassmoreinfo"></a>
-More Information</h1>
+<h2>More Information </h2>
 <ul>
 <li><a class="el" href="cppclassencap.html">Encapsulation</a></li>
-<li>"Inheritance &amp; Composition"</li>
-<li>"friend, static, const, and virtual functions/methods"</li>
-<li>"Operator Overloading" </li>
+<li><a class="el" href="cppclassinheritcomp.html">Inheritance &amp; Composition</a></li>
+<li><a class="el" href="cppclassfn.html">friend, static, const, and virtual functions/methods</a></li>
+<li><a class="el" href="cppclassopoverload.html">Operator Overloading</a> </li>
 </ul>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->

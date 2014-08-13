@@ -1,0 +1,367 @@
+/** \page cppclassinheritcomp Inheritance & Composition
+\tableofcontents
+
+* **Inheritance creates an is-a relationship between classes, while composition creates a has-a relationship**. In other words, inheritance says, "I am this class with these other things," while composition says "This other class is one of my components."
+
+\section cppclasscomp Composition
+Composition is the term used for placing an object within a class. Say there are two classes, A and B. If you place an object of type A into the declaration of B, that is composition.
+~~~
+//A struct or a class will work here, both are user-defined datatypes.
+class A {
+private:
+    int someValue;
+    int someOtherValue;
+public:
+    A();
+    A(int a, int b);
+    int getSomeValue();
+    int setSomeValue(int val);
+    int getSomeOtherValue();
+    int setSomeOtherValue(int val);
+};
+
+class B {
+private:
+    int x[10];
+public:
+    B();
+    A member; //This is composition, placing one user-defined type within another.
+};
+~~~
+
+You can access values in `A` from an object of `B` using the dot operator.
+
+    B obj; //When the constructor for B is run, it invokes the constructor for A automatically.
+    obj.member.setSomeValue(7);
+    ...
+
+\note Although this particular example is useless, there are still times where composition is necessary and useful.
+
+\section cppclassinherit Inheritance
+Inheritance allows one class to extend another.
+
+###Example: What do all vehicles have in common?
+Properties:
+- Some form of propulsion
+    - Strength to weight ratio
+- Maximum speed
+- Weight
+- Dimensions
+- Cargo/passenger capacity
+
+Methods:
+- Move
+- Load
+- Fits in space
+
+\subsection cppclassinheritbase The Base Class
+\subsubsection vehiclehh FILE: Vehicle.hh
+~~~
+#ifndef VEHICLE_HH
+#define VEHICLE_HH
+
+enum MotorType {
+    steam,
+    gas,
+    diesel,
+    jet,
+    air
+};
+
+//In many cases here, the default constructor is basically useless. So they are implemented inline (as nothing).
+
+//This could be a struct, but it is a class for convenience (the constructor can be useful.
+class Motor {
+public:
+    Motor(){}
+    Motor(MotorType t, double pwr, double stwr);
+    MotorType type;
+    double power;
+    double strength; //Strength to weight ratio
+};
+
+class Point2d {
+public:
+    Point2d(){}
+    Point2d(int initX, int initY);
+    int x, y;
+};
+
+class Dimensions {
+public:
+    Dimensions(){}
+    Dimensions(double l, double w, double h);
+    double length, width, height;
+};
+
+class Vehicle {
+protected:
+    Vehicle(){}
+    Motor mtr;
+    double weight;
+    Dimensions size;
+    double maxSpeed;
+    Point2d location;
+public:
+    Vehicle(Motor m, double wt, Dimensions s, double speed, Point2d startLoc);
+    //Mutators (setters): change/update values
+    double move(int x, int y, double speed);
+    bool fits(Dimensions space);
+    //Accessors (getters): get values
+    const double getMaxSpeed(); //const as part of the return type means that the user can't change the value returned
+    const double getWeight();
+    Point2d getLocation();
+    const Dimensions getSize();
+};
+
+#endif
+~~~
+
+\subsubsection vehiclecc FILE: Vehicle.cc
+~~~
+#include <cmath>
+#include "Vehicle.hh"
+using namespace std;
+
+//It is generally a good idea to initialize all of the class values within a constructor.
+
+Motor::Motor(MotorType t, double pwr, double stwr) {
+    type = t;
+    power = pwr;
+    strength = stwr;
+}
+
+Point2d::Point2d(int initX, int initY) {
+    x = initX;
+    y = initY;
+}
+
+Dimensions::Dimensions(double l, double w, double h) {
+    length = l;
+    width = w;
+    height = h;
+}
+
+Vehicle::Vehicle(Motor m, double wt, Dimensions s, double speed, Point2d startLoc) {
+    mtr = m;
+    weight = wt;
+    size = s;
+    maxSpeed = speed;
+    location = startLoc;
+}
+
+double Vehicle::move(int x, int y, double speed) {
+    if (speed > maxSpeed)
+        speed = maxSpeed;
+    //Knowing the basic three trig functions (and their inverses)
+    //can be very useful when programming. Especially with graphics
+    //and position-related programming.
+    //Calculate the time it will take to travel to the location
+    location = Point2d(x, y);
+    return atan2(static_cast<float>(y), static_cast<float>(x)) * speed;
+}
+
+bool Vehicle::fits(Dimensions space) {
+    if (space.length >= size.length
+        || space.width >= size.width
+        || space.height >= size.height)
+        return false;
+    else return true;
+}
+
+const double Vehicle::getMaxSpeed() {
+    return maxSpeed;
+}
+
+const double Vehicle::getWeight() {
+    return weight;
+}
+
+Point2d Vehicle::getLocation() {
+    return location;
+}
+
+const Dimensions Vehicle::getSize() {
+    return size;
+}
+~~~
+
+\note This class introduces a new level of encapsulation, `protected`. This allows a child class to edit variables within an inherited class. In this case, a class that inherits the `Vehicle` will have access to `protected` members as if they were its own. However, it cannot edit members within the `private` designation of `Vehicle`.
+
+
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+\subsection cppclassinheritchild Child Classes
+Let's create a class that inherits `Vehicle`. Again, this is different than composition because it creates an *is-a relationship*. For instance, a car is a type of vehicle. Inheritance is denoted as follows.
+
+    class DerivedClass : [public/private/protected] BaseClass
+
+All inheritance does is "copy" the members from one class into another, allowing you to extend a previously declared class. The `public/private/protected` is optional. The encapsulation level here denotes the highest level of protection the members of the base class will have in the child class. In other words...
+- `public`:
+    - public members of the base class are public in the private class
+    - protected members are protected
+    - private members are private
+- `protected`:
+    - public members from the base are protected
+    - protected members are protected
+    - private members are private
+- `private`: all inherited members are private within the child class
+
+\subsubsection carhh FILE: Car.hh
+~~~
+#ifndef CAR_HH
+#define CAR_HH
+
+#include "Vehicle.hh"
+
+class Car : public Vehicle {
+private:
+    int maxPassengers;
+    int passengers;
+    double maxCargo;
+    double cargo;
+public:
+    Car();
+    Car(int maxPass, double maxCarg);
+    Car(int maxPass, double maxCarg, Motor m, double wt, Dimensions s, double speed, Point2d startLoc);
+    //mutators
+    bool load(int people);
+    bool load(double weight);
+    void unload(int people);
+    void unload(double weight);
+    double move(int x, int y, double speed);
+    //accessors
+    const int getMaxPassengers();
+    const int loadedPassengers();
+    const double getMaxCargo();
+    const double loadedCargo();
+    //actions
+    double push(double weight);
+    double pull(double weight);
+};
+
+#endif
+~~~
+
+\subsubsection carcc FILE: Car.cc
+~~~
+#include "Car.hh"
+using namespace std;
+
+Car::Car() {
+    //The default constructor for Vehicle (the base class) is run here.
+    Vehicle(Motor(gas, 100, 110),
+            1500,
+            Dimensions(10, 6, 4),
+            120, Point2d(0, 0)); //NOTE: remove this constructor.
+    maxCargo = 600;
+    cargo = 0;
+    maxPassengers = 4;
+    passengers = 0;
+}
+
+Car::Car(int maxPass, double maxCarg) {
+    Vehicle(Motor(gas, 100, 110),
+            1500,
+            Dimensions(10, 6, 4),
+            120, Point2d(0, 0));
+    maxCargo = maxCarg;
+    cargo = 0;
+    maxPassengers = maxPass;
+    passengers = 0;
+}
+
+Car::Car(int maxPass, double maxCarg, Motor m, double wt, Dimensions s, double speed, Point2d startLoc) {
+    maxPassengers = maxPass;
+    maxCargo = maxCarg;
+    mtr = m;
+    weight = wt;
+    size = s;
+    maxSpeed = speed;
+    location = startLoc;
+}
+
+bool Car::load(int people) {
+    if (passengers + people < maxPassengers)
+    {
+        passengers += people;
+        return true;
+    }
+    else return false;
+}
+
+bool Car::load(double weight) {
+    if (cargo + weight < maxCargo)
+    {
+        cargo += weight;
+        return true;
+    }
+    else return false;
+}
+
+void Car::unload(int people) {
+    if (passengers - people > 0)
+        passengers -= people;
+    else
+        passengers = 0;
+}
+
+void Car::unload(double weight) {
+    if (cargo - weight > 0)
+        cargo -= weight;
+    else cargo = 0;
+}
+
+const int Car::getMaxPassengers() {
+    return maxPassengers;
+}
+
+const int Car::loadedPassengers() {
+    return passengers;
+}
+
+const double Car::getMaxCargo() {
+    return maxCargo;
+}
+
+const double Car::loadedCargo() {
+    return cargo;
+}
+
+double Car::push(double weight) {
+    //Calculations related to the speed reduction while
+    //pushing would go here.
+}
+
+double Car::pull(double weight) {
+    //Calculations related to the speed reduction while
+    //pulling go here.
+}
+
+//Car::move is different from Vehicle::move. When the original move method needs to
+//  be called, you can call it via carobj.Vehicle::move(...
+double Car::move(int x, int y, double speed) {
+    if (speed > maxSpeed)
+        speed = 0;
+    location = Point2d(x, y);
+    return (x + y) * speed;
+}
+~~~
+Here is a file that tests a few of the features of `Car`.
+~~~
+#include <iostream>
+#include "Car.hh"
+using namespace std;
+
+int main() {
+    Car c(10, 500,
+          Motor(gas, 100, 110), 1500,
+          Dimensions(10, 6, 4), 120,
+          Point2d(1, 1));
+    cout << c.getLocation().x << ' ' << c.getLocation().y << '\n'
+         << c.move(2, 2, 100) << '\n'
+         << c.getLocation().x << ' ' << c.getLocation().y << '\n'
+         << c.Vehicle::move(3, 3, 100) << '\n';
+}
+~~~
+*/

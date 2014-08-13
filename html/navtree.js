@@ -1,13 +1,14 @@
 var NAVTREE =
 [
   [ "Team 2550", "index.html", [
-    [ "C++", "md__documentation_cpp__c_09_09.html", "md__documentation_cpp__c_09_09" ]
+    [ "Team 2550 Website", "^http://team2550.blogspot.com/", null ],
+    [ "C++", "cpp.html", "cpp" ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"cpparray.html"
+"cpp.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
