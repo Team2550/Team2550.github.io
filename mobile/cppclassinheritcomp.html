@@ -45,14 +45,7 @@
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#cppclasscomp">Composition</a></li>
-<li class="level1"><a href="#cppclassinherit">Inheritance</a><ul><li class="level2"><a href="#cppclassinheritbase">The Base Class</a><ul><li class="level3"><a href="#vehiclehh">FILE: Vehicle.hh</a></li>
-<li class="level3"><a href="#vehiclecc">FILE: Vehicle.cc</a></li>
-</ul>
-</li>
-<li class="level2"><a href="#cppclassinheritchild">Child Classes</a><ul><li class="level3"><a href="#carhh">FILE: Car.hh</a></li>
-<li class="level3"><a href="#carcc">FILE: Car.cc</a></li>
-</ul>
-</li>
+<li class="level1"><a href="#cppclassinherit">Inheritance</a><ul><li class="level2"><a href="#cppclassinherituml">UML Diagrams</a></li>
 </ul>
 </li>
 </ul>
@@ -89,329 +82,43 @@ obj.member.setSomeValue(7);
 </pre><dl class="section note"><dt>Note</dt><dd>Although this particular example is useless, there are still times where composition is necessary and useful.</dd></dl>
 <h1><a class="anchor" id="cppclassinherit"></a>
 Inheritance</h1>
-<p>Inheritance allows one class to extend another.</p>
-<h3>Example: What do all vehicles have in common?</h3>
-<p>Properties:</p>
+<p>As was said above, inheritance creates an "is-a" relationship between classes.</p>
+<p>Inheritance introduces the need for a new encapsulation level: <code>protected</code>. When a member is <code>private</code>, it is not accessible to a class that inherits it. Members that are labeled <code>protected</code> are accessible by derived classes, but not for general use. In other words, <code>protected</code> members are accessible to methods declared within the derived class, but not when the class is instantiated and used.</p>
+<h2><a class="anchor" id="cppclassinherituml"></a>
+UML Diagrams</h2>
+<p>When you are developing an application that uses inheritance, you usually start with a <b>Universal Modeling Language (UML)</b> diagram. A UML diagram shows the relationship between classes within a program. In other words, it shows what classes are components (composition) or others and when classes inherit others.</p>
+<p>The UML syntax is slightly different from that of C++ due to the fact that it is designed to describe multiple programming languages.</p>
+<dl class="section note"><dt>Note</dt><dd>I used <a href="http://dia-installer.de/index.html.en">Dia</a> to create the diagrams in this section. It is fairly self-explanatory, but the terminology is slightly different. Notably, member variables are called "attributes" and methods are called "operations".</dd></dl>
+<p>Here is a sample class in UML.</p>
+<p><div class="diagraph">
+<img src="/home/caleb/Documents/FRC2550-Git/Team2550.github.io/mobile/dia_ExampleClass.png" />
+</div>
+</p>
+<h3>Explanation:</h3>
 <ul>
-<li>Some form of propulsion<ul>
-<li>Strength to weight ratio</li>
+<li>Encapsulation levels are denoted with <code>+</code>, <code>-</code>, or <code>#</code><ul>
+<li><code>+</code>: public</li>
+<li><code>-</code>: private</li>
+<li><code>#</code>: protected</li>
 </ul>
 </li>
-<li>Maximum speed</li>
-<li>Weight</li>
-<li>Dimensions</li>
-<li>Cargo/passenger capacity</li>
-</ul>
-<p>Methods:</p>
-<ul>
-<li>Move</li>
-<li>Load</li>
-<li>Fits in space</li>
-</ul>
-<h2><a class="anchor" id="cppclassinheritbase"></a>
-The Base Class</h2>
-<h3><a class="anchor" id="vehiclehh"></a>
-FILE: Vehicle.hh</h3>
-<div class="fragment"><div class="line"><span class="preprocessor">#ifndef VEHICLE_HH</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define VEHICLE_HH</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="keyword">enum</span> MotorType {</div>
-<div class="line">    steam,</div>
-<div class="line">    gas,</div>
-<div class="line">    diesel,</div>
-<div class="line">    jet,</div>
-<div class="line">    air</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="comment">//In many cases here, the default constructor is basically useless. So they are implemented inline (as nothing).</span></div>
-<div class="line"></div>
-<div class="line"><span class="comment">//This could be a struct, but it is a class for convenience (the constructor can be useful.</span></div>
-<div class="line"><span class="keyword">class </span>Motor {</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Motor(){}</div>
-<div class="line">    Motor(MotorType t, <span class="keywordtype">double</span> pwr, <span class="keywordtype">double</span> stwr);</div>
-<div class="line">    MotorType type;</div>
-<div class="line">    <span class="keywordtype">double</span> power;</div>
-<div class="line">    <span class="keywordtype">double</span> strength; <span class="comment">//Strength to weight ratio</span></div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">class </span>Point2d {</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Point2d(){}</div>
-<div class="line">    Point2d(<span class="keywordtype">int</span> initX, <span class="keywordtype">int</span> initY);</div>
-<div class="line">    <span class="keywordtype">int</span> x, y;</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">class </span>Dimensions {</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Dimensions(){}</div>
-<div class="line">    Dimensions(<span class="keywordtype">double</span> l, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h);</div>
-<div class="line">    <span class="keywordtype">double</span> length, width, height;</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">class </span>Vehicle {</div>
-<div class="line"><span class="keyword">protected</span>:</div>
-<div class="line">    Vehicle(){}</div>
-<div class="line">    Motor mtr;</div>
-<div class="line">    <span class="keywordtype">double</span> weight;</div>
-<div class="line">    Dimensions size;</div>
-<div class="line">    <span class="keywordtype">double</span> maxSpeed;</div>
-<div class="line">    Point2d location;</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Vehicle(Motor m, <span class="keywordtype">double</span> wt, Dimensions s, <span class="keywordtype">double</span> speed, Point2d startLoc);</div>
-<div class="line">    <span class="comment">//Mutators (setters): change/update values</span></div>
-<div class="line">    <span class="keywordtype">double</span> move(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">double</span> speed);</div>
-<div class="line">    <span class="keywordtype">bool</span> fits(Dimensions space);</div>
-<div class="line">    <span class="comment">//Accessors (getters): get values</span></div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">double</span> getMaxSpeed(); <span class="comment">//const as part of the return type means that the user can&#39;t change the value returned</span></div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">double</span> getWeight();</div>
-<div class="line">    Point2d getLocation();</div>
-<div class="line">    <span class="keyword">const</span> Dimensions getSize();</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="vehiclecc"></a>
-FILE: Vehicle.cc</h3>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;Vehicle.hh&quot;</span></div>
-<div class="line"><span class="keyword">using namespace </span>std;</div>
-<div class="line"></div>
-<div class="line"><span class="comment">//It is generally a good idea to initialize all of the class values within a constructor.</span></div>
-<div class="line"></div>
-<div class="line">Motor::Motor(MotorType t, <span class="keywordtype">double</span> pwr, <span class="keywordtype">double</span> stwr) {</div>
-<div class="line">    type = t;</div>
-<div class="line">    power = pwr;</div>
-<div class="line">    strength = stwr;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Point2d::Point2d(<span class="keywordtype">int</span> initX, <span class="keywordtype">int</span> initY) {</div>
-<div class="line">    x = initX;</div>
-<div class="line">    y = initY;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Dimensions::Dimensions(<span class="keywordtype">double</span> l, <span class="keywordtype">double</span> w, <span class="keywordtype">double</span> h) {</div>
-<div class="line">    length = l;</div>
-<div class="line">    width = w;</div>
-<div class="line">    height = h;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Vehicle::Vehicle(Motor m, <span class="keywordtype">double</span> wt, Dimensions s, <span class="keywordtype">double</span> speed, Point2d startLoc) {</div>
-<div class="line">    mtr = m;</div>
-<div class="line">    weight = wt;</div>
-<div class="line">    size = s;</div>
-<div class="line">    maxSpeed = speed;</div>
-<div class="line">    location = startLoc;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> Vehicle::move(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">double</span> speed) {</div>
-<div class="line">    <span class="keywordflow">if</span> (speed &gt; maxSpeed)</div>
-<div class="line">        speed = maxSpeed;</div>
-<div class="line">    <span class="comment">//Knowing the basic three trig functions (and their inverses)</span></div>
-<div class="line">    <span class="comment">//can be very useful when programming. Especially with graphics</span></div>
-<div class="line">    <span class="comment">//and position-related programming.</span></div>
-<div class="line">    <span class="comment">//Calculate the time it will take to travel to the location</span></div>
-<div class="line">    location = Point2d(x, y);</div>
-<div class="line">    <span class="keywordflow">return</span> atan2(static_cast&lt;float&gt;(y), static_cast&lt;float&gt;(x)) * speed;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">bool</span> Vehicle::fits(Dimensions space) {</div>
-<div class="line">    <span class="keywordflow">if</span> (space.length &gt;= size.length</div>
-<div class="line">        || space.width &gt;= size.width</div>
-<div class="line">        || space.height &gt;= size.height)</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span> Vehicle::getMaxSpeed() {</div>
-<div class="line">    <span class="keywordflow">return</span> maxSpeed;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span> Vehicle::getWeight() {</div>
-<div class="line">    <span class="keywordflow">return</span> weight;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Point2d Vehicle::getLocation() {</div>
-<div class="line">    <span class="keywordflow">return</span> location;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> Dimensions Vehicle::getSize() {</div>
-<div class="line">    <span class="keywordflow">return</span> size;</div>
-<div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>This class introduces a new level of encapsulation, <code>protected</code>. This allows a child class to edit variables within an inherited class. In this case, a class that inherits the <code>Vehicle</code> will have access to <code>protected</code> members as if they were its own. However, it cannot edit members within the <code>private</code> designation of <code>Vehicle</code>.</dd></dl>
-<hr/>
-<h2><a class="anchor" id="cppclassinheritchild"></a>
-Child Classes</h2>
-<p>Let's create a class that inherits <code>Vehicle</code>. Again, this is different than composition because it creates an <em>is-a relationship</em>. For instance, a car is a type of vehicle. Inheritance is denoted as follows. </p>
-<pre class="fragment">class DerivedClass : [public/private/protected] BaseClass
-</pre><p>All inheritance does is "copy" the members from one class into another, allowing you to extend a previously declared class. The <code>public/private/protected</code> is optional. The encapsulation level here denotes the highest level of protection the members of the base class will have in the child class. In other words...</p>
-<ul>
-<li><code>public</code>:<ul>
-<li>public members of the base class are public in the private class</li>
-<li>protected members are protected</li>
-<li>private members are private</li>
+<li>Member variables follow a <code>name: type = value</code> syntax. The <code>type</code> and <code>= value</code> parts are optional.</li>
+<li>Composition is denoted with a diamond pointing at the component type declaration. In this case, it is the Point struct.</li>
+<li>Member variables are in the top section, and methods are in the bottom. In Dia, you can choose to hide either, as I did in the struct.</li>
+<li>Methods follow a different syntax: <code>method(arg1:type, arg2:type = value): ReturnType</code><ul>
+<li>Parameters are optional, and are formatted like members</li>
+<li>The return type is shown after the name and parameters</li>
 </ul>
 </li>
-<li><code>protected</code>:<ul>
-<li>public members from the base are protected</li>
-<li>protected members are protected</li>
-<li>private members are private</li>
+<li>As you will see below, classes that inherit another class are shown with an arrow pointing to the class they inherit</li>
 </ul>
-</li>
-<li><code>private</code>: all inherited members are private within the child class</li>
-</ul>
-<h3><a class="anchor" id="carhh"></a>
-FILE: Car.hh</h3>
-<div class="fragment"><div class="line"><span class="preprocessor">#ifndef CAR_HH</span></div>
-<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define CAR_HH</span></div>
-<div class="line"><span class="preprocessor"></span></div>
-<div class="line"><span class="preprocessor">#include &quot;Vehicle.hh&quot;</span></div>
-<div class="line"></div>
-<div class="line"><span class="keyword">class </span>Car : <span class="keyword">public</span> Vehicle {</div>
-<div class="line"><span class="keyword">private</span>:</div>
-<div class="line">    <span class="keywordtype">int</span> maxPassengers;</div>
-<div class="line">    <span class="keywordtype">int</span> passengers;</div>
-<div class="line">    <span class="keywordtype">double</span> maxCargo;</div>
-<div class="line">    <span class="keywordtype">double</span> cargo;</div>
-<div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Car();</div>
-<div class="line">    Car(<span class="keywordtype">int</span> maxPass, <span class="keywordtype">double</span> maxCarg);</div>
-<div class="line">    Car(<span class="keywordtype">int</span> maxPass, <span class="keywordtype">double</span> maxCarg, Motor m, <span class="keywordtype">double</span> wt, Dimensions s, <span class="keywordtype">double</span> speed, Point2d startLoc);</div>
-<div class="line">    <span class="comment">//mutators</span></div>
-<div class="line">    <span class="keywordtype">bool</span> load(<span class="keywordtype">int</span> people);</div>
-<div class="line">    <span class="keywordtype">bool</span> load(<span class="keywordtype">double</span> weight);</div>
-<div class="line">    <span class="keywordtype">void</span> unload(<span class="keywordtype">int</span> people);</div>
-<div class="line">    <span class="keywordtype">void</span> unload(<span class="keywordtype">double</span> weight);</div>
-<div class="line">    <span class="keywordtype">double</span> move(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">double</span> speed);</div>
-<div class="line">    <span class="comment">//accessors</span></div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> getMaxPassengers();</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> loadedPassengers();</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">double</span> getMaxCargo();</div>
-<div class="line">    <span class="keyword">const</span> <span class="keywordtype">double</span> loadedCargo();</div>
-<div class="line">    <span class="comment">//actions</span></div>
-<div class="line">    <span class="keywordtype">double</span> push(<span class="keywordtype">double</span> weight);</div>
-<div class="line">    <span class="keywordtype">double</span> pull(<span class="keywordtype">double</span> weight);</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><h3><a class="anchor" id="carcc"></a>
-FILE: Car.cc</h3>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Car.hh&quot;</span></div>
-<div class="line"><span class="keyword">using namespace </span>std;</div>
-<div class="line"></div>
-<div class="line">Car::Car() {</div>
-<div class="line">    <span class="comment">//The default constructor for Vehicle (the base class) is run here.</span></div>
-<div class="line">    Vehicle(Motor(gas, 100, 110),</div>
-<div class="line">            1500,</div>
-<div class="line">            Dimensions(10, 6, 4),</div>
-<div class="line">            120, Point2d(0, 0)); <span class="comment">//NOTE: remove this constructor.</span></div>
-<div class="line">    maxCargo = 600;</div>
-<div class="line">    cargo = 0;</div>
-<div class="line">    maxPassengers = 4;</div>
-<div class="line">    passengers = 0;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Car::Car(<span class="keywordtype">int</span> maxPass, <span class="keywordtype">double</span> maxCarg) {</div>
-<div class="line">    Vehicle(Motor(gas, 100, 110),</div>
-<div class="line">            1500,</div>
-<div class="line">            Dimensions(10, 6, 4),</div>
-<div class="line">            120, Point2d(0, 0));</div>
-<div class="line">    maxCargo = maxCarg;</div>
-<div class="line">    cargo = 0;</div>
-<div class="line">    maxPassengers = maxPass;</div>
-<div class="line">    passengers = 0;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Car::Car(<span class="keywordtype">int</span> maxPass, <span class="keywordtype">double</span> maxCarg, Motor m, <span class="keywordtype">double</span> wt, Dimensions s, <span class="keywordtype">double</span> speed, Point2d startLoc) {</div>
-<div class="line">    maxPassengers = maxPass;</div>
-<div class="line">    maxCargo = maxCarg;</div>
-<div class="line">    mtr = m;</div>
-<div class="line">    weight = wt;</div>
-<div class="line">    size = s;</div>
-<div class="line">    maxSpeed = speed;</div>
-<div class="line">    location = startLoc;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">bool</span> Car::load(<span class="keywordtype">int</span> people) {</div>
-<div class="line">    <span class="keywordflow">if</span> (passengers + people &lt; maxPassengers)</div>
-<div class="line">    {</div>
-<div class="line">        passengers += people;</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">bool</span> Car::load(<span class="keywordtype">double</span> weight) {</div>
-<div class="line">    <span class="keywordflow">if</span> (cargo + weight &lt; maxCargo)</div>
-<div class="line">    {</div>
-<div class="line">        cargo += weight;</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line">    }</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> Car::unload(<span class="keywordtype">int</span> people) {</div>
-<div class="line">    <span class="keywordflow">if</span> (passengers - people &gt; 0)</div>
-<div class="line">        passengers -= people;</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        passengers = 0;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> Car::unload(<span class="keywordtype">double</span> weight) {</div>
-<div class="line">    <span class="keywordflow">if</span> (cargo - weight &gt; 0)</div>
-<div class="line">        cargo -= weight;</div>
-<div class="line">    <span class="keywordflow">else</span> cargo = 0;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> Car::getMaxPassengers() {</div>
-<div class="line">    <span class="keywordflow">return</span> maxPassengers;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> Car::loadedPassengers() {</div>
-<div class="line">    <span class="keywordflow">return</span> passengers;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span> Car::getMaxCargo() {</div>
-<div class="line">    <span class="keywordflow">return</span> maxCargo;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span> Car::loadedCargo() {</div>
-<div class="line">    <span class="keywordflow">return</span> cargo;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> Car::push(<span class="keywordtype">double</span> weight) {</div>
-<div class="line">    <span class="comment">//Calculations related to the speed reduction while</span></div>
-<div class="line">    <span class="comment">//pushing would go here.</span></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">double</span> Car::pull(<span class="keywordtype">double</span> weight) {</div>
-<div class="line">    <span class="comment">//Calculations related to the speed reduction while</span></div>
-<div class="line">    <span class="comment">//pulling go here.</span></div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="comment">//Car::move is different from Vehicle::move. When the original move method needs to</span></div>
-<div class="line"><span class="comment">//  be called, you can call it via carobj.Vehicle::move(...</span></div>
-<div class="line"><span class="keywordtype">double</span> Car::move(<span class="keywordtype">int</span> x, <span class="keywordtype">int</span> y, <span class="keywordtype">double</span> speed) {</div>
-<div class="line">    <span class="keywordflow">if</span> (speed &gt; maxSpeed)</div>
-<div class="line">        speed = 0;</div>
-<div class="line">    location = Point2d(x, y);</div>
-<div class="line">    <span class="keywordflow">return</span> (x + y) * speed;</div>
-<div class="line">}</div>
-</div><!-- fragment --><p> Here is a file that tests a few of the features of <code>Car</code>. </p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="preprocessor">#include &quot;Car.hh&quot;</span></div>
-<div class="line"><span class="keyword">using namespace </span>std;</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    Car c(10, 500,</div>
-<div class="line">          Motor(gas, 100, 110), 1500,</div>
-<div class="line">          Dimensions(10, 6, 4), 120,</div>
-<div class="line">          Point2d(1, 1));</div>
-<div class="line">    cout &lt;&lt; c.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; c.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">         &lt;&lt; c.move(2, 2, 100) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">         &lt;&lt; c.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; c.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">         &lt;&lt; c.Vehicle::move(3, 3, 100) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+<p><div class="diagraph">
+<img src="/home/caleb/Documents/FRC2550-Git/Team2550.github.io/mobile/dia_ShapeClass.png" />
+<div class="caption">
+The UML inheritance diagram showing the relation between the Shape class and its various decedents and components.</div>
+</div>
+</p>
+</div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->

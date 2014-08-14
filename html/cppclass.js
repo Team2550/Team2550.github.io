@@ -10,14 +10,7 @@ var cppclass =
     [ "Inheritance & Composition", "cppclassinheritcomp.html", [
       [ "Composition", "cppclassinheritcomp.html#cppclasscomp", null ],
       [ "Inheritance", "cppclassinheritcomp.html#cppclassinherit", [
-        [ "The Base Class", "cppclassinheritcomp.html#cppclassinheritbase", [
-          [ "FILE: Vehicle.hh", "cppclassinheritcomp.html#vehiclehh", null ],
-          [ "FILE: Vehicle.cc", "cppclassinheritcomp.html#vehiclecc", null ]
-        ] ],
-        [ "Child Classes", "cppclassinheritcomp.html#cppclassinheritchild", [
-          [ "FILE: Car.hh", "cppclassinheritcomp.html#carhh", null ],
-          [ "FILE: Car.cc", "cppclassinheritcomp.html#carcc", null ]
-        ] ]
+        [ "UML Diagrams", "cppclassinheritcomp.html#cppclassinherituml", null ]
       ] ]
     ] ],
     [ "Functions & Methods", "cppclassfn.html", null ],
