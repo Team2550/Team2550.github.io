@@ -46,6 +46,10 @@
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#cppclasscomp">Composition</a></li>
 <li class="level1"><a href="#cppclassinherit">Inheritance</a><ul><li class="level2"><a href="#cppclassinherituml">UML Diagrams</a></li>
+<li class="level2"><a href="#Example"></a></li>
+<li class="level2"><a href="#cppclassinheritbase">The Base Class: Shape</a></li>
+<li class="level2"><a href="#cppclassinheritchild1">Child Class: Rectangle</a></li>
+<li class="level2"><a href="#cppclassinheritfn">Inheritance & Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -112,12 +116,62 @@ UML Diagrams</h2>
 </li>
 <li>As you will see below, classes that inherit another class are shown with an arrow pointing to the class they inherit</li>
 </ul>
+<h2><a class="anchor" id="Example"></a>
+Example</h2>
+<p>The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).</p>
 <p><div class="diagraph">
 <img src="/home/caleb/Documents/FRC2550-Git/Team2550.github.io/mobile/dia_ShapeClass.png" />
 <div class="caption">
-The UML inheritance diagram showing the relation between the Shape class and its various decedents and components.</div>
+Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components.</div>
 </div>
-</p>
+ </p>
+<dl class="section note"><dt>Note</dt><dd>The default constructor for each class is implied.</dd></dl>
+<h2><a class="anchor" id="cppclassinheritbase"></a>
+The Base Class: Shape</h2>
+<p>Here is the declaration and implementation of the <code>Shape</code> class.</p>
+<h3>FILE: Shape.hh</h3>
+<div class="fragment"></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>width</code> and <code>height</code> are protected because other classes may need access to them.</dd></dl>
+<h3>FILE: Shape.cc</h3>
+<div class="fragment"></div><!-- fragment --><h2><a class="anchor" id="cppclassinheritchild1"></a>
+Child Class: Rectangle</h2>
+<p>Here is the declaration and implementation of a very simple child class, <code>Rectangle</code>. The only additional methods it supplies are <code>area()</code> and <code>perimeter()</code>.</p>
+<h3>FILE: Rectangle.hh</h3>
+<div class="fragment"></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The encapsulation level before the name of the base class is important. It is the highest level that a member from <code>Shape</code> can be in a <code>Rectangle</code> object. In other words, if <code>public Shape</code> were changed to <code>private Shape</code>, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.</dd></dl>
+<h3>FILE: Rectangle.cc</h3>
+<div class="fragment"></div><!-- fragment --><p>For demonstration purposes, here is a simple test file. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Rectangle r;</div>
+<div class="line">    <span class="comment">//The following line demonstrates how inheritance works:</span></div>
+<div class="line">    <span class="comment">//getLocation is a method in Shape, but it is being called from a Rectangle object.</span></div>
+<div class="line">    cout &lt;&lt; r.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; r.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    r.setWidth(3);</div>
+<div class="line">    r.setHeight(2);</div>
+<div class="line">    <span class="comment">//Call a method that only exists in Rectangle</span></div>
+<div class="line">    cout &lt;&lt; r.area();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="cppclassinheritfn"></a>
+Inheritance &amp; Functions</h2>
+<p>Inheritance also provides a benefit when you are passing a class into a function. You can pass child classes into a function meant for the base class. In other words, you can pass a <code>Rectangle</code> into a function requiring a <code>Shape</code> argument. This makes since, a Rectangle will have no less than a Shape (assuming that it inherited Shape as public).</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> printShape(Shape s) {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height:&quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Rectangle r;</div>
+<div class="line">    printShape(r);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The above code works perfectly. Note that <code>r</code> is a <code>Rectangle</code> and the function's parameter type is a <code>Shape</code>. This would cause a compiler error if you set the encapsulation level when <code>Rectangle</code> inherited <code>Shape</code> were something other than <code>public</code>.</p>
+<dl class="section note"><dt>Note</dt><dd>There is a more efficient way to write this function. See <a class="el" href="cppclassfn.html#cppclassfnconst">const functions</a>. </dd></dl>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->
