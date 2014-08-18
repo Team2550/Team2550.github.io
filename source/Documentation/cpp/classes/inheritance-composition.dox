@@ -38,330 +38,391 @@ You can access values in `A` from an object of `B` using the dot operator.
 \note Although this particular example is useless, there are still times where composition is necessary and useful.
 
 \section cppclassinherit Inheritance
-Inheritance allows one class to extend another.
+As was said above, inheritance creates an "is-a" relationship between classes.
 
-###Example: What do all vehicles have in common?
-Properties:
-- Some form of propulsion
-    - Strength to weight ratio
-- Maximum speed
-- Weight
-- Dimensions
-- Cargo/passenger capacity
+Inheritance introduces the need for a new encapsulation level: `protected`. When a member is `private`, it is not accessible to a class that inherits it. Members that are labeled `protected` are accessible by derived classes, but not for general use. In other words, `protected` members are accessible to methods declared within the derived class, but not when the class is instantiated and used.
 
-Methods:
-- Move
-- Load
-- Fits in space
+\subsection cppclassinherituml UML Diagrams
+When you are developing an application that uses inheritance, you usually start with a **Universal Modeling Language (UML)** diagram. A UML diagram shows the relationship between classes within a program. In other words, it shows what classes are components (composition) or others and when classes inherit others.
 
-\subsection cppclassinheritbase The Base Class
-\subsubsection vehiclehh FILE: Vehicle.hh
+The UML syntax is slightly different from that of C++ due to the fact that it is designed to describe multiple programming languages.
+
+\note I used [Dia](http://dia-installer.de/index.html.en) to create the diagrams in this section. It is fairly self-explanatory, but the terminology is slightly different. Notably, member variables are called "attributes" and methods are called "operations".
+
+Here is a sample class in UML.
+
+\diafile ExampleClass.dia
+
+###Explanation:
+- Encapsulation levels are denoted with `+`, `-`, or `#`
+    - `+`: public
+    - `-`: private
+    - `#`: protected
+- Member variables follow a `name: type = value` syntax. The `type` and `= value` parts are optional.
+- Composition is denoted with a diamond pointing at the component type declaration. In this case, it is the Point struct.
+- Member variables are in the top section, and methods are in the bottom. In Dia, you can choose to hide either, as I did in the struct.
+- Methods follow a different syntax: `method(arg1:type, arg2:type = value): ReturnType`
+    - Parameters are optional, and are formatted like members
+    - The return type is shown after the name and parameters
+- As you will see below, classes that inherit another class are shown with an arrow pointing to the class they inherit
+
+\subsection Example
+The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).
+
+\diafile ShapeClass.dia "Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components."
+
+\note The default constructor for each class is implied.
+
+\subsection cppclassinheritbase The Base Class: Shape
+Here is the declaration and implementation of the `Shape` class.
+
+###FILE: Shape.hh
 ~~~
-#ifndef VEHICLE_HH
-#define VEHICLE_HH
-
-enum MotorType {
-    steam,
-    gas,
-    diesel,
-    jet,
-    air
-};
-
-//In many cases here, the default constructor is basically useless. So they are implemented inline (as nothing).
-
-//This could be a struct, but it is a class for convenience (the constructor can be useful.
-class Motor {
-public:
-    Motor(){}
-    Motor(MotorType t, double pwr, double stwr);
-    MotorType type;
-    double power;
-    double strength; //Strength to weight ratio
-};
+#ifndef SHAPE_HH
+#define SHAPE_HH
 
 class Point2d {
 public:
-    Point2d(){}
-    Point2d(int initX, int initY);
-    int x, y;
+    Point2d();
+    Point2d(int xValue, int yValue);
+    int x;
+    int y;
 };
 
-class Dimensions {
-public:
-    Dimensions(){}
-    Dimensions(double l, double w, double h);
-    double length, width, height;
-};
-
-class Vehicle {
-protected:
-    Vehicle(){}
-    Motor mtr;
-    double weight;
-    Dimensions size;
-    double maxSpeed;
+class Shape {
+private:
+    int layer;
     Point2d location;
+    int angleDeg;
+protected:
+    float width;
+    float height;
 public:
-    Vehicle(Motor m, double wt, Dimensions s, double speed, Point2d startLoc);
-    //Mutators (setters): change/update values
-    double move(int x, int y, double speed);
-    bool fits(Dimensions space);
-    //Accessors (getters): get values
-    const double getMaxSpeed(); //const as part of the return type means that the user can't change the value returned
-    const double getWeight();
+    Shape();
+    Shape(float w, float h, Point2d loc, int angle);
+    //Mutators
+    void setLayer(int l);
+    void setWidth(float w);
+    void setHeight(float h);
+    void setLocation(Point2d loc);
+    void chgLocation(Point2d delta);
+    void setRotation(int degrees);
+    void chgRotation(int degrees);
+    //Accessors
+    int getLayer();
+    float getWidth();
+    float getHeight();
     Point2d getLocation();
-    const Dimensions getSize();
+    int getRotation();
 };
 
 #endif
 ~~~
 
-\subsubsection vehiclecc FILE: Vehicle.cc
+\note `width` and `height` are protected because other classes may need access to them.
+
+###FILE: Shape.cc
 ~~~
-#include <cmath>
-#include "Vehicle.hh"
+#include "Shape.hh"
 using namespace std;
 
-//It is generally a good idea to initialize all of the class values within a constructor.
+//Point2d would more efficient as a struct, but here it is a class
+//in order to demonstrate the behavior of constructors when using
+//composition.
 
-Motor::Motor(MotorType t, double pwr, double stwr) {
-    type = t;
-    power = pwr;
-    strength = stwr;
+Point2d::Point2d() {
+    x = 0;
+    y = 0;
 }
 
-Point2d::Point2d(int initX, int initY) {
-    x = initX;
-    y = initY;
+Point2d::Point2d(int xValue, int yValue) {
+    x = xValue;
+    y = yValue;
 }
 
-Dimensions::Dimensions(double l, double w, double h) {
-    length = l;
+Shape::Shape() {
+    layer = 0;
+    angleDeg = 0;
+    width = 1;
+    height = 1;
+    //The default Point2d constructor is run automatically.
+}
+
+Shape::Shape(float w, float h, Point2d loc, int angle) {
+    layer = 0;
     width = w;
+    height = h;
+    location = loc;
+    setRotation(angle);
+}
+
+void Shape::setLayer(int l) {
+    layer = l;
+}
+
+void Shape::setWidth(float w) {
+    width = w;
+}
+
+void Shape::setHeight(float h) {
     height = h;
 }
 
-Vehicle::Vehicle(Motor m, double wt, Dimensions s, double speed, Point2d startLoc) {
-    mtr = m;
-    weight = wt;
-    size = s;
-    maxSpeed = speed;
-    location = startLoc;
+void Shape::setLocation(Point2d loc) {
+    location.x = loc.x;
+    location.y = loc.y;
 }
 
-double Vehicle::move(int x, int y, double speed) {
-    if (speed > maxSpeed)
-        speed = maxSpeed;
-    //Knowing the basic three trig functions (and their inverses)
-    //can be very useful when programming. Especially with graphics
-    //and position-related programming.
-    //Calculate the time it will take to travel to the location
-    location = Point2d(x, y);
-    return atan2(static_cast<float>(y), static_cast<float>(x)) * speed;
+void Shape::chgLocation(Point2d delta) {
+    location.x += delta.x;
+    location.y += delta.y;
 }
 
-bool Vehicle::fits(Dimensions space) {
-    if (space.length >= size.length
-        || space.width >= size.width
-        || space.height >= size.height)
-        return false;
-    else return true;
+void Shape::setRotation(int degrees) {
+    angleDeg = degrees % 360;
+    //An angle modded by 360 makes sure that its value is between 0 and 359
+    //this means that we don't have to calculate multiple rotations later on.
 }
 
-const double Vehicle::getMaxSpeed() {
-    return maxSpeed;
+void Shape::chgRotation(int degrees) {
+    angleDeg += degrees;
+    angleDeg %= 360;
 }
 
-const double Vehicle::getWeight() {
-    return weight;
+int Shape::getLayer() {
+    return layer;
 }
 
-Point2d Vehicle::getLocation() {
+float Shape::getWidth() {
+    return width;
+}
+
+float Shape::getHeight() {
+    return height;
+}
+
+int Shape::getRotation() {
+    return angleDeg;
+}
+
+Point2d Shape::getLocation() {
     return location;
 }
-
-const Dimensions Vehicle::getSize() {
-    return size;
-}
 ~~~
 
-\note This class introduces a new level of encapsulation, `protected`. This allows a child class to edit variables within an inherited class. In this case, a class that inherits the `Vehicle` will have access to `protected` members as if they were its own. However, it cannot edit members within the `private` designation of `Vehicle`.
+\subsection cppclassinheritchild1 Child Class: Rectangle
+Here is the declaration and implementation of a very simple child class, `Rectangle`. The only additional methods it supplies are `area()` and `perimeter()`.
 
-
-------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-\subsection cppclassinheritchild Child Classes
-Let's create a class that inherits `Vehicle`. Again, this is different than composition because it creates an *is-a relationship*. For instance, a car is a type of vehicle. Inheritance is denoted as follows.
-
-    class DerivedClass : [public/private/protected] BaseClass
-
-All inheritance does is "copy" the members from one class into another, allowing you to extend a previously declared class. The `public/private/protected` is optional. The encapsulation level here denotes the highest level of protection the members of the base class will have in the child class. In other words...
-- `public`:
-    - public members of the base class are public in the private class
-    - protected members are protected
-    - private members are private
-- `protected`:
-    - public members from the base are protected
-    - protected members are protected
-    - private members are private
-- `private`: all inherited members are private within the child class
-
-\subsubsection carhh FILE: Car.hh
+###FILE: Rectangle.hh
 ~~~
-#ifndef CAR_HH
-#define CAR_HH
+#ifndef RECTANGLE_HH
+#define RECTANGLE_HH
 
-#include "Vehicle.hh"
+#include "Shape.hh"
 
-class Car : public Vehicle {
-private:
-    int maxPassengers;
-    int passengers;
-    double maxCargo;
-    double cargo;
+class Rectangle : public Shape {
 public:
-    Car();
-    Car(int maxPass, double maxCarg);
-    Car(int maxPass, double maxCarg, Motor m, double wt, Dimensions s, double speed, Point2d startLoc);
-    //mutators
-    bool load(int people);
-    bool load(double weight);
-    void unload(int people);
-    void unload(double weight);
-    double move(int x, int y, double speed);
-    //accessors
-    const int getMaxPassengers();
-    const int loadedPassengers();
-    const double getMaxCargo();
-    const double loadedCargo();
-    //actions
-    double push(double weight);
-    double pull(double weight);
+    Rectangle();
+    Rectangle(float w, float h, Point2d loc, int angle);
+    int area();
+    int perimeter();
 };
 
 #endif
 ~~~
 
-\subsubsection carcc FILE: Car.cc
+\note The encapsulation level before the name of the base class is important. It is the highest level that a member from `Shape` can be in a `Rectangle` object. In other words, if `public Shape` were changed to `private Shape`, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.
+
+###FILE: Rectangle.cc
 ~~~
-#include "Car.hh"
+#include "Rectangle.hh"
 using namespace std;
 
-Car::Car() {
-    //The default constructor for Vehicle (the base class) is run here.
-    Vehicle(Motor(gas, 100, 110),
-            1500,
-            Dimensions(10, 6, 4),
-            120, Point2d(0, 0)); //NOTE: remove this constructor.
-    maxCargo = 600;
-    cargo = 0;
-    maxPassengers = 4;
-    passengers = 0;
+//All other methods are defined in Shape. You can call any of Shape's methods
+//for a Rectangle object.
+
+Rectangle::Rectangle() {
+    //The Shape default constructor is automatically run here.
 }
 
-Car::Car(int maxPass, double maxCarg) {
-    Vehicle(Motor(gas, 100, 110),
-            1500,
-            Dimensions(10, 6, 4),
-            120, Point2d(0, 0));
-    maxCargo = maxCarg;
-    cargo = 0;
-    maxPassengers = maxPass;
-    passengers = 0;
+Rectangle::Rectangle(float w, float h, Point2d loc, int angle) :
+    Shape(w, h, loc, angle) //This is an alternative to the default constructor (see below).
+{}
+
+int Rectangle::area() {
+    return width * height;
 }
 
-Car::Car(int maxPass, double maxCarg, Motor m, double wt, Dimensions s, double speed, Point2d startLoc) {
-    maxPassengers = maxPass;
-    maxCargo = maxCarg;
-    mtr = m;
-    weight = wt;
-    size = s;
-    maxSpeed = speed;
-    location = startLoc;
-}
-
-bool Car::load(int people) {
-    if (passengers + people < maxPassengers)
-    {
-        passengers += people;
-        return true;
-    }
-    else return false;
-}
-
-bool Car::load(double weight) {
-    if (cargo + weight < maxCargo)
-    {
-        cargo += weight;
-        return true;
-    }
-    else return false;
-}
-
-void Car::unload(int people) {
-    if (passengers - people > 0)
-        passengers -= people;
-    else
-        passengers = 0;
-}
-
-void Car::unload(double weight) {
-    if (cargo - weight > 0)
-        cargo -= weight;
-    else cargo = 0;
-}
-
-const int Car::getMaxPassengers() {
-    return maxPassengers;
-}
-
-const int Car::loadedPassengers() {
-    return passengers;
-}
-
-const double Car::getMaxCargo() {
-    return maxCargo;
-}
-
-const double Car::loadedCargo() {
-    return cargo;
-}
-
-double Car::push(double weight) {
-    //Calculations related to the speed reduction while
-    //pushing would go here.
-}
-
-double Car::pull(double weight) {
-    //Calculations related to the speed reduction while
-    //pulling go here.
-}
-
-//Car::move is different from Vehicle::move. When the original move method needs to
-//  be called, you can call it via carobj.Vehicle::move(...
-double Car::move(int x, int y, double speed) {
-    if (speed > maxSpeed)
-        speed = 0;
-    location = Point2d(x, y);
-    return (x + y) * speed;
+int Rectangle::perimeter() {
+    return (2 * width) + (2 * height);
 }
 ~~~
-Here is a file that tests a few of the features of `Car`.
+
+`: Shape(w, h, loc, angle)` bypasses the default constructor. In this case, the arguments of the `Rectangle` constructor are passed to the `Shape` constructor. This prevents members of the new class from being set twice.
+
+\note It is also possible to put `using Shape::Shape;` in the class declaration in order to inherit the constructors from Shape, but this is a relatively new feature of C++ and is not supported everywhere. For now, it is best to use the method shown above to pass arguments to non-default constructors.
+
+For demonstration purposes, here is a simple test file.
 ~~~
 #include <iostream>
-#include "Car.hh"
+#include "Rectangle.hh"
 using namespace std;
 
 int main() {
-    Car c(10, 500,
-          Motor(gas, 100, 110), 1500,
-          Dimensions(10, 6, 4), 120,
-          Point2d(1, 1));
-    cout << c.getLocation().x << ' ' << c.getLocation().y << '\n'
-         << c.move(2, 2, 100) << '\n'
-         << c.getLocation().x << ' ' << c.getLocation().y << '\n'
-         << c.Vehicle::move(3, 3, 100) << '\n';
+    Rectangle r;
+    //The following line demonstrates how inheritance works:
+    //getLocation is a method in Shape, but it is being called from a Rectangle object.
+    cout << r.getLocation().x << ' ' << r.getLocation().y << '\n';
+    r.setWidth(3);
+    r.setHeight(2);
+    //Call a method that only exists in Rectangle
+    cout << r.area();
 }
 ~~~
+
+\subsection cppclassinheritfn Inheritance & Functions
+Inheritance also provides a benefit when you are passing a class into a function. You can pass child classes into a function meant for the base class. In other words, you can pass a `Rectangle` into a function requiring a `Shape` argument. This makes since, a Rectangle will have no less than a Shape (assuming that it inherited Shape as public).
+
+~~~
+#include <iostream>
+#include "Rectangle.hh"
+using namespace std;
+
+void printShape(Shape s);
+
+int main() {
+    Rectangle r;
+    printShape(r);
+}
+
+void printShape(Shape s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n';
+}
+~~~
+
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 0 0
+    Width: 1 Height: 1    
+
+Note that `r` is a `Rectangle` and the function's parameter type is a `Shape`. This would cause a compiler error if you set the encapsulation level when `Rectangle` inherited `Shape` were something other than `public`.
+
+\note There is a more efficient way to write this function. See \ref cppclassfnconst "const functions".
+
+\subsection cppclassinheritchild2 Child Class: EquilTriangle
+Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the `Shape` class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called `EquilTriangle`, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.
+
+\image html EquilTriangle.png
+
+The above diagram gives us one very important piece of information: the ratio between the width and height of an equilateral triangle is: 0.866025403784. In other words:
+
+    height = 0.866025403784 * width
+    width = height / 0.866025403784
+
+###FILE: EquilTriangle.hh
+~~~
+#ifndef EQUILTRIANGLE_HH
+#define EQUILTRIANGLE_HH
+
+#include "Shape.hh"
+
+class EquilTriangle : public Shape {
+public:
+    EquilTriangle();
+    EquilTriangle(float w, Point2d loc, int angle);
+    void setWidth(float w);
+    void setHeight(float h);
+    float area();
+    float perimeter();
+};
+
+#endif
+~~~
+
+Note that the above declaration redefines `setHeight` and `setWidth`.
+
+###FILE: EquilTriangle.cc
+~~~
+#include <cmath>
+#include "EquilTriangle.hh"
+using namespace std;
+
+const double EquilTriangle_ratio = 0.866025403784;
+
+EquilTriangle::EquilTriangle() {
+    height = EquilTriangle_ratio * width;
+}
+
+EquilTriangle::EquilTriangle(float w, Point2d loc, int angle) :
+    Shape(w, EquilTriangle_ratio * w, loc, angle)
+{
+    //This constructor is a fairly special case. Because the height depends on
+    //the width, we can't have the user provide both arguments. The Shape
+    //constructor has to be run given a width value, and then use the ratio
+    //we created earlier to determine the height.
+}
+
+void EquilTriangle::setWidth(float w) {
+    width = w;
+    height = EquilTriangle_ratio * width;
+}
+
+void EquilTriangle::setHeight(float h) {
+    height = h;
+    width = height / EquilTriangle_ratio;
+}
+
+float EquilTriangle::area() {
+    return (width * height) / 2;
+}
+
+float EquilTriangle::perimeter() {
+    return 3 * width;
+}
+~~~
+
+There is almost nothing new here, so let's run a test program...
+~~~
+#include <iostream>
+#include "EquilTriangle.hh"
+using namespace std;
+
+void printShape(Shape s);
+
+int main() {
+    EquilTriangle t(2, Point2d(1, 0), 0);
+    printShape(t);
+    t.setWidth(3); //Runs EquilTriangle::setWidth
+    printShape(t);
+    t.Shape::setHeight(5); //Runs Shape::setHeight
+    printShape(t);
+}
+
+void printShape(Shape s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << "\n\n";
+}
+~~~
+
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 2 Height: 1.73205
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 3 Height: 2.59808
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 3 Height: 5
+
+As you can see, the program worked. However, running `Shape::setHeight` defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.
+
+\subsection cppclassinheritvirtual Virtual Functions
 */
