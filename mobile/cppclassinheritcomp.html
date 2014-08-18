@@ -50,6 +50,8 @@
 <li class="level2"><a href="#cppclassinheritbase">The Base Class: Shape</a></li>
 <li class="level2"><a href="#cppclassinheritchild1">Child Class: Rectangle</a></li>
 <li class="level2"><a href="#cppclassinheritfn">Inheritance & Functions</a></li>
+<li class="level2"><a href="#cppclassinheritchild2">Child Class: EquilTriangle</a></li>
+<li class="level2"><a href="#cppclassinheritvirtual">Virtual Functions</a></li>
 </ul>
 </li>
 </ul>
@@ -130,15 +132,176 @@ Here is the UML inheritance diagram showing the relation between the Shape class
 The Base Class: Shape</h2>
 <p>Here is the declaration and implementation of the <code>Shape</code> class.</p>
 <h3>FILE: Shape.hh</h3>
-<div class="fragment"></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>width</code> and <code>height</code> are protected because other classes may need access to them.</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef SHAPE_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define SHAPE_HH</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="keyword">class </span>Point2d {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Point2d();</div>
+<div class="line">    Point2d(<span class="keywordtype">int</span> xValue, <span class="keywordtype">int</span> yValue);</div>
+<div class="line">    <span class="keywordtype">int</span> x;</div>
+<div class="line">    <span class="keywordtype">int</span> y;</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Shape {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <span class="keywordtype">int</span> layer;</div>
+<div class="line">    Point2d location;</div>
+<div class="line">    <span class="keywordtype">int</span> angleDeg;</div>
+<div class="line"><span class="keyword">protected</span>:</div>
+<div class="line">    <span class="keywordtype">float</span> width;</div>
+<div class="line">    <span class="keywordtype">float</span> height;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Shape();</div>
+<div class="line">    Shape(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    <span class="comment">//Mutators</span></div>
+<div class="line">    <span class="keywordtype">void</span> setLayer(<span class="keywordtype">int</span> l);</div>
+<div class="line">    <span class="keywordtype">void</span> setWidth(<span class="keywordtype">float</span> w);</div>
+<div class="line">    <span class="keywordtype">void</span> setHeight(<span class="keywordtype">float</span> h);</div>
+<div class="line">    <span class="keywordtype">void</span> setLocation(Point2d loc);</div>
+<div class="line">    <span class="keywordtype">void</span> chgLocation(Point2d delta);</div>
+<div class="line">    <span class="keywordtype">void</span> setRotation(<span class="keywordtype">int</span> degrees);</div>
+<div class="line">    <span class="keywordtype">void</span> chgRotation(<span class="keywordtype">int</span> degrees);</div>
+<div class="line">    <span class="comment">//Accessors</span></div>
+<div class="line">    <span class="keywordtype">int</span> getLayer();</div>
+<div class="line">    <span class="keywordtype">float</span> getWidth();</div>
+<div class="line">    <span class="keywordtype">float</span> getHeight();</div>
+<div class="line">    Point2d getLocation();</div>
+<div class="line">    <span class="keywordtype">int</span> getRotation();</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>width</code> and <code>height</code> are protected because other classes may need access to them.</dd></dl>
 <h3>FILE: Shape.cc</h3>
-<div class="fragment"></div><!-- fragment --><h2><a class="anchor" id="cppclassinheritchild1"></a>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Shape.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//Point2d would more efficient as a struct, but here it is a class</span></div>
+<div class="line"><span class="comment">//in order to demonstrate the behavior of constructors when using</span></div>
+<div class="line"><span class="comment">//composition.</span></div>
+<div class="line"></div>
+<div class="line">Point2d::Point2d() {</div>
+<div class="line">    x = 0;</div>
+<div class="line">    y = 0;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Point2d::Point2d(<span class="keywordtype">int</span> xValue, <span class="keywordtype">int</span> yValue) {</div>
+<div class="line">    x = xValue;</div>
+<div class="line">    y = yValue;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Shape::Shape() {</div>
+<div class="line">    layer = 0;</div>
+<div class="line">    angleDeg = 0;</div>
+<div class="line">    width = 1;</div>
+<div class="line">    height = 1;</div>
+<div class="line">    <span class="comment">//The default Point2d constructor is run automatically.</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Shape::Shape(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle) {</div>
+<div class="line">    layer = 0;</div>
+<div class="line">    width = w;</div>
+<div class="line">    height = h;</div>
+<div class="line">    location = loc;</div>
+<div class="line">    setRotation(angle);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::setLayer(<span class="keywordtype">int</span> l) {</div>
+<div class="line">    layer = l;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::setWidth(<span class="keywordtype">float</span> w) {</div>
+<div class="line">    width = w;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::setHeight(<span class="keywordtype">float</span> h) {</div>
+<div class="line">    height = h;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::setLocation(Point2d loc) {</div>
+<div class="line">    location.x = loc.x;</div>
+<div class="line">    location.y = loc.y;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::chgLocation(Point2d delta) {</div>
+<div class="line">    location.x += delta.x;</div>
+<div class="line">    location.y += delta.y;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::setRotation(<span class="keywordtype">int</span> degrees) {</div>
+<div class="line">    angleDeg = degrees % 360;</div>
+<div class="line">    <span class="comment">//An angle modded by 360 makes sure that its value is between 0 and 359</span></div>
+<div class="line">    <span class="comment">//this means that we don&#39;t have to calculate multiple rotations later on.</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Shape::chgRotation(<span class="keywordtype">int</span> degrees) {</div>
+<div class="line">    angleDeg += degrees;</div>
+<div class="line">    angleDeg %= 360;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Shape::getLayer() {</div>
+<div class="line">    <span class="keywordflow">return</span> layer;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> Shape::getWidth() {</div>
+<div class="line">    <span class="keywordflow">return</span> width;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> Shape::getHeight() {</div>
+<div class="line">    <span class="keywordflow">return</span> height;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Shape::getRotation() {</div>
+<div class="line">    <span class="keywordflow">return</span> angleDeg;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Point2d Shape::getLocation() {</div>
+<div class="line">    <span class="keywordflow">return</span> location;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="cppclassinheritchild1"></a>
 Child Class: Rectangle</h2>
 <p>Here is the declaration and implementation of a very simple child class, <code>Rectangle</code>. The only additional methods it supplies are <code>area()</code> and <code>perimeter()</code>.</p>
 <h3>FILE: Rectangle.hh</h3>
-<div class="fragment"></div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The encapsulation level before the name of the base class is important. It is the highest level that a member from <code>Shape</code> can be in a <code>Rectangle</code> object. In other words, if <code>public Shape</code> were changed to <code>private Shape</code>, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.</dd></dl>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef RECTANGLE_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define RECTANGLE_HH</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#include &quot;Shape.hh&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Rectangle : <span class="keyword">public</span> Shape {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Rectangle();</div>
+<div class="line">    Rectangle(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    <span class="keywordtype">int</span> area();</div>
+<div class="line">    <span class="keywordtype">int</span> perimeter();</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The encapsulation level before the name of the base class is important. It is the highest level that a member from <code>Shape</code> can be in a <code>Rectangle</code> object. In other words, if <code>public Shape</code> were changed to <code>private Shape</code>, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.</dd></dl>
 <h3>FILE: Rectangle.cc</h3>
-<div class="fragment"></div><!-- fragment --><p>For demonstration purposes, here is a simple test file. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//All other methods are defined in Shape. You can call any of Shape&#39;s methods</span></div>
+<div class="line"><span class="comment">//for a Rectangle object.</span></div>
+<div class="line"></div>
+<div class="line">Rectangle::Rectangle() {</div>
+<div class="line">    <span class="comment">//The Shape default constructor is automatically run here.</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Rectangle::Rectangle(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle) :</div>
+<div class="line">    Shape(w, h, loc, angle) <span class="comment">//This is an alternative to the default constructor (see below).</span></div>
+<div class="line">{}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Rectangle::area() {</div>
+<div class="line">    <span class="keywordflow">return</span> width * height;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Rectangle::perimeter() {</div>
+<div class="line">    <span class="keywordflow">return</span> (2 * width) + (2 * height);</div>
+<div class="line">}</div>
+</div><!-- fragment --><p><code>: Shape(w, h, loc, angle)</code> bypasses the default constructor. In this case, the arguments of the <code>Rectangle</code> constructor are passed to the <code>Shape</code> constructor. This prevents members of the new class from being set twice.</p>
+<dl class="section note"><dt>Note</dt><dd>It is also possible to put <code>using Shape::Shape;</code> in the class declaration in order to inherit the constructors from Shape, but this is a relatively new feature of C++ and is not supported everywhere. For now, it is best to use the method shown above to pass arguments to non-default constructors.</dd></dl>
+<p>For demonstration purposes, here is a simple test file. </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
@@ -160,18 +323,124 @@ Inheritance &amp; Functions</h2>
 <div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
-<div class="line"><span class="keywordtype">void</span> printShape(Shape s) {</div>
-<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
-<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height:&quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
-<div class="line">}</div>
+<div class="line"><span class="keywordtype">void</span> printShape(Shape s);</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    Rectangle r;</div>
 <div class="line">    printShape(r);</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>The above code works perfectly. Note that <code>r</code> is a <code>Rectangle</code> and the function's parameter type is a <code>Shape</code>. This would cause a compiler error if you set the encapsulation level when <code>Rectangle</code> inherited <code>Shape</code> were something other than <code>public</code>.</p>
-<dl class="section note"><dt>Note</dt><dd>There is a more efficient way to write this function. See <a class="el" href="cppclassfn.html#cppclassfnconst">const functions</a>. </dd></dl>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> printShape(Shape s) {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height: &quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">Angle: 0 Layer: 0
+Location: 0 0
+Width: 1 Height: 1    
+</pre><p>Note that <code>r</code> is a <code>Rectangle</code> and the function's parameter type is a <code>Shape</code>. This would cause a compiler error if you set the encapsulation level when <code>Rectangle</code> inherited <code>Shape</code> were something other than <code>public</code>.</p>
+<dl class="section note"><dt>Note</dt><dd>There is a more efficient way to write this function. See <a class="el" href="cppclassfn.html#cppclassfnconst">const functions</a>.</dd></dl>
+<h2><a class="anchor" id="cppclassinheritchild2"></a>
+Child Class: EquilTriangle</h2>
+<p>Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the <code>Shape</code> class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called <code>EquilTriangle</code>, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.</p>
+<div class="image">
+<img src="EquilTriangle.png" alt="EquilTriangle.png"/>
+</div>
+<p>The above diagram gives us one very important piece of information: the ratio between the width and height of an equilateral triangle is: 0.866025403784. In other words: </p>
+<pre class="fragment">height = 0.866025403784 * width
+width = height / 0.866025403784
+</pre><h3>FILE: EquilTriangle.hh</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef EQUILTRIANGLE_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define EQUILTRIANGLE_HH</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#include &quot;Shape.hh&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>EquilTriangle : <span class="keyword">public</span> Shape {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    EquilTriangle();</div>
+<div class="line">    EquilTriangle(<span class="keywordtype">float</span> w, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    <span class="keywordtype">void</span> setWidth(<span class="keywordtype">float</span> w);</div>
+<div class="line">    <span class="keywordtype">void</span> setHeight(<span class="keywordtype">float</span> h);</div>
+<div class="line">    <span class="keywordtype">float</span> area();</div>
+<div class="line">    <span class="keywordtype">float</span> perimeter();</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><p>Note that the above declaration redefines <code>setHeight</code> and <code>setWidth</code>.</p>
+<h3>FILE: EquilTriangle.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;EquilTriangle.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">double</span> EquilTriangle_ratio = 0.866025403784;</div>
+<div class="line"></div>
+<div class="line">EquilTriangle::EquilTriangle() {</div>
+<div class="line">    height = EquilTriangle_ratio * width;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">EquilTriangle::EquilTriangle(<span class="keywordtype">float</span> w, Point2d loc, <span class="keywordtype">int</span> angle) :</div>
+<div class="line">    Shape(w, EquilTriangle_ratio * w, loc, angle)</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">//This constructor is a fairly special case. Because the height depends on</span></div>
+<div class="line">    <span class="comment">//the width, we can&#39;t have the user provide both arguments. The Shape</span></div>
+<div class="line">    <span class="comment">//constructor has to be run given a width value, and then use the ratio</span></div>
+<div class="line">    <span class="comment">//we created earlier to determine the height.</span></div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> EquilTriangle::setWidth(<span class="keywordtype">float</span> w) {</div>
+<div class="line">    width = w;</div>
+<div class="line">    height = EquilTriangle_ratio * width;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> EquilTriangle::setHeight(<span class="keywordtype">float</span> h) {</div>
+<div class="line">    height = h;</div>
+<div class="line">    width = height / EquilTriangle_ratio;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> EquilTriangle::area() {</div>
+<div class="line">    <span class="keywordflow">return</span> (width * height) / 2;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> EquilTriangle::perimeter() {</div>
+<div class="line">    <span class="keywordflow">return</span> 3 * width;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>There is almost nothing new here, so let's run a test program... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;EquilTriangle.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> printShape(Shape s);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    EquilTriangle t(2, Point2d(1, 0), 0);</div>
+<div class="line">    printShape(t);</div>
+<div class="line">    t.setWidth(3); <span class="comment">//Runs EquilTriangle::setWidth</span></div>
+<div class="line">    printShape(t);</div>
+<div class="line">    t.Shape::setHeight(5); <span class="comment">//Runs Shape::setHeight</span></div>
+<div class="line">    printShape(t);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> printShape(Shape s) {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height: &quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">Angle: 0 Layer: 0
+Location: 1 0
+Width: 2 Height: 1.73205
+
+Angle: 0 Layer: 0
+Location: 1 0
+Width: 3 Height: 2.59808
+
+Angle: 0 Layer: 0
+Location: 1 0
+Width: 3 Height: 5
+</pre><p>As you can see, the program worked. However, running <code>Shape::setHeight</code> defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.</p>
+<h2><a class="anchor" id="cppclassinheritvirtual"></a>
+Virtual Functions</h2>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
 <!-- start footer part -->

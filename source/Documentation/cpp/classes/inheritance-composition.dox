@@ -78,14 +78,136 @@ Here is the declaration and implementation of the `Shape` class.
 
 ###FILE: Shape.hh
 ~~~
+#ifndef SHAPE_HH
+#define SHAPE_HH
 
+class Point2d {
+public:
+    Point2d();
+    Point2d(int xValue, int yValue);
+    int x;
+    int y;
+};
+
+class Shape {
+private:
+    int layer;
+    Point2d location;
+    int angleDeg;
+protected:
+    float width;
+    float height;
+public:
+    Shape();
+    Shape(float w, float h, Point2d loc, int angle);
+    //Mutators
+    void setLayer(int l);
+    void setWidth(float w);
+    void setHeight(float h);
+    void setLocation(Point2d loc);
+    void chgLocation(Point2d delta);
+    void setRotation(int degrees);
+    void chgRotation(int degrees);
+    //Accessors
+    int getLayer();
+    float getWidth();
+    float getHeight();
+    Point2d getLocation();
+    int getRotation();
+};
+
+#endif
 ~~~
 
 \note `width` and `height` are protected because other classes may need access to them.
 
 ###FILE: Shape.cc
 ~~~
+#include "Shape.hh"
+using namespace std;
 
+//Point2d would more efficient as a struct, but here it is a class
+//in order to demonstrate the behavior of constructors when using
+//composition.
+
+Point2d::Point2d() {
+    x = 0;
+    y = 0;
+}
+
+Point2d::Point2d(int xValue, int yValue) {
+    x = xValue;
+    y = yValue;
+}
+
+Shape::Shape() {
+    layer = 0;
+    angleDeg = 0;
+    width = 1;
+    height = 1;
+    //The default Point2d constructor is run automatically.
+}
+
+Shape::Shape(float w, float h, Point2d loc, int angle) {
+    layer = 0;
+    width = w;
+    height = h;
+    location = loc;
+    setRotation(angle);
+}
+
+void Shape::setLayer(int l) {
+    layer = l;
+}
+
+void Shape::setWidth(float w) {
+    width = w;
+}
+
+void Shape::setHeight(float h) {
+    height = h;
+}
+
+void Shape::setLocation(Point2d loc) {
+    location.x = loc.x;
+    location.y = loc.y;
+}
+
+void Shape::chgLocation(Point2d delta) {
+    location.x += delta.x;
+    location.y += delta.y;
+}
+
+void Shape::setRotation(int degrees) {
+    angleDeg = degrees % 360;
+    //An angle modded by 360 makes sure that its value is between 0 and 359
+    //this means that we don't have to calculate multiple rotations later on.
+}
+
+void Shape::chgRotation(int degrees) {
+    angleDeg += degrees;
+    angleDeg %= 360;
+}
+
+int Shape::getLayer() {
+    return layer;
+}
+
+float Shape::getWidth() {
+    return width;
+}
+
+float Shape::getHeight() {
+    return height;
+}
+
+int Shape::getRotation() {
+    return angleDeg;
+}
+
+Point2d Shape::getLocation() {
+    return location;
+}
 ~~~
 
 \subsection cppclassinheritchild1 Child Class: Rectangle
@@ -93,15 +215,52 @@ Here is the declaration and implementation of a very simple child class, `Rectan
 
 ###FILE: Rectangle.hh
 ~~~
+#ifndef RECTANGLE_HH
+#define RECTANGLE_HH
 
+#include "Shape.hh"
+
+class Rectangle : public Shape {
+public:
+    Rectangle();
+    Rectangle(float w, float h, Point2d loc, int angle);
+    int area();
+    int perimeter();
+};
+
+#endif
 ~~~
 
 \note The encapsulation level before the name of the base class is important. It is the highest level that a member from `Shape` can be in a `Rectangle` object. In other words, if `public Shape` were changed to `private Shape`, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.
 
 ###FILE: Rectangle.cc
 ~~~
+#include "Rectangle.hh"
+using namespace std;
 
+//All other methods are defined in Shape. You can call any of Shape's methods
+//for a Rectangle object.
+
+Rectangle::Rectangle() {
+    //The Shape default constructor is automatically run here.
+}
+
+Rectangle::Rectangle(float w, float h, Point2d loc, int angle) :
+    Shape(w, h, loc, angle) //This is an alternative to the default constructor (see below).
+{}
+
+int Rectangle::area() {
+    return width * height;
+}
+
+int Rectangle::perimeter() {
+    return (2 * width) + (2 * height);
+}
 ~~~
+
+`: Shape(w, h, loc, angle)` bypasses the default constructor. In this case, the arguments of the `Rectangle` constructor are passed to the `Shape` constructor. This prevents members of the new class from being set twice.
+
+\note It is also possible to put `using Shape::Shape;` in the class declaration in order to inherit the constructors from Shape, but this is a relatively new feature of C++ and is not supported everywhere. For now, it is best to use the method shown above to pass arguments to non-default constructors.
 
 For demonstration purposes, here is a simple test file.
 ~~~
@@ -129,19 +288,141 @@ Inheritance also provides a benefit when you are passing a class into a function
 #include "Rectangle.hh"
 using namespace std;
 
-void printShape(Shape s) {
-    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
-         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
-         << "Width: " << s.getWidth() << " Height:" << s.getHeight() << '\n';
-}
+void printShape(Shape s);
 
 int main() {
     Rectangle r;
     printShape(r);
 }
+
+void printShape(Shape s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n';
+}
 ~~~
 
-The above code works perfectly. Note that `r` is a `Rectangle` and the function's parameter type is a `Shape`. This would cause a compiler error if you set the encapsulation level when `Rectangle` inherited `Shape` were something other than `public`.
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 0 0
+    Width: 1 Height: 1    
+
+Note that `r` is a `Rectangle` and the function's parameter type is a `Shape`. This would cause a compiler error if you set the encapsulation level when `Rectangle` inherited `Shape` were something other than `public`.
 
 \note There is a more efficient way to write this function. See \ref cppclassfnconst "const functions".
+
+\subsection cppclassinheritchild2 Child Class: EquilTriangle
+Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the `Shape` class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called `EquilTriangle`, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.
+
+\image html EquilTriangle.png
+
+The above diagram gives us one very important piece of information: the ratio between the width and height of an equilateral triangle is: 0.866025403784. In other words:
+
+    height = 0.866025403784 * width
+    width = height / 0.866025403784
+
+###FILE: EquilTriangle.hh
+~~~
+#ifndef EQUILTRIANGLE_HH
+#define EQUILTRIANGLE_HH
+
+#include "Shape.hh"
+
+class EquilTriangle : public Shape {
+public:
+    EquilTriangle();
+    EquilTriangle(float w, Point2d loc, int angle);
+    void setWidth(float w);
+    void setHeight(float h);
+    float area();
+    float perimeter();
+};
+
+#endif
+~~~
+
+Note that the above declaration redefines `setHeight` and `setWidth`.
+
+###FILE: EquilTriangle.cc
+~~~
+#include <cmath>
+#include "EquilTriangle.hh"
+using namespace std;
+
+const double EquilTriangle_ratio = 0.866025403784;
+
+EquilTriangle::EquilTriangle() {
+    height = EquilTriangle_ratio * width;
+}
+
+EquilTriangle::EquilTriangle(float w, Point2d loc, int angle) :
+    Shape(w, EquilTriangle_ratio * w, loc, angle)
+{
+    //This constructor is a fairly special case. Because the height depends on
+    //the width, we can't have the user provide both arguments. The Shape
+    //constructor has to be run given a width value, and then use the ratio
+    //we created earlier to determine the height.
+}
+
+void EquilTriangle::setWidth(float w) {
+    width = w;
+    height = EquilTriangle_ratio * width;
+}
+
+void EquilTriangle::setHeight(float h) {
+    height = h;
+    width = height / EquilTriangle_ratio;
+}
+
+float EquilTriangle::area() {
+    return (width * height) / 2;
+}
+
+float EquilTriangle::perimeter() {
+    return 3 * width;
+}
+~~~
+
+There is almost nothing new here, so let's run a test program...
+~~~
+#include <iostream>
+#include "EquilTriangle.hh"
+using namespace std;
+
+void printShape(Shape s);
+
+int main() {
+    EquilTriangle t(2, Point2d(1, 0), 0);
+    printShape(t);
+    t.setWidth(3); //Runs EquilTriangle::setWidth
+    printShape(t);
+    t.Shape::setHeight(5); //Runs Shape::setHeight
+    printShape(t);
+}
+
+void printShape(Shape s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << "\n\n";
+}
+~~~
+
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 2 Height: 1.73205
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 3 Height: 2.59808
+
+    Angle: 0 Layer: 0
+    Location: 1 0
+    Width: 3 Height: 5
+
+As you can see, the program worked. However, running `Shape::setHeight` defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.
+
+\subsection cppclassinheritvirtual Virtual Functions
 */
