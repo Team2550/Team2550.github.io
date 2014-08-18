@@ -1130,7 +1130,11 @@ dl.section dd {
 
 .image
 {
-        text-align: center;
+    text-align: center;
+}
+
+.image img {
+    width: 100%;
 }
 
 .dotgraph

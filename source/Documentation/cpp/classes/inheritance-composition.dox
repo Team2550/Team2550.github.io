@@ -51,7 +51,7 @@ The UML syntax is slightly different from that of C++ due to the fact that it is
 
 Here is a sample class in UML.
 
-\diafile ExampleClass.dia
+<img style="width: 40%;" src="ExampleClass.svg" alt="ExampleClass.svg">
 
 ###Explanation:
 - Encapsulation levels are denoted with `+`, `-`, or `#`
@@ -69,7 +69,7 @@ Here is a sample class in UML.
 \subsection Example
 The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).
 
-\diafile ShapeClass.dia "Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components."
+\image html ShapeClass.svg "Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components."
 
 \note The default constructor for each class is implied.
 

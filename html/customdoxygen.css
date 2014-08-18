@@ -1057,6 +1057,10 @@ dl.section dd {
         text-align: center;
 }
 
+.image img {
+    width: 100%;
+}
+
 .dotgraph
 {
         text-align: center;

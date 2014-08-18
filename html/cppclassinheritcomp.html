@@ -175,10 +175,9 @@ UML Diagrams</h2>
 <p>The UML syntax is slightly different from that of C++ due to the fact that it is designed to describe multiple programming languages.</p>
 <dl class="section note"><dt>Note</dt><dd>I used <a href="http://dia-installer.de/index.html.en">Dia</a> to create the diagrams in this section. It is fairly self-explanatory, but the terminology is slightly different. Notably, member variables are called "attributes" and methods are called "operations".</dd></dl>
 <p>Here is a sample class in UML.</p>
-<p><div class="diagraph">
-<img src="/home/caleb/Documents/FRC2550-Git/Team2550.github.io/html/dia_ExampleClass.png" />
+<div class="image">
+<img src="ExampleClass.svg"  style="width: 40%;" alt="ExampleClass.svg"/>
 </div>
-</p>
 <h3>Explanation:</h3>
 <ul>
 <li>Encapsulation levels are denoted with <code>+</code>, <code>-</code>, or <code>#</code><ul>
@@ -200,13 +199,11 @@ UML Diagrams</h2>
 <h2><a class="anchor" id="Example"></a>
 Example</h2>
 <p>The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).</p>
-<p><div class="diagraph">
-<img src="/home/caleb/Documents/FRC2550-Git/Team2550.github.io/html/dia_ShapeClass.png" />
+<div class="image">
+<img src="ShapeClass.svg" alt="ShapeClass.svg"/>
 <div class="caption">
-Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components.</div>
-</div>
- </p>
-<dl class="section note"><dt>Note</dt><dd>The default constructor for each class is implied.</dd></dl>
+Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components.</div></div>
+ <dl class="section note"><dt>Note</dt><dd>The default constructor for each class is implied.</dd></dl>
 <h2><a class="anchor" id="cppclassinheritbase"></a>
 The Base Class: Shape</h2>
 <p>Here is the declaration and implementation of the <code>Shape</code> class.</p>
