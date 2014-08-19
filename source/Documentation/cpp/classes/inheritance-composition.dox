@@ -315,7 +315,7 @@ Note that `r` is a `Rectangle` and the function's parameter type is a `Shape`. T
 \subsection cppclassinheritchild2 Child Class: EquilTriangle
 Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the `Shape` class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called `EquilTriangle`, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.
 
-\image html EquilTriangle.png
+\image html EquilTriangle.svg
 
 The above diagram gives us one very important piece of information: the ratio between the width and height of an equilateral triangle is: 0.866025403784. In other words:
 
