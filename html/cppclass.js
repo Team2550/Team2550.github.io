@@ -16,7 +16,9 @@ var cppclass =
         [ "Child Class: Rectangle", "cppclassinheritcomp.html#cppclassinheritchild1", null ],
         [ "Inheritance & Functions", "cppclassinheritcomp.html#cppclassinheritfn", null ],
         [ "Child Class: EquilTriangle", "cppclassinheritcomp.html#cppclassinheritchild2", null ],
-        [ "Virtual Functions", "cppclassinheritcomp.html#cppclassinheritvirtual", null ]
+        [ "Virtual Functions", "cppclassinheritcomp.html#cppclassinheritvirtual", null ],
+        [ "Child Class: Ellipse", "cppclassinheritcomp.html#cppclassinheritchild3", null ],
+        [ "Multiple Inheritance", "cppclassinheritcomp.html#cppclassinheritmulti", null ]
       ] ]
     ] ],
     [ "Functions & Methods", "cppclassfn.html", [

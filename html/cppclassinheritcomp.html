@@ -131,6 +131,8 @@ $(document).ready(function(){initNavTree('cppclassinheritcomp.html','');});
 <li class="level2"><a href="#cppclassinheritfn">Inheritance & Functions</a></li>
 <li class="level2"><a href="#cppclassinheritchild2">Child Class: EquilTriangle</a></li>
 <li class="level2"><a href="#cppclassinheritvirtual">Virtual Functions</a></li>
+<li class="level2"><a href="#cppclassinheritchild3">Child Class: Ellipse</a></li>
+<li class="level2"><a href="#cppclassinheritmulti">Multiple Inheritance</a></li>
 </ul>
 </li>
 </ul>
@@ -229,7 +231,7 @@ The Base Class: Shape</h2>
 <div class="line">    <span class="keywordtype">float</span> height;</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    Shape();</div>
-<div class="line">    Shape(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    Shape(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle = 0);</div>
 <div class="line">    <span class="comment">//Mutators</span></div>
 <div class="line">    <span class="keywordtype">void</span> setLayer(<span class="keywordtype">int</span> l);</div>
 <div class="line">    <span class="keywordtype">void</span> setWidth(<span class="keywordtype">float</span> w);</div>
@@ -346,7 +348,7 @@ Child Class: Rectangle</h2>
 <div class="line"><span class="keyword">class </span>Rectangle : <span class="keyword">public</span> Shape {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    Rectangle();</div>
-<div class="line">    Rectangle(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    Rectangle(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle = 0);</div>
 <div class="line">    <span class="keywordtype">int</span> area();</div>
 <div class="line">    <span class="keywordtype">int</span> perimeter();</div>
 <div class="line">};</div>
@@ -435,7 +437,7 @@ width = height / 0.866025403784
 <div class="line"><span class="keyword">class </span>EquilTriangle : <span class="keyword">public</span> Shape {</div>
 <div class="line"><span class="keyword">public</span>:</div>
 <div class="line">    EquilTriangle();</div>
-<div class="line">    EquilTriangle(<span class="keywordtype">float</span> w, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    EquilTriangle(<span class="keywordtype">float</span> w, Point2d loc, <span class="keywordtype">int</span> angle = 0);</div>
 <div class="line">    <span class="keywordtype">void</span> setWidth(<span class="keywordtype">float</span> w);</div>
 <div class="line">    <span class="keywordtype">void</span> setHeight(<span class="keywordtype">float</span> h);</div>
 <div class="line">    <span class="keywordtype">float</span> area();</div>
@@ -517,6 +519,164 @@ Width: 3 Height: 5
 </pre><p>As you can see, the program worked. However, running <code>Shape::setHeight</code> defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.</p>
 <h2><a class="anchor" id="cppclassinheritvirtual"></a>
 Virtual Functions</h2>
+<p>The more methods the base class has, the more powerful it is. The more methods the base class has, the more you can do in the functions that accept it as an argument. For instance, the <code>area</code> and <code>perimeter</code> methods are in every child class of <code>Shape</code> that we declared, and it is safe to say that every shape has both an area and perimeter (circumference in the case of circles, but it is still the same thing). The problem we encounter is that the means by which you calculate those values differ from shape to shape. Because of this, it doesn't make since to define the methods in the base class. This is where virtual methods come in. Basically, they make the base class incomplete. You can still call a virtual function, but unless the user (programmer) inherits the class and defines those functions, the class cannot be used. Let's take another look at the <code>printShape</code> function.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> printShape(Shape s) {</div>
+<div class="line">    <span class="comment">//All of the methods that are called here exist in the base class. </span></div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height: &quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>There is no way to call the <code>area</code> and <code>perimeter methods</code> in the above function because they don't exist in the <code>Shape</code> class. The problem is that the base class cannot define them, and having them return a default value, such as 0, makes no since. In addition, the <code>Shape</code> class does not implement a specific shape. It is like a rectangle, but it does not define a rectangle any more than it defines any other shape. Let's modify the UML diagram we create earlier in order to deal with this shortcoming.</p>
+<div class="image">
+<img src="ShapeClassVirtual.svg" alt="ShapeClassVirtual.svg"/>
+</div>
+<dl class="section note"><dt>Note</dt><dd>The <code>area</code> and <code>perimeter</code> methods in the UML diagram above are italicized. This denotes that they are virtual functions.</dd></dl>
+<p>The declaration of <code>Shape</code> will now look like this...</p>
+<h3>FILE: Shape.hh</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef SHAPE_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define SHAPE_HH</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="keyword">class </span>Point2d {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Point2d();</div>
+<div class="line">    Point2d(<span class="keywordtype">int</span> xValue, <span class="keywordtype">int</span> yValue);</div>
+<div class="line">    <span class="keywordtype">int</span> x;</div>
+<div class="line">    <span class="keywordtype">int</span> y;</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Shape {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <span class="keywordtype">int</span> layer;</div>
+<div class="line">    Point2d location;</div>
+<div class="line">    <span class="keywordtype">int</span> angleDeg;</div>
+<div class="line"><span class="keyword">protected</span>:</div>
+<div class="line">    <span class="keywordtype">float</span> width;</div>
+<div class="line">    <span class="keywordtype">float</span> height;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Shape();</div>
+<div class="line">    Shape(<span class="keywordtype">float</span> w, <span class="keywordtype">float</span> h, Point2d loc, <span class="keywordtype">int</span> angle);</div>
+<div class="line">    <span class="comment">//Mutators</span></div>
+<div class="line">    <span class="keywordtype">void</span> setLayer(<span class="keywordtype">int</span> l);</div>
+<div class="line">    <span class="keywordtype">void</span> setWidth(<span class="keywordtype">float</span> w);</div>
+<div class="line">    <span class="keywordtype">void</span> setHeight(<span class="keywordtype">float</span> h);</div>
+<div class="line">    <span class="keywordtype">void</span> setLocation(Point2d loc);</div>
+<div class="line">    <span class="keywordtype">void</span> chgLocation(Point2d delta);</div>
+<div class="line">    <span class="keywordtype">void</span> setRotation(<span class="keywordtype">int</span> degrees);</div>
+<div class="line">    <span class="keywordtype">void</span> chgRotation(<span class="keywordtype">int</span> degrees);</div>
+<div class="line">    <span class="comment">//Accessors</span></div>
+<div class="line">    <span class="keywordtype">int</span> getLayer();</div>
+<div class="line">    <span class="keywordtype">float</span> getWidth();</div>
+<div class="line">    <span class="keywordtype">float</span> getHeight();</div>
+<div class="line">    Point2d getLocation();</div>
+<div class="line">    <span class="keywordtype">int</span> getRotation();</div>
+<div class="line">    <span class="comment">//Utility</span></div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">float</span> area() = 0;</div>
+<div class="line">    <span class="keyword">virtual</span> <span class="keywordtype">float</span> perimeter() = 0;</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The two virtual functions are at the bottom. The <code>= 0</code> is critical because it makes them <em>pure virtual functions</em>. In other words, it makes the class <em>abstract</em>, meaning that you can't create a <code>Shape</code> object. In order to use <code>Shape</code>, you have to inherit it and define the virtual functions. Normal virtual functions behave similar to method overriding (see <a class="el" href="cppclassinheritcomp.html#cppclassinheritchild2">EquilTriangle</a>).</dd></dl>
+<p><b>The implementation of <code>Shape</code> does not change.</b></p>
+<h2><a class="anchor" id="cppclassinheritchild3"></a>
+Child Class: Ellipse</h2>
+<p>In order to demonstrate how (pure) virtual functions work, here is another child class: <code>Ellipse</code> (which can also be used for circles).</p>
+<h3>FILE: Ellipse.hh</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef ELLIPSE_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define ELLIPSE_HH</span></div>
+<div class="line"><span class="preprocessor"></span></div>
+<div class="line"><span class="preprocessor">#include &quot;Shape.hh&quot;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Ellipse : <span class="keyword">public</span> Shape {</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    <span class="keywordtype">bool</span> isCircle();</div>
+<div class="line">    <span class="keywordtype">float</span> area(); <span class="comment">//This and the prototype after define the virtual functions, making the class non-abstract.</span></div>
+<div class="line">    <span class="keywordtype">float</span> perimeter();</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><h3>FILE: Ellipse.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Ellipse.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">bool</span> Ellipse::isCircle() {</div>
+<div class="line">    <span class="keywordflow">return</span> (width == height) ? <span class="keyword">true</span> : <span class="keyword">false</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">float</span> Ellipse::area() {</div>
+<div class="line">    <span class="comment">//M_PI is defined in cmath and approximates the value of pi (3.1415926...).</span></div>
+<div class="line">    <span class="keywordflow">return</span> M_PI * (width/2) * (height/2);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//The perimeter of an ellipse is difficult to calculate exactly (it involves calculus), so this implementation approximates it.</span></div>
+<div class="line"><span class="keywordtype">float</span> Ellipse::perimeter() {</div>
+<div class="line">    <span class="comment">//Equation from http://www.mathsisfun.com/geometry/ellipse-perimeter.html</span></div>
+<div class="line">    <span class="keywordtype">float</span> a, b;</div>
+<div class="line">    <span class="keywordtype">double</span> h;</div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">if</span> (width &gt; height)</div>
+<div class="line">    {</div>
+<div class="line">        a = width / 2;</div>
+<div class="line">        b = height / 2;</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">else</span></div>
+<div class="line">    {</div>
+<div class="line">        a = height / 2;</div>
+<div class="line">        b = width / 2;</div>
+<div class="line">    }</div>
+<div class="line"></div>
+<div class="line">    h = pow(a - b, 2) / pow(a + b, 2);</div>
+<div class="line">    <span class="keywordflow">return</span> M_PI * (3*(a+b) - sqrt((3*a + b)*(a + 3*b)));</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Here is an example <code>main()</code> using <code>Ellipse</code>...</p>
+<h3>Sample main()</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Ellipse.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> print(Shape&amp; s);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Ellipse e;</div>
+<div class="line">    e.setWidth(2); </div>
+<div class="line">    print(e);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> print(Shape&amp; s) { <span class="comment">//Passing by reference is necessary for abstract classes. Later we will learn how to work with const classes.</span></div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height: &quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Area: &quot;</span> &lt;&lt; s.area() &lt;&lt; <span class="stringliteral">&quot; Perimeter: &quot;</span> &lt;&lt; s.perimeter();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">Angle: 0 Layer: 0
+Location: 0 0
+Width: 2 Height: 1
+Area: 1.5708 Perimeter: 4.84421
+</pre><p>This is different from the override in <a class="el" href="cppclassinheritcomp.html#cppclassinheritchild2">EquilTriangle</a> in that you cannot access <code>Shape::area()</code>. If you change the <code>print</code> function so that it tries to call <code>Shape::area</code> or <code>Shape::perimeter</code>, you will get a compiler error.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">void</span> print(Shape&amp; s) {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Angle: &quot;</span> &lt;&lt; s.getRotation() &lt;&lt; <span class="stringliteral">&quot; Layer: &quot;</span> &lt;&lt; s.getLayer() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Location: &quot;</span> &lt;&lt; s.getLocation().x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; s.getLocation().y &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Width: &quot;</span> &lt;&lt; s.getWidth() &lt;&lt; <span class="stringliteral">&quot; Height: &quot;</span> &lt;&lt; s.getHeight() &lt;&lt; <span class="charliteral">&#39;\n&#39;</span></div>
+<div class="line">         &lt;&lt; <span class="stringliteral">&quot;Area: &quot;</span> &lt;&lt; s.Shape::area() &lt;&lt; <span class="stringliteral">&quot; Perimeter: &quot;</span> &lt;&lt; s.perimeter();</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Compiler Output</h3>
+<pre class="fragment">In function `print(Shape&amp;)':
+test.cc:(.text+0x77): undefined reference to `Shape::area()'
+collect2: error: ld returned 1 exit status
+
+Compilation exited abnormally with code 1
+</pre><dl class="section note"><dt>Note</dt><dd>This compiler output is a sample. Your compiler will likely not give the same result, but the message will be similar.</dd></dl>
+<h2><a class="anchor" id="cppclassinheritmulti"></a>
+Multiple Inheritance</h2>
+<p>Although it has limited uses, multiple inheritance can sometimes be helpful. Up until now, any child class inherited a single base class, but you can actually have any number of base classes.</p>
+<h3>Example:</h3>
+<p>Let's say there is a class called <code>Render</code> that can display an object on the screen. The members of a <code>Render</code> object do not matter here, so I will not provide a declaration. Let's say we want to make a rectangle class that is renderable.</p>
+<div class="fragment"><div class="line"><span class="keyword">class </span>Rectangle : <span class="keyword">public</span> Shape, <span class="keyword">public</span> Render {</div>
+<div class="line">    <span class="comment">//Declaration goes here.</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>There is no real difference between multiple and single inheritance except that there is not a single base class. The members of both <code>Shape</code> and <code>Render</code> are callable in the child, and functions that accept either <code>Shape</code> or <code>Render objects can also operate on the new</code>Rectangle` class.</p>
+<dl class="section note"><dt>Note</dt><dd>The reason I did not create a more detailed example for <code>Render</code> is because it requires a variable number of points to be stored, which requires the use of dynamic memory - I have not covered this yet and therefore do not feel comfortable introducing unexplained syntax. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

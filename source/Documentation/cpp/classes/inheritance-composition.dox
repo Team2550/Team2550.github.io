@@ -99,7 +99,7 @@ protected:
     float height;
 public:
     Shape();
-    Shape(float w, float h, Point2d loc, int angle);
+    Shape(float w, float h, Point2d loc, int angle = 0);
     //Mutators
     void setLayer(int l);
     void setWidth(float w);
@@ -223,7 +223,7 @@ Here is the declaration and implementation of a very simple child class, `Rectan
 class Rectangle : public Shape {
 public:
     Rectangle();
-    Rectangle(float w, float h, Point2d loc, int angle);
+    Rectangle(float w, float h, Point2d loc, int angle = 0);
     int area();
     int perimeter();
 };
@@ -332,7 +332,7 @@ The above diagram gives us one very important piece of information: the ratio be
 class EquilTriangle : public Shape {
 public:
     EquilTriangle();
-    EquilTriangle(float w, Point2d loc, int angle);
+    EquilTriangle(float w, Point2d loc, int angle = 0);
     void setWidth(float w);
     void setHeight(float h);
     float area();
@@ -425,4 +425,197 @@ void printShape(Shape s) {
 As you can see, the program worked. However, running `Shape::setHeight` defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.
 
 \subsection cppclassinheritvirtual Virtual Functions
+The more methods the base class has, the more powerful it is. The more methods the base class has, the more you can do in the functions that accept it as an argument. For instance, the `area` and `perimeter` methods are in every child class of `Shape` that we declared, and it is safe to say that every shape has both an area and perimeter (circumference in the case of circles, but it is still the same thing). The problem we encounter is that the means by which you calculate those values differ from shape to shape. Because of this, it doesn't make since to define the methods in the base class. This is where virtual methods come in. Basically, they make the base class incomplete. You can still call a virtual function, but unless the user (programmer) inherits the class and defines those functions, the class cannot be used. Let's take another look at the `printShape` function.
+
+~~~
+void printShape(Shape s) {
+    //All of the methods that are called here exist in the base class. 
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n';
+}
+~~~
+
+There is no way to call the `area` and `perimeter methods` in the above function because they don't exist in the `Shape` class. The problem is that the base class cannot define them, and having them return a default value, such as 0, makes no since. In addition, the `Shape` class does not implement a specific shape. It is like a rectangle, but it does not define a rectangle any more than it defines any other shape. Let's modify the UML diagram we create earlier in order to deal with this shortcoming.
+
+\image html ShapeClassVirtual.svg
+
+\note The `area` and `perimeter` methods in the UML diagram above are italicized. This denotes that they are virtual functions.
+
+The declaration of `Shape` will now look like this...
+
+###FILE: Shape.hh
+~~~
+#ifndef SHAPE_HH
+#define SHAPE_HH
+
+class Point2d {
+public:
+    Point2d();
+    Point2d(int xValue, int yValue);
+    int x;
+    int y;
+};
+
+class Shape {
+private:
+    int layer;
+    Point2d location;
+    int angleDeg;
+protected:
+    float width;
+    float height;
+public:
+    Shape();
+    Shape(float w, float h, Point2d loc, int angle);
+    //Mutators
+    void setLayer(int l);
+    void setWidth(float w);
+    void setHeight(float h);
+    void setLocation(Point2d loc);
+    void chgLocation(Point2d delta);
+    void setRotation(int degrees);
+    void chgRotation(int degrees);
+    //Accessors
+    int getLayer();
+    float getWidth();
+    float getHeight();
+    Point2d getLocation();
+    int getRotation();
+    //Utility
+    virtual float area() = 0;
+    virtual float perimeter() = 0;
+};
+
+#endif
+~~~
+
+\note The two virtual functions are at the bottom. The `= 0` is critical because it makes them *pure virtual functions*. In other words, it makes the class *abstract*, meaning that you can't create a `Shape` object. In order to use `Shape`, you have to inherit it and define the virtual functions. Normal virtual functions behave similar to method overriding (see \ref cppclassinheritchild2 "EquilTriangle").
+
+* **The implementation of `Shape` does not change.**
+
+\subsection cppclassinheritchild3 Child Class: Ellipse
+In order to demonstrate how (pure) virtual functions work, here is another child class: `Ellipse` (which can also be used for circles).
+
+###FILE: Ellipse.hh
+~~~
+#ifndef ELLIPSE_HH
+#define ELLIPSE_HH
+
+#include "Shape.hh"
+
+class Ellipse : public Shape {
+public:
+    bool isCircle();
+    float area(); //This and the prototype after define the virtual functions, making the class non-abstract.
+    float perimeter();
+};
+
+#endif
+~~~
+
+###FILE: Ellipse.cc
+~~~
+#include <cmath>
+#include "Ellipse.hh"
+using namespace std;
+
+bool Ellipse::isCircle() {
+    return (width == height) ? true : false;
+}
+
+float Ellipse::area() {
+    //M_PI is defined in cmath and approximates the value of pi (3.1415926...).
+    return M_PI * (width/2) * (height/2);
+}
+
+//The perimeter of an ellipse is difficult to calculate exactly (it involves calculus), so this implementation approximates it.
+float Ellipse::perimeter() {
+    //Equation from http://www.mathsisfun.com/geometry/ellipse-perimeter.html
+    float a, b;
+    double h;
+    
+    if (width > height)
+    {
+        a = width / 2;
+        b = height / 2;
+    }
+    else
+    {
+        a = height / 2;
+        b = width / 2;
+    }
+
+    h = pow(a - b, 2) / pow(a + b, 2);
+    return M_PI * (3*(a+b) - sqrt((3*a + b)*(a + 3*b)));
+}
+~~~
+
+Here is an example `main()` using `Ellipse`...
+
+###Sample main()
+~~~
+#include <iostream>
+#include "Ellipse.hh"
+using namespace std;
+
+void print(Shape& s);
+
+int main() {
+    Ellipse e;
+    e.setWidth(2); 
+    print(e);
+}
+
+void print(Shape& s) { //Passing by reference is necessary for abstract classes. Later we will learn how to work with const classes.
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n'
+         << "Area: " << s.area() << " Perimeter: " << s.perimeter();
+}
+~~~
+
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 0 0
+    Width: 2 Height: 1
+    Area: 1.5708 Perimeter: 4.84421
+
+This is different from the override in \ref cppclassinheritchild2 "EquilTriangle" in that you cannot access `Shape::area()`. If you change the `print` function so that it tries to call `Shape::area` or `Shape::perimeter`, you will get a compiler error.
+
+~~~
+void print(Shape& s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n'
+         << "Area: " << s.Shape::area() << " Perimeter: " << s.perimeter();
+}
+~~~
+
+###Compiler Output
+
+    In function `print(Shape&)':
+    test.cc:(.text+0x77): undefined reference to `Shape::area()'
+    collect2: error: ld returned 1 exit status
+
+    Compilation exited abnormally with code 1
+
+\note This compiler output is a sample. Your compiler will likely not give the same result, but the message will be similar.
+
+\subsection cppclassinheritmulti Multiple Inheritance
+Although it has limited uses, multiple inheritance can sometimes be helpful. Up until now, any child class inherited a single base class, but you can actually have any number of base classes.
+
+###Example:
+Let's say there is a class called `Render` that can display an object on the screen. The members of a `Render` object do not matter here, so I will not provide a declaration. Let's say we want to make a rectangle class that is renderable.
+
+~~~
+class Rectangle : public Shape, public Render {
+    //Declaration goes here.
+}
+~~~
+
+There is no real difference between multiple and single inheritance except that there is not a single base class. The members of both `Shape` and `Render` are callable in the child, and functions that accept either `Shape` or `Render objects can also operate on the new `Rectangle` class.
+
+\note The reason I did not create a more detailed example for `Render` is because it requires a variable number of points to be stored, which requires the use of dynamic memory - I have not covered this yet and therefore do not feel comfortable introducing unexplained syntax.
 */
