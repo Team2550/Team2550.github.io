@@ -1,0 +1,400 @@
+/** \page cppclassmemb Special Members
+\tableofcontents
+
+This page briefly covers some special functionality of class members. `const` functions allow you to work with classes that have been designated as constant, and `static` members do not change between class instances.
+
+\section cppclassmembfnconst const Functions
+There are times you may want to have a `const` class, where data-altering methods cannot be run, but accessors still need to work. An example of a situation where this can be useful is when you want to pass by reference but guarantee the members of the class will not change.
+
+Let's use the `Shape` class as an example...
+
+###FILE: Shape.hh
+~~~
+#ifndef SHAPE_HH
+#define SHAPE_HH
+
+class Point2d {
+public:
+    Point2d();
+    Point2d(int xValue, int yValue);
+    int x;
+    int y;
+};
+
+class Shape {
+private:
+    int layer;
+    Point2d location;
+    int angleDeg;
+protected:
+    float width;
+    float height;
+public:
+    Shape();
+    Shape(float w, float h, Point2d loc, int angle);
+    //Mutators
+    void setLayer(int l);
+    void setWidth(float w);
+    void setHeight(float h);
+    void setLocation(Point2d loc);
+    void chgLocation(Point2d delta);
+    void setRotation(int degrees);
+    void chgRotation(int degrees);
+    //Accessors
+    int getLayer() const;
+    float getWidth() const;
+    float getHeight() const;
+    Point2d getLocation() const;
+    int getRotation() const;
+    //Utility
+    virtual float area() const = 0; //Note the position of const here.
+    virtual float perimeter() const = 0;
+};
+
+#endif
+~~~
+
+All we did was append `const` to the end of the function prototypes we want to be able to call from a `const` object. If an object is constant, we want to be able to access the data, but not change it.
+
+\warning A `const` at the end of the prototype and at the beginning are different. If `const` is at the beginning, the data it returns cannot be changed. If it is at the end, it determines whether the method can be called if it is a const object.
+
+The implementation has similar changes...
+
+###FILE: Shape.cc
+~~~
+...
+
+int Shape::getLayer() const { //const has to be in both the declaration and implementation.
+    return layer;
+}
+
+float Shape::getWidth() const {
+    return width;
+}
+
+float Shape::getHeight() const {
+    return height;
+}
+
+int Shape::getRotation() const {
+    return angleDeg;
+}
+
+Point2d Shape::getLocation() const {
+    return location;
+}
+~~~
+
+\note The constructors don't need to be declared `const`, they can be run regardless.
+
+I used the class from the inheritance section here in order to show how to deal with const in virtual functions...
+
+###FILE: Rectangle.hh
+~~~
+#ifndef RECTANGLE_HH
+#define RECTANGLE_HH
+
+#include "Shape.hh"
+
+class Rectangle : public Shape {
+public:
+    Rectangle();
+    Rectangle(float w, float h, Point2d loc, int angle);
+    float area() const;
+    float perimeter() const;
+};
+
+#endif
+~~~
+
+###FILE: Rectangle.cc
+~~~
+#include "Rectangle.hh"
+using namespace std;
+
+//All other methods are defined in Shape. You can call any of Shape's methods
+//for a Rectangle object.
+
+Rectangle::Rectangle() {
+    //The Shape default constructor is automatically run here.
+}
+
+Rectangle::Rectangle(float w, float h, Point2d loc, int angle) :
+    Shape(w, h, loc, angle)
+{}
+
+float Rectangle::area() const { //Again, const has to be in both the declaration and implementation.
+    return width * height;
+}
+
+float Rectangle::perimeter() const {
+    return (width*2) + (height*2);
+}
+~~~
+
+###Example main()
+~~~
+#include <iostream>
+#include "Rectangle.hh"
+using namespace std;
+
+void print(const Shape& s);
+
+int main() {
+    Rectangle r;
+    r.setWidth(2); 
+    print(r);
+}
+
+void print(const Shape& s) {
+    cout << "Angle: " << s.getRotation() << " Layer: " << s.getLayer() << '\n'
+         << "Location: " << s.getLocation().x << ' ' << s.getLocation().y << '\n'
+         << "Width: " << s.getWidth() << " Height: " << s.getHeight() << '\n'
+         << "Area: " << s.area() << " Perimeter: " << s.perimeter();
+}
+~~~
+
+###Output
+
+    Angle: 0 Layer: 0
+    Location: 0 0
+    Width: 2 Height: 1
+    Area: 2 Perimeter: 6
+
+The only difference in the above program is that `print` now does not have the ability to call methods that were not labeled `const`. This guarantees that the object will not change.
+
+In order to demonstrate this, consider the below code, that compiles and runs correctly...
+
+~~~
+#include <iostream>
+#include "Rectangle.hh"
+using namespace std;
+
+int main() {
+    const Rectangle r;
+    cout << r.getWidth();
+}
+~~~
+
+...however, if we try to compile something that runs a method that was not labeled as `const`, we will run into trouble.
+
+~~~
+#include <iostream>
+#include "Rectangle.hh"
+using namespace std;
+
+int main() {
+    const Rectangle r;
+    r.setWidth(2);
+    cout << r.getWidth();
+}
+~~~
+
+###Compiler Error
+
+    test.cc: In function ‘int main()’:
+    test.cc:7:17: error: passing ‘const Rectangle’ as ‘this’ argument of ‘void Shape::setWidth(float)’ discards qualifiers [-fpermissive]
+        r.setWidth(2);
+                 ^
+    Compilation exited abnormally with code 1
+
+\section cppclassmembstatic static Members
+Static members have one value no matter what the object is. They can be useful for a variety of reasons, but I will use it to count how many instances of a class there are.
+
+\subsection cppclassmembstaticvar static Variables
+Here is an example class that uses a `static` variable to count how many instances exist.
+
+###FILE: CountMe.hh
+~~~
+#ifndef COUNTME_HH
+#define COUNTME_HH
+
+class CountMe {
+private:
+    static int inst;
+public:
+    CountMe();
+    ~CountMe(); //This is the destructor
+    int getInstances() const;
+};
+
+#endif
+~~~
+
+\note The destructor is run automatically when the class goes out of scope. I will explain it in more detail later. A destructor is always named `~ClassName` and has no return type.
+
+###FILE: CountMe.cc
+~~~
+#include "CountMe.hh"
+
+int CountMe::inst = 0; //See warning.
+
+CountMe::CountMe() {
+    inst++;
+}
+
+CountMe::~CountMe() {
+    inst--;
+}
+
+int CountMe::getInstances() const {
+    return inst;
+}
+~~~
+
+\warning The static member has to be initialized outside of the class. This can only be done once, and has to happen in the global scope.
+
+###FILE: test.cc
+~~~
+#include <iostream>
+#include "CountMe.hh"
+
+int main() {
+    CountMe c[10];
+    //The constructor has run 10 times.
+    cout << c[0].getInstances() << '\n';
+    if (true) //introduce a new scope
+    {
+        CountMe d; //Ran the constructor again.
+        cout << d.getInstances() << '\n';
+    }
+    //Ran the destructor
+    cout << c[0].getInstances();
+}
+~~~
+
+###Output
+
+    10
+    11
+    10
+
+\subsection cppclassmembstaticfn static Functions
+`static` functions are methods that do not operate on a specific object. Also, they cannot access data that is object-specific (any members that are not `static`). This basically makes the class behave as if it were a namespace.
+
+###Example
+The `getInstances` method is not useful for specific objects. It gets the total number of instances there are, which does not change based on the instance.
+~~~
+#ifndef COUNTME_HH
+#define COUNTME_HH
+
+class CountMe {
+private:
+    static int inst;
+public:
+    CountMe();
+    ~CountMe(); //This is the destructor
+    static int getInstances();
+};
+
+#endif
+~~~
+
+\note `static` methods cannot be delcared as `const` or `virtual`.
+
+The implementation file does not change, but the way you call the method does. Both of the calls below work correctly.
+~~~
+object.getInstance();
+CountMe::getInstance();
+~~~
+
+\section cppclassmembfriend friend Functions
+`friend` functions have access to the private members of a class. They are useful when you are doing operations on multiple objects of the same class, and you need private member access. Here is a simple example of where this can be useful...
+
+###FILE: Point2d.hh
+~~~
+#ifndef POINT2D_HH
+#define POINT2d_HH
+
+class Point2d {
+private:
+    int x;
+    int y;
+public:
+    Point2d();
+    bool setX(int xVal);
+    bool setY(int yVal);
+    int getX();
+    int getY();
+    friend Point2d add(Point2d a, Point2d b);
+};
+
+#endif
+~~~
+
+\note No additional prototype for the friend function is necessary, even though it is not actuall a part of the class.
+
+###FILES: Point2d.cc
+~~~
+#include "Point2d.hh"
+
+//This is the friend function. Note that it is not a part of the class, so it does not need the additional scope resolution.
+Point2d add(Point2d a, Point2d b) {
+    Point2d result;
+    result.x = a.x + b.x;
+    result.y = a.y + b.y;
+    return result;
+}
+
+///////////////////////////////////////////////////////////
+Point2d::Point2d() {
+    x = 0;
+    y = 0;
+}
+
+bool Point2d::setX(int xVal) {
+    //Needed some reason have a setter method.
+    if (xVal >= 0)
+    {
+        x = xVal;
+        return true;
+    }
+    else
+        return false;
+}
+
+bool Point2d::setY(int yVal) {
+    if (yVal >= 0)
+    {
+        y = yVal;
+        return true;
+    }
+    else
+        return false;
+}
+
+int Point2d::getX() {
+    return x;
+}
+
+int Point2d::getY() {
+    return y;
+}
+
+~~~
+
+###Test File
+~~~
+#include <iostream>
+#include "Point2d.hh"
+using namespace std;
+
+int main() {
+    Point2d p1;
+    Point2d p2;
+    Point2d res;
+    p1.setX(1);
+    p1.setY(2);
+    p2.setX(3);
+    p2.setY(4);
+    res = add(p1, p2);
+    cout << res.getX() << ' ' << res.getY() << endl;
+}
+~~~
+
+###Output
+
+    4 6
+
+*/
+

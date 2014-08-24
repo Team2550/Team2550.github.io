@@ -21,8 +21,13 @@ var cppclass =
         [ "Multiple Inheritance", "cppclassinheritcomp.html#cppclassinheritmulti", null ]
       ] ]
     ] ],
-    [ "Functions & Methods", "cppclassfn.html", [
-      [ "const Functions", "cppclassfn.html#cppclassfnconst", null ]
+    [ "Special Members", "cppclassmemb.html", [
+      [ "const Functions", "cppclassmemb.html#cppclassmembfnconst", null ],
+      [ "static Members", "cppclassmemb.html#cppclassmembstatic", [
+        [ "static Variables", "cppclassmemb.html#cppclassmembstaticvar", null ],
+        [ "static Functions", "cppclassmemb.html#cppclassmembstaticfn", null ]
+      ] ],
+      [ "friend Functions", "cppclassmemb.html#cppclassmembfriend", null ]
     ] ],
     [ "Operator Overloading", "cppclassopoverload.html", null ]
 ];

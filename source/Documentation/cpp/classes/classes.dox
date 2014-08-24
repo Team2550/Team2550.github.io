@@ -180,6 +180,6 @@ More Information
 ---------------------
 - \subpage cppclassencap "Encapsulation"
 - \subpage cppclassinheritcomp "Inheritance & Composition"
-- \subpage cppclassfn "friend, static, and const methods"
+- \subpage cppclassmemb "Special Members"
 - \subpage cppclassopoverload "Operator Overloading"
 */

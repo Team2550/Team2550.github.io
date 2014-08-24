@@ -339,7 +339,7 @@ Inheritance &amp; Functions</h2>
 Location: 0 0
 Width: 1 Height: 1    
 </pre><p>Note that <code>r</code> is a <code>Rectangle</code> and the function's parameter type is a <code>Shape</code>. This would cause a compiler error if you set the encapsulation level when <code>Rectangle</code> inherited <code>Shape</code> were something other than <code>public</code>.</p>
-<dl class="section note"><dt>Note</dt><dd>There is a more efficient way to write this function. See <a class="el" href="cppclassfn.html#cppclassfnconst">const functions</a>.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>There is a more efficient way to write this function. See const functions.</dd></dl>
 <h2><a class="anchor" id="cppclassinheritchild2"></a>
 Child Class: EquilTriangle</h2>
 <p>Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the <code>Shape</code> class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called <code>EquilTriangle</code>, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.</p>
