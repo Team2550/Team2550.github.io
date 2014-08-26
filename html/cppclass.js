@@ -29,5 +29,5 @@ var cppclass =
       ] ],
       [ "friend Functions", "cppclassmemb.html#cppclassmembfriend", null ]
     ] ],
-    [ "Operator Overloading", "cppclassopoverload.html", null ]
+    [ "More Information", "cppclassmore.html", null ]
 ];

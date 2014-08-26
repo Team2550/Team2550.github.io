@@ -33,7 +33,7 @@ var NAVTREEINDEX0 =
 "cppclassmemb.html#cppclassmembstatic":[1,12,6,1],
 "cppclassmemb.html#cppclassmembstaticfn":[1,12,6,1,1],
 "cppclassmemb.html#cppclassmembstaticvar":[1,12,6,1,0],
-"cppclassopoverload.html":[1,12,7],
+"cppclassmore.html":[1,12,7],
 "cppconsole.html":[1,3],
 "cppconsole.html#escape":[1,3,0,0],
 "cppconsole.html#ierr":[1,3,2,1],

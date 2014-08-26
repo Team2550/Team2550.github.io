@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['opoverload_2edox',['opoverload.dox',['../opoverload_8dox.html',1,'']]]
+  ['strings_2edox',['strings.dox',['../strings_8dox.html',1,'']]],
+  ['struct_2edox',['struct.dox',['../struct_8dox.html',1,'']]]
 ];

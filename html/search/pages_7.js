@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['namespaces_20_26_20headers',['Namespaces &amp; Headers',['../cppnamespace.html',1,'cpp']]]
+  ['more_20information',['More Information',['../cppclassmore.html',1,'cppclass']]]
 ];
