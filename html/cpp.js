@@ -67,6 +67,7 @@ var cpp =
     ] ],
     [ "Classes", "cppclass.html", "cppclass" ],
     [ "Multidimensional Arrays", "cppmdarray.html", [
-      [ "Memory Allocation Diagrams", "cppmdarray.html#cppmdarrayalloc", null ]
+      [ "Memory Allocation Diagrams", "cppmdarray.html#cppmdarrayalloc", null ],
+      [ "Arrays of Arrays", "cppmdarray.html#cppmdarray2", null ]
     ] ]
 ];

@@ -26,43 +26,225 @@ The above table is fairly similar to the one that the system keeps, but not exac
 
 \note The addresses do not matter, I am just giving each byte an address. This is a simplification of reality, but it works for illustrative purposes.
 
-
-    Address	Name	Type
-    ---------------------
-    10000	c	    char
-    ---------------------
-    10001	x	    int
-    10002
-    10003
-    10004
-    ---------------------
-    10005	y[5]    int
-    10006
-    10007
-    10008
-    -----
-    10009
-    10010
-    10011
-    10012
-    -----
-    10013
-    10014
-    10015
-    10016
-    -----
-    10017
-    10018
-    10019
-    10020
-    -----
-    10021
-    10022
-    10023
-    10024
-    ---------------------
-    …
+<table>
+<tr>
+    <th>Address</th>
+    <th>Name</th>
+    <th>Type</th>
+</tr>
+<tr>
+    <td>10000</td>
+    <td>c</td>
+    <td>char</td>
+</tr>
+<tr>
+    <td>10001</td>
+    <td rowspan="4">x</td>
+    <td rowspan="4">int</td>
+</tr>
+<tr>
+    <td>10002</td>
+</tr>
+<tr>
+    <td>10003</td>
+</tr>
+<tr>
+    <td>10004</td>
+</tr>
+<tr>
+    <td>10005</td>
+    <td rowspan="4">y[0]</td>
+    <td rowspan="20">int[5]</td>
+</tr>
+<tr>
+    <td>10006</td>
+</tr>
+<tr>
+    <td>10007</td>
+</tr>
+<tr>
+    <td>10008</td>
+</tr>
+<tr>
+    <td>10009</td>
+    <td rowspan="4">y[1]</td>
+</tr>
+<tr>
+    <td>10010</td>
+</tr>
+<tr>
+    <td>10011</td>
+</tr>
+<tr>
+    <td>10012</td>
+</tr>
+<tr>
+    <td>10013</td>
+    <td rowspan="4">y[2]</td>
+</tr>
+<tr>
+    <td>10014</td>
+</tr>
+<tr>
+    <td>10015</td>
+</tr>
+<tr>
+    <td>10016</td>
+</tr>
+<tr>
+    <td>10017</td>
+    <td rowspan="4">y[3]</td>
+</tr>
+<tr>
+    <td>10018</td>
+</tr>
+<tr>
+    <td>10019</td>
+</tr>
+<tr>
+    <td>10020</td>
+</tr>
+<tr>
+    <td>10021</td>
+    <td rowspan="4">y[4]</td>
+</tr>
+<tr>
+    <td>10022</td>
+</tr>
+<tr>
+    <td>10023</td>
+</tr>
+<tr>
+    <td>10024</td>
+</tr>
+<tr>
+    <td colspan="3">...</td>
+</tr>
+</table>
     
 The benefit of the above chart is that it *shows* how much space is taken up by each variable.
 
+\section cppmdarray2 Arrays of Arrays
+Multidimensional arrays allow you to store arrays of arrays. For instance, a declaration of a 2 dimensional array would look like this...
+
+    int x[3][2];
+
+The array above has two indexes, and is known as a 3x2 array. You can store 6 values in it. To access a value, you treat it like a normal array.
+
+    x[0][0] = 0;
+    x[2][1] = 3;
+    
+One way to think of a 2D array is as a table. It would look something like the one below...
+
+<table>
+<tr>
+    <th colspan="2">x[3][2]</th>
+</tr>
+<tr>
+    <td>x[0][0]</td>
+    <td>x[0][1]</td>
+</tr>
+<tr>
+    <td>x[1][0]</td>
+    <td>x[1][1]</td>
+</tr>
+<tr>
+    <td>x[2][0]</td>
+    <td>x[2][1]</td>
+</tr>
+</table>
+
+It is important to note that the table is arranged so that the first index defines the number of rows and the second columns. This is different from what you commonly learn in math class, where you use X and Y coordinates (columns/rows instead of rows/columns). The reason for using the rows/columns (RC) convention is that, to the compiler, you are defining an array of arrays. In other words, memory is not 2D.
+
+<table>
+<tr>
+    <th colspan="2">x[3][2] in Memory</th>
+</tr>
+<tr>
+    <th>Address</th>
+    <th>Name</th>
+</tr>
+<tr>
+    <td>1000</td>
+    <td rowspan="4">x[0][0]</td>
+</tr>
+<tr>
+    <td>1001</td>
+</tr>
+<tr>
+    <td>1002</td>
+</tr>
+<tr>
+    <td>1003</td>
+</tr>
+<tr>
+    <td>1004</td>
+    <td rowspan="4">x[0][1]</td>
+</tr>
+<tr>
+    <td>1005</td>
+</tr>
+<tr>
+    <td>1006</td>
+</tr>
+<tr>
+    <td>1007</td>
+</tr>
+<tr>
+    <td>1008</td>
+    <td rowspan="4">x[1][0]</td>
+</tr>
+<tr>
+    <td>1009</td>
+</tr>
+<tr>
+    <td>1010</td>
+</tr>
+<tr>
+    <td>1011</td>
+
+</tr>
+<tr>
+    <td>1012</td>
+    <td rowspan="4">x[1][1]</td>
+</tr>
+<tr>
+    <td>1013</td>
+</tr>
+<tr>
+    <td>1014</td>
+
+</tr>
+<tr>
+    <td>1015</td>
+
+</tr>
+<tr>
+    <td>1016</td>
+    <td rowspan="4">x[2][0]</td>
+</tr>
+<tr>
+    <td>1017</td>
+</tr>
+<tr>
+    <td>1018</td>
+
+</tr>
+<tr>
+    <td>1019</td>
+</tr>
+<tr>
+    <td>1020</td>
+    <td rowspan="4">x[2][1]</td>
+</tr>
+<tr>
+    <td>1021</td>
+</tr>
+<tr>
+    <td>1022</td>
+</tr>
+<tr>
+    <td>1023</td>
+</tr>
+</table>
 */
