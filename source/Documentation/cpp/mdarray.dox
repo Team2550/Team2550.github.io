@@ -1,0 +1,68 @@
+/** \page cppmdarray Multidimensional Arrays
+\tableofcontents
+
+Multidimensional arrays allow you to create arrays with more than one index. This can be useful for creating tables or simulating real life within your program.
+
+\section cppmdarrayalloc Memory Allocation Diagrams
+Memory allocation refers to how and where variables and other temporary values are stored while the program is running. There are two types of memory (RAM) storage: **the stack** and **the heap**. For now, we will just focus on the stack - the portion of memory that the system dedicates to your program.
+
+Given this code...
+
+    char c;
+    int x;
+    int y[5];
+
+Here is a memory chart...
+
+Start Address | End Address | Unit Size | Name
+--------------|-------------|-----------|------
+10000         | 10001       | 1 byte    | c
+10001         | 10005       | 4 bytes   | x
+10005         | 10024       | 4 bytes   | y
+
+\note An int takes 4 bytes of memory. 1 byte is 4 bits, a bit is a single 1 or 0.
+
+The above table is fairly similar to the one that the system keeps, but not exactly the same. The array takes 5x the memory of the int. Because that is not immediately visible, memory is often shown in diagrams or charts. For instance, a chart of the above memory could look like this...	
+
+\note The addresses do not matter, I am just giving each byte an address. This is a simplification of reality, but it works for illustrative purposes.
+
+
+    Address	Name	Type
+    ---------------------
+    10000	c	    char
+    ---------------------
+    10001	x	    int
+    10002
+    10003
+    10004
+    ---------------------
+    10005	y[5]    int
+    10006
+    10007
+    10008
+    -----
+    10009
+    10010
+    10011
+    10012
+    -----
+    10013
+    10014
+    10015
+    10016
+    -----
+    10017
+    10018
+    10019
+    10020
+    -----
+    10021
+    10022
+    10023
+    10024
+    ---------------------
+    …
+    
+The benefit of the above chart is that it *shows* how much space is taken up by each variable.
+
+*/

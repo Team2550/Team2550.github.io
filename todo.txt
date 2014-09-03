@@ -2,10 +2,10 @@ x (A) Arrays +cpp
 x (A) Strings +cpp
 x (B) Namespaces +cpp
 x (A) Structs +cpp
-(A) Classes +cpp
-(B) Inheritance & Composition +cpp
+x (A) Classes +cpp
+x (B) Inheritance & Composition +cpp
+(A) Multidimensional Arrays +cpp
 (C) Dynamic Memory & Pointers +cpp
-(C) Multidimensional Arrays +cpp
 (D) WPILib +cpp
 (D) Electrical @expand
 (D) Pneumatics @expand

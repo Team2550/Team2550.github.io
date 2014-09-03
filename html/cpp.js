@@ -65,5 +65,8 @@ var cpp =
       [ "Functions", "cppstruct.html#structfn", null ],
       [ "Arrays", "cppstruct.html#structarray", null ]
     ] ],
-    [ "Classes", "cppclass.html", "cppclass" ]
+    [ "Classes", "cppclass.html", "cppclass" ],
+    [ "Multidimensional Arrays", "cppmdarray.html", [
+      [ "Memory Allocation Diagrams", "cppmdarray.html#cppmdarrayalloc", null ]
+    ] ]
 ];

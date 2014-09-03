@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: C++</title>
+<title>Team 2550: Multidimensional Arrays</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -100,7 +100,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('cpp.html','');});
+$(document).ready(function(){initNavTree('cppmdarray.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -119,98 +119,78 @@ $(document).ready(function(){initNavTree('cpp.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">C++ </div>  </div>
+<div class="title">Multidimensional Arrays </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>C++ is the programming language we use to program the robot and one of the most commonly used languages today. However, it is not an easy language to learn for a beginner due to the fact that it has a steep learning curve. This document is designed to help teach the basics of C++.</p>
-<h3>You will learn</h3>
-<ul>
-<li>Why you want to know C++</li>
-<li>How C++ goes from a text file to binary code that can run</li>
-<li>Basic syntax of C++</li>
-<li>C++ data types</li>
-<li>Functions</li>
-<li>Arrays</li>
-<li>Classes</li>
-<li>Inheritance and composition</li>
-<li>Dynamic memory</li>
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#cppmdarrayalloc">Memory Allocation Diagrams</a></li>
 </ul>
-<h3>You need to know</h3>
-<ul>
-<li>Basic computer components</li>
-<li>How programs are structured</li>
-<li>Algebra</li>
-</ul>
-<h3>About C++</h3>
-<p>C++ was created by a man named Bjarne Stoustrup as an upgrade to C that fixed many of the issues and complaints. There are many C-based languages, but C++ is one of the most popular. C was created in order to write the Unix operating system, the mainstay of the computing industry since the 1970's. C was created to be simple, fast, efficient, and powerful.</p>
-<p>A few C-based programming languages are...</p>
-<ul>
-<li>C++<ul>
-<li>Designed to be extremely fast and efficient</li>
-<li>More complex than C</li>
-<li>Object-oriented programming supported</li>
-<li>Much of the C++ code is backwards-compatible with C</li>
-<li>Often used for background tasks such as graphics engines, robotics, and operating systems</li>
-</ul>
-</li>
-<li>Java (not to be confused with JavaScript)<ul>
-<li>Slow when compared to C and C++ because it runs in a virtual machine – high RAM and CPU usage</li>
-<li>Similar syntax to C++</li>
-<li>Object-oriented</li>
-<li>Designed for user-level applications and good cross-platform support</li>
-<li>Used for web programming and cross-platform applications, the main programming language used on Android phones</li>
-</ul>
-</li>
-<li>Objective-C<ul>
-<li>Implements many of the same missing features from C that C++ added</li>
-<li>Object-oriented</li>
-<li>Not backwards-compatible with C, syntax is significantly different</li>
-<li>Can be mixed with C++ code</li>
-<li>Primarily used on Apple devices, used to write apps for Mac and iOS devices</li>
-</ul>
-</li>
-</ul>
-<h3>A few notes</h3>
-<ul>
-<li><code>// makes the rest of this line a comment in C++, the compiler ignores this</code></li>
-<li><div class="fragment"><div class="line"><span class="comment">/*</span></div>
-<div class="line"><span class="comment">This is a block comment... Anything I type in here is ignored by the compiler.</span></div>
-<div class="line"><span class="comment">It can span multiple lines.</span></div>
-<div class="line"><span class="comment">*/</span></div>
-</div><!-- fragment --></li>
-<li><code>#</code> is a preprocessor directive, more on those later</li>
-<li>Each line of code must end with a semicolon (<code>;</code>). If you don't include this, two lines will be seen as the same line (which can be useful if you need to do a lot of comparisons).</li>
-<li>Blocks of code are enclosed in <code>{ }</code></li>
-</ul>
-<h3>A few suggestions</h3>
-<ul>
-<li><b>Always comment your code.</b> This will help a lot when someone (or you) tries to look at it in the future. It doesn't matter how self-explanatory your code is, comment it!</li>
-<li>If you can't figure out what is wrong with your code, ask someone else. They will find the missing semicolon in 30 seconds that you didn't notice after five hours.</li>
-<li>Write self-documenting code. This means use names that make since and clearly show the logic that the program uses. Make it consistent.</li>
-</ul>
-<h2>Pages</h2>
-<ul>
-<li><a class="el" href="cppbuild.html">Build Process</a></li>
-<li><a class="el" href="cppdata.html">Simple Data Types</a></li>
-<li><a class="el" href="cpplayout.html">Program Layout</a></li>
-<li><a class="el" href="cppconsole.html">Console I/O</a></li>
-<li><a class="el" href="cppflow.html">Program Flow</a></li>
-<li><a class="el" href="cppfn.html">Functions</a></li>
-<li><a class="el" href="cppenum.html">Enumeration</a></li>
-<li><a class="el" href="cpparray.html">Arrays</a></li>
-<li><a class="el" href="cppstr.html">Strings</a></li>
-<li><a class="el" href="cppfileio.html">File I/O</a></li>
-<li><a class="el" href="cppnamespace.html">Namespaces &amp; Headers</a></li>
-<li><a class="el" href="cppstruct.html">Structures</a></li>
-<li><a class="el" href="cppclass.html">Classes</a></li>
-<li><a class="el" href="cppmdarray.html">Multidimensional Arrays</a> </li>
-</ul>
+</div>
+<div class="textblock"><p>Multidimensional arrays allow you to create arrays with more than one index. This can be useful for creating tables or simulating real life within your program.</p>
+<h1><a class="anchor" id="cppmdarrayalloc"></a>
+Memory Allocation Diagrams</h1>
+<p>Memory allocation refers to how and where variables and other temporary values are stored while the program is running. There are two types of memory (RAM) storage: <b>the stack</b> and <b>the heap</b>. For now, we will just focus on the stack - the portion of memory that the system dedicates to your program.</p>
+<p>Given this code... </p>
+<pre class="fragment">char c;
+int x;
+int y[5];
+</pre><p>Here is a memory chart...</p>
+<table class="doxtable">
+<tr>
+<th>Start Address </th><th>End Address </th><th>Unit Size </th><th>Name  </th></tr>
+<tr>
+<td>10000 </td><td>10001 </td><td>1 byte </td><td>c </td></tr>
+<tr>
+<td>10001 </td><td>10005 </td><td>4 bytes </td><td>x </td></tr>
+<tr>
+<td>10005 </td><td>10024 </td><td>4 bytes </td><td>y </td></tr>
+</table>
+<dl class="section note"><dt>Note</dt><dd>An int takes 4 bytes of memory. 1 byte is 4 bits, a bit is a single 1 or 0.</dd></dl>
+<p>The above table is fairly similar to the one that the system keeps, but not exactly the same. The array takes 5x the memory of the int. Because that is not immediately visible, memory is often shown in diagrams or charts. For instance, a chart of the above memory could look like this...</p>
+<dl class="section note"><dt>Note</dt><dd>The addresses do not matter, I am just giving each byte an address. This is a simplification of reality, but it works for illustrative purposes.</dd></dl>
+<pre class="fragment">Address Name    Type
+---------------------
+10000   c       char
+---------------------
+10001   x       int
+10002
+10003
+10004
+---------------------
+10005   y[5]    int
+10006
+10007
+10008
+-----
+10009
+10010
+10011
+10012
+-----
+10013
+10014
+10015
+10016
+-----
+10017
+10018
+10019
+10020
+-----
+10021
+10022
+10023
+10024
+---------------------
+…
+</pre><p>The benefit of the above chart is that it <em>shows</em> how much space is taken up by each variable. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <ul>
+        <li class="navelem"><a class="el" href="cpp.html">C++</a></li>
         <li class="footer">
             <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:7px 0px" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
         </li>
