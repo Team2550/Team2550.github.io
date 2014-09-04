@@ -24,8 +24,6 @@ Start Address | End Address | Unit Size | Name
 
 The above table is fairly similar to the one that the system keeps, but not exactly the same. The array takes 5x the memory of the int. Because that is not immediately visible, memory is often shown in diagrams or charts. For instance, a chart of the above memory could look like this...	
 
-\note The addresses do not matter, I am just giving each byte an address. This is a simplification of reality, but it works for illustrative purposes.
-
 <table>
 <tr>
     <th>Address</th>
@@ -121,7 +119,9 @@ The above table is fairly similar to the one that the system keeps, but not exac
     <td colspan="3">...</td>
 </tr>
 </table>
-    
+
+\note The addresses do not matter, I am just giving each byte an address. This is a simplification of reality, but it works for illustrative purposes.
+
 The benefit of the above chart is that it *shows* how much space is taken up by each variable.
 
 \section cppmdarray2 Arrays of Arrays
@@ -247,4 +247,40 @@ It is important to note that the table is arranged so that the first index defin
     <td>1023</td>
 </tr>
 </table>
+
+The same concept applies to arrays of 3 or more dimensions. I won't show a table of these, as they would take up too much space.
+
+    int a[4][5][6]; //A 4x5x6 3-dimensional array (120 places)
+    float b[5][6][7][8]; //A 5x6x7x8 array (1680 places)
+
+\note In general, it is best to declare the fastest changing (largest) index last.
+
+More information is available in [this Wikipedia article](http://en.wikipedia.org/wiki/Row-major_order).
+
+\section cppmdarrayiter Initializing
+Initializing the values of a multidimensional array is slightly more complicated than single-dimensional ones.
+
+    int a[3][4] = {{1, 2, 3, 4},
+                   {5, 6, 7, 8},
+                   {9, 10, 11, 12}};
+
+Each row is enclosed in its own pair of braces, and the whole statement is also enclosed. Again, note that the x coordinates (columns) are the second dimension.
+
+\note Putting a single value such as `{1}` does not work for multidimensional arrays, the easiest way to initialize the values is via a loop.
+
+You can also let the compiler define the first dimension. The code below is valid.
+
+    int a[][4] = {{1, 2, 3, 4},
+                  {5, 6, 7, 8},
+                  {9, 10, 11, 12}};
+
+However, this does not work.
+
+    int a[][] = {{1, 2, 3, 4},
+                 {5, 6, 7, 8},
+                 {9, 10, 11, 12}};
+
+* **You have to define every dimension except for the first.**
+
+\warning Declaring an array greater than 2 dimensions in this manner is not advised. It can become easily confusing.
 */
