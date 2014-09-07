@@ -126,6 +126,8 @@ $(document).ready(function(){initNavTree('cppmdarray.html','');});
 <ul><li class="level1"><a href="#cppmdarrayalloc">Memory Allocation Diagrams</a></li>
 <li class="level1"><a href="#cppmdarray2">Arrays of Arrays</a></li>
 <li class="level1"><a href="#cppmdarrayiter">Initializing</a></li>
+<li class="level1"><a href="#cppmdarrayloop">Looping</a></li>
+<li class="level1"><a href="#cppmdarrayfn">Functions</a></li>
 </ul>
 </div>
 <div class="textblock"><p>Multidimensional arrays allow you to create arrays with more than one index. This can be useful for creating tables or simulating real life within your program.</p>
@@ -147,7 +149,7 @@ int y[5];
 <tr>
 <td>10005 </td><td>10024 </td><td>4 bytes </td><td>y </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>An int takes 4 bytes of memory. 1 byte is 4 bits, a bit is a single 1 or 0.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>An int takes 4 bytes of memory. 1 byte is 8 bits, a bit is a single 1 or 0. In most (if not all) cases, memory is addressed by the byte. You can only read and write 8 bytes at once.</dd></dl>
 <p>The above table is fairly similar to the one that the system keeps, but not exactly the same. The array takes 5x the memory of the int. Because that is not immediately visible, memory is often shown in diagrams or charts. For instance, a chart of the above memory could look like this...</p>
 <table class="doxtable">
 <tr>
@@ -310,7 +312,126 @@ Initializing</h1>
              {5, 6, 7, 8},
              {9, 10, 11, 12}};
 </pre><p><b>You have to define every dimension except for the first.</b></p>
-<dl class="section warning"><dt>Warning</dt><dd>Declaring an array greater than 2 dimensions in this manner is not advised. It can become easily confusing. </dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Declaring an array greater than 2 dimensions in this manner is not advised. It can become easily confusing.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>You can only use these initializations for newly declared arrays. After declaration, you have to assign values individually by their index.</dd></dl>
+<h1><a class="anchor" id="cppmdarrayloop"></a>
+Looping</h1>
+<p>You can access all of the elements of a multidimensional array by nesting for-loops. Again, the dimensions of the array are not stored automatically.</p>
+<p>This code initializes the values of a 2D array... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[5][10]; <span class="comment">//[y][x]</span></div>
+<div class="line">    <span class="keywordtype">int</span> count = 1;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; 5; ++y)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; 10; ++x)</div>
+<div class="line">        {</div>
+<div class="line">            a[y][x] = count;</div>
+<div class="line">            count++;</div>
+<div class="line">            cout &lt;&lt; a[y][x] &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line">        }</div>
+<div class="line">        cout &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">1 2 3 4 5 6 7 8 9 10 
+11 12 13 14 15 16 17 18 19 20 
+21 22 23 24 25 26 27 28 29 30 
+31 32 33 34 35 36 37 38 39 40 
+41 42 43 44 45 46 47 48 49 50 
+</pre><p>It is important that you are consistent with the dimensions, and it helps to make a comment saying what each index is. That way, you know that the loops don't get mixed up. In the case above, the x value had to be the second coordinate because the there is a newline for every y. Once you have printed a newline, you can't go back up.</p>
+<p>Here is another example, this time using a 3D array... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[5][5][5]; <span class="comment">//[z][y][x]</span></div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> z = 0; z &lt; 5; ++z)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; 5; ++y)</div>
+<div class="line">        {</div>
+<div class="line">            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; 5; ++x)</div>
+<div class="line">            {</div>
+<div class="line">                a[z][y][x] = x + y + z;</div>
+<div class="line">                cout &lt;&lt; a[z][y][x] &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line">            }</div>
+<div class="line">            cout &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">        }</div>
+<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;\n\n&quot;</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">0 1 2 3 4 
+1 2 3 4 5 
+2 3 4 5 6 
+3 4 5 6 7 
+4 5 6 7 8 
+
+
+1 2 3 4 5 
+2 3 4 5 6 
+3 4 5 6 7 
+4 5 6 7 8 
+5 6 7 8 9 
+
+
+2 3 4 5 6 
+3 4 5 6 7 
+4 5 6 7 8 
+5 6 7 8 9 
+6 7 8 9 10 
+
+
+3 4 5 6 7 
+4 5 6 7 8 
+5 6 7 8 9 
+6 7 8 9 10 
+7 8 9 10 11 
+
+
+4 5 6 7 8 
+5 6 7 8 9 
+6 7 8 9 10 
+7 8 9 10 11 
+8 9 10 11 12 
+</pre><p>Here, I have output the array values so that each layer (z index change) is printed separately, and the x and y indexes are shown in a table. As you add more dimensions, it becomes increasingly difficult to display their data all at once. For most programs, you will never need more than 3 dimensions.</p>
+<h1><a class="anchor" id="cppmdarrayfn"></a>
+Functions</h1>
+<p>Like single-dimensional arrays, <b>multidimensional arrays are always passed by reference</b>. Also, all dimensions except for the first must be defined at compile time.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> userInput(<span class="keywordtype">int</span> a[][3], <span class="keywordtype">int</span> y_size);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[2][3];</div>
+<div class="line">    userInput(a, 2);</div>
+<div class="line">    cout &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; 2; ++y)</div>
+<div class="line">    {</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; 3; ++x)</div>
+<div class="line">            cout &lt;&lt; a[y][x] &lt;&lt; <span class="charliteral">&#39; &#39;</span>;</div>
+<div class="line">        cout &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> userInput(<span class="keywordtype">int</span> a[][3], <span class="keywordtype">int</span> y_size) {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; y_size; ++y)</div>
+<div class="line">    {</div>
+<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;&gt; &quot;</span>;</div>
+<div class="line">        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; 3; ++x)</div>
+<div class="line">            cin &gt;&gt; a[y][x];</div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Input/Output</h3>
+<pre class="fragment">&gt; 1 2 3 
+&gt; 4 5 6
+
+1 2 3 
+4 5 6
+</pre><dl class="section note"><dt>Note</dt><dd>If you want to guarantee that the function will not change the array, you can put <code>const</code> in front of the parameter (<code>const a[][3]</code>). </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

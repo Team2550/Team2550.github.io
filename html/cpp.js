@@ -69,6 +69,8 @@ var cpp =
     [ "Multidimensional Arrays", "cppmdarray.html", [
       [ "Memory Allocation Diagrams", "cppmdarray.html#cppmdarrayalloc", null ],
       [ "Arrays of Arrays", "cppmdarray.html#cppmdarray2", null ],
-      [ "Initializing", "cppmdarray.html#cppmdarrayiter", null ]
+      [ "Initializing", "cppmdarray.html#cppmdarrayiter", null ],
+      [ "Looping", "cppmdarray.html#cppmdarrayloop", null ],
+      [ "Functions", "cppmdarray.html#cppmdarrayfn", null ]
     ] ]
 ];
