@@ -1,0 +1,71 @@
+/** \page cppmem Dynamic Memory
+\tableofcontents
+
+\section cppmemstack The Stack
+Up until now, all of variables you have created were allocated to the stack. The stack is a fixed-size portion of memory that the operating system gives your program when it starts. The in \ref cppmdarray "Multidimensional Arrays" are an example of how memory is stored in the stack.
+
+The stack supports two operations: push and pop. Pushing to the stack adds and item to the top, popping removes an item.
+
+Below is a (simplified) example stack for the following code...
+
+    char c = 'a';
+    int x = 1;
+    int y = 2;
+
+    
+Type | Value
+-----|------
+int  | y
+int  | x
+char | c
+
+Stacks are arranged so that the most recently used value is the easiest and fastest to access. In this case, the variable y was the most recently declared, so it is on top. We can now access y by popping from the stack.
+
+Type | Value
+-----|------
+int  | x
+char | c
+
+In order to access the memory, the CPU pops the value off the stack and reads it into the **cache** (a very small amount of memory that the CPU has built in). There, the necessary operations are performed and it is pushed back onto the stack.
+
+In some cases, it is necessary for the CPU to access multiple values, or values that are not on top of the stack. This process is slightly more complex. Let's try reading c, which is on the bottom...
+
+First, we have to pop both of the int values off of the stack and onto a temporary stack.
+
+Top | Type | Name
+----|------|------
+->  | int  | y
+-   | int  | x
+-   | char | c
+
+Pop both int values...
+
+###Stack 1 (the main stack):
+Type | Value
+-----|------
+char | c
+
+###Stack 2 (temporary):
+Type | Value
+-----|------
+int  | x
+int  | y
+
+Now the CPU is able to operate on c and then push x and y back onto the stack.
+
+\section cppmemheap The Heap
+The heap is more complex than the stack, but it is not important to know how it works exactly. As the programmer, all you need to know is that the allocation of data on the heap takes place at runtime (whenever the program is run) as opposed to compile-time. In other words, your program has to ask the operating system for memory while it is running instead of using its own dedicated memory. As a result, it will slow down your program significantly because you have to wait for the operating system to fulfill the request. However, you can store far more on the heap (on a 32 bit system, you can store up to 4GB, and even more if it is 64-bit).
+
+\note You can allocate up to 4GB on a 32-bit system *if there is nothing else running*. In other words, only the operating system can actually use the full 4GB.
+
+Different operating systems have different policies regarding how much a single program you can allocate, but you can still allocate much more than is available on the stack.
+
+Because heap storage is allocated at runtime, it is known as dynamic memory.
+
+Sections
+==========
+- \subpage cppmembinhex "Binary and Hexadecimal Numbers"
+- \subpage cppmemptr "Pointers"
+- \subpage cppmemarr "Dynamic Arrays"
+- \subpage cppmemobj "Dynamic Objects"
+*/

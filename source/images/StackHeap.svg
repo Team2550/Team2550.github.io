@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="23cm" height="9cm" viewBox="-143 -203 452 162" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="240" y="-180" width="46" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="240" y="-180" width="46" height="36"/>
+    <polygon style="fill: #ffffff" points="240,-180 250,-190 296,-190 286,-180 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="240,-180 250,-190 296,-190 286,-180 "/>
+    <polygon style="fill: #ffffff" points="286,-180 296,-190 296,-154 286,-144 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="286,-180 296,-190 296,-154 286,-144 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="250" y="-158.1">
+      <tspan x="250" y="-158.1">CPU</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="80" y="-180" width="72.1" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="80" y="-180" width="72.1" height="36"/>
+    <polygon style="fill: #ffffff" points="80,-180 90,-190 162.1,-190 152.1,-180 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="80,-180 90,-190 162.1,-190 152.1,-180 "/>
+    <polygon style="fill: #ffffff" points="152.1,-180 162.1,-190 162.1,-154 152.1,-144 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="152.1,-180 162.1,-190 162.1,-154 152.1,-144 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="90" y="-158.1">
+      <tspan x="90" y="-158.1">Memory</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="169.736" y1="-160" x2="230.264" y2="-160"/>
+    <polygon style="fill: #000000" points="162.236,-160 172.236,-165 169.736,-160 172.236,-155 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="162.236,-160 172.236,-165 169.736,-160 172.236,-155 "/>
+    <polygon style="fill: #000000" points="237.764,-160 227.764,-155 230.264,-160 227.764,-165 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="237.764,-160 227.764,-155 230.264,-160 227.764,-165 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="140" y="-100" width="55.45" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="140" y="-100" width="55.45" height="36"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="150" y="-78.1">
+      <tspan x="150" y="-78.1">Stack</tspan>
+    </text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="60" y="-100" width="53.55" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="60" y="-100" width="53.55" height="36"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="70" y="-78.1">
+      <tspan x="70" y="-78.1">Heap</tspan>
+    </text>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="120,-144 120,-124 80,-124 80,-113.736 "/>
+    <polygon style="fill: #000000" points="80,-106.236 75,-116.236 80,-113.736 85,-116.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="80,-106.236 75,-116.236 80,-113.736 85,-116.236 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="160,-113.736 160,-124 120,-124 120,-144 "/>
+    <polygon style="fill: #000000" points="160,-106.236 155,-116.236 160,-113.736 165,-116.236 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="160,-106.236 155,-116.236 160,-113.736 165,-116.236 "/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="-120" y="-180" width="127.35" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="-120" y="-180" width="127.35" height="36"/>
+    <polygon style="fill: #ffffff" points="-120,-180 -110,-190 17.35,-190 7.35,-180 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="-120,-180 -110,-190 17.35,-190 7.35,-180 "/>
+    <polygon style="fill: #ffffff" points="7.35,-180 17.35,-190 17.35,-154 7.35,-144 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="7.35,-180 17.35,-190 17.35,-154 7.35,-144 "/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:start;font-family:sans-serif;font-style:normal;font-weight:normal" x="-110" y="-158.1">
+      <tspan x="-110" y="-158.1">External Storage</tspan>
+    </text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="29.7361" y1="-160" x2="70.2639" y2="-160"/>
+    <polygon style="fill: #000000" points="22.2361,-160 32.2361,-165 29.7361,-160 32.2361,-155 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="22.2361,-160 32.2361,-165 29.7361,-160 32.2361,-155 "/>
+    <polygon style="fill: #000000" points="77.7639,-160 67.7639,-155 70.2639,-160 67.7639,-165 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="77.7639,-160 67.7639,-155 70.2639,-160 67.7639,-165 "/>
+  </g>
+</svg>

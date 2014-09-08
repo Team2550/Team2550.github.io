@@ -80,4 +80,4 @@ If you don't include this, two lines will be seen as the same line (which can be
 - \subpage cppstruct "Structures"
 - \subpage cppclass "Classes"
 - \subpage cppmdarray "Multidimensional Arrays"
-
+- \subpage cppmem "Dynamic Memory"

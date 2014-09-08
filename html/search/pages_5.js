@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['inheritance_20_26_20composition',['Inheritance &amp; Composition',['../cppclassinheritcomp.html',1,'cppclass']]],
-  ['if_20statements',['If Statements',['../cppif.html',1,'cppflow']]]
+  ['file_20i_2fo',['File I/O',['../cppfileio.html',1,'cpp']]],
+  ['functions',['Functions',['../cppfn.html',1,'cpp']]]
 ];

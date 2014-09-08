@@ -72,5 +72,6 @@ var cpp =
       [ "Initializing", "cppmdarray.html#cppmdarrayiter", null ],
       [ "Looping", "cppmdarray.html#cppmdarrayloop", null ],
       [ "Functions", "cppmdarray.html#cppmdarrayfn", null ]
-    ] ]
+    ] ],
+    [ "Dynamic Memory", "cppmem.html", "cppmem" ]
 ];
