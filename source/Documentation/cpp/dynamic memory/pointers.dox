@@ -1,4 +1,4 @@
-/** \page cppmemptr Pointer
+/** \page cppmemptr Pointers
 \tableofcontents
 
 Before we dive into pointers, it may be useful to know about the `sizeof` operator. `sizeof(datatype)` is a built in function that returns the size of a given datatype in bytes. See [cppreference.com](http://en.cppreference.com/w/cpp/language/sizeof) for more information.
@@ -226,4 +226,59 @@ Although you rarely need pointers or pointers (or pointers to pointers to pointe
 The type `void*` has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.
 
 \note `void*` has largely been replaced with C++ templates (except in a few rare cases). C++ templates can handle multiple data types but are type-safe. In other words, templates prevent trivial but hard-to-find errors that are likely to arise due to `void` pointers.
+
+\section cppmemptrobj Pointers & Objects
+Pointers have some unique functionality when you are working with classes and structs.
+
+First, it is important to note that `*` is evaluated after the dot operator.
+
+~~~
+#include <iostream>
+using namespace std;
+
+struct Point {
+    int x;
+    int y;
+};
+
+//This does not compile, 
+int main() {
+    Point loc;
+    Point* p = &loc;
+    cout << p.x << '\n';  //Compilation error
+    cout << *p.x << '\n'; //Compilation error
+    cout << (*p).x << '\n'; //OK
+    cout << p->x << '\n';   //OK
+}
+~~~
+
+Because of this operator precedence issue, the arrow operator (`->`) exists. It is simply a shorter version of `(*p).x`. This rule also applies for calling class methods.
+
+---------------------------------------------------
+
+Classes also have a special built-in pointer called `this`. It is a pointer to the current object. It is often not necessary to use it, but sometimes it is helpful.
+
+~~~
+//It is possible to declare functions directly in the class. In larger projects, it is not a good idea.
+class Test {
+private:
+    int value;
+public:
+    Test() {
+        value = 0;
+    }
+    Test(int value) {
+        this->value = value;
+        //this->value accesses the member
+        //value accesses the argument.
+    }
+    setValue(int value) {
+        this->value = value;
+    }
+};
+~~~
+
+\note `static` methods have no `this` pointer.
+
+Basically, `this` can sometimes be useful to make code more clearly readable and it allows you to name local variables within functions the same as class members. It can also be useful if you pass another object of the class as an argument.
 */

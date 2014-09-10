@@ -94,6 +94,7 @@ var NAVTREEINDEX0 =
 "cppmemptr.html":[1,14,3],
 "cppmemptr.html#cppmemptrarray":[1,14,3,1],
 "cppmemptr.html#cppmemptrmath":[1,14,3,2],
+"cppmemptr.html#cppmemptrobj":[1,14,3,5],
 "cppmemptr.html#cppmemptrptr":[1,14,3,3],
 "cppmemptr.html#cppmemptrscope":[1,14,3,0],
 "cppmemptr.html#cppmemptrvoid":[1,14,3,4],

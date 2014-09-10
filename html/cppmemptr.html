@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: Pointer</title>
+<title>Team 2550: Pointers</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('cppmemptr.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Pointer </div>  </div>
+<div class="title">Pointers </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
@@ -128,6 +128,7 @@ $(document).ready(function(){initNavTree('cppmemptr.html','');});
 <li class="level1"><a href="#cppmemptrmath">Pointer Arithmetic</a></li>
 <li class="level1"><a href="#cppmemptrptr">Pointers to Pointers</a></li>
 <li class="level1"><a href="#cppmemptrvoid">The void*</a></li>
+<li class="level1"><a href="#cppmemptrobj">Pointers & Objects</a></li>
 </ul>
 </div>
 <div class="textblock"><p>Before we dive into pointers, it may be useful to know about the <code>sizeof</code> operator. <code>sizeof(datatype)</code> is a built in function that returns the size of a given datatype in bytes. See <a href="http://en.cppreference.com/w/cpp/language/sizeof">cppreference.com</a> for more information. </p>
@@ -290,7 +291,50 @@ Pointers to Pointers</h1>
 <h1><a class="anchor" id="cppmemptrvoid"></a>
 The void*</h1>
 <p>The type <code>void*</code> has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.</p>
-<dl class="section note"><dt>Note</dt><dd><code>void*</code> has largely been replaced with C++ templates (except in a few rare cases). C++ templates can handle multiple data types but are type-safe. In other words, templates prevent trivial but hard-to-find errors that are likely to arise due to <code>void</code> pointers. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd><code>void*</code> has largely been replaced with C++ templates (except in a few rare cases). C++ templates can handle multiple data types but are type-safe. In other words, templates prevent trivial but hard-to-find errors that are likely to arise due to <code>void</code> pointers.</dd></dl>
+<h1><a class="anchor" id="cppmemptrobj"></a>
+Pointers &amp; Objects</h1>
+<p>Pointers have some unique functionality when you are working with classes and structs.</p>
+<p>First, it is important to note that <code>*</code> is evaluated after the dot operator.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">struct </span>Point {</div>
+<div class="line">    <span class="keywordtype">int</span> x;</div>
+<div class="line">    <span class="keywordtype">int</span> y;</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//This does not compile, </span></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Point loc;</div>
+<div class="line">    Point* p = &amp;loc;</div>
+<div class="line">    cout &lt;&lt; p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;  <span class="comment">//Compilation error</span></div>
+<div class="line">    cout &lt;&lt; *p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//Compilation error</span></div>
+<div class="line">    cout &lt;&lt; (*p).x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//OK</span></div>
+<div class="line">    cout &lt;&lt; p-&gt;x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;   <span class="comment">//OK</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Because of this operator precedence issue, the arrow operator (<code>-&gt;</code>) exists. It is simply a shorter version of <code>(*p).x</code>. This rule also applies for calling class methods. </p>
+<hr/>
+<p>Classes also have a special built-in pointer called <code>this</code>. It is a pointer to the current object. It is often not necessary to use it, but sometimes it is helpful.</p>
+<div class="fragment"><div class="line"><span class="comment">//It is possible to declare functions directly in the class. In larger projects, it is not a good idea.</span></div>
+<div class="line"><span class="keyword">class </span>Test {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <span class="keywordtype">int</span> value;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Test() {</div>
+<div class="line">        value = 0;</div>
+<div class="line">    }</div>
+<div class="line">    Test(<span class="keywordtype">int</span> value) {</div>
+<div class="line">        this-&gt;value = value;</div>
+<div class="line">        <span class="comment">//this-&gt;value accesses the member</span></div>
+<div class="line">        <span class="comment">//value accesses the argument.</span></div>
+<div class="line">    }</div>
+<div class="line">    setValue(<span class="keywordtype">int</span> value) {</div>
+<div class="line">        this-&gt;value = value;</div>
+<div class="line">    }</div>
+<div class="line">};</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>static</code> methods have no <code>this</code> pointer.</dd></dl>
+<p>Basically, <code>this</code> can sometimes be useful to make code more clearly readable and it allows you to name local variables within functions the same as class members. It can also be useful if you pass another object of the class as an argument. </p>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
