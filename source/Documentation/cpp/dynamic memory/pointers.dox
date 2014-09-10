@@ -1,2 +1,229 @@
-/** \page cppmemptr Pointers
+/** \page cppmemptr Pointer
+\tableofcontents
+
+Before we dive into pointers, it may be useful to know about the `sizeof` operator. `sizeof(datatype)` is a built in function that returns the size of a given datatype in bytes. See [cppreference.com](http://en.cppreference.com/w/cpp/language/sizeof) for more information.
+
+-----------------------------------------------------
+
+A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. At this point, we will work with pointers on the stack.
+
+In order to declare a pointer, you just have to append a `*` to the type name.
+
+    int* p; //This variable stores the address of an int.
+    double* d; //This points to a double.
+
+\note `int*` is treated as an entirely different datatype than int.
+
+In order to assign a pointer to the address of another variable, you use the **address of operator**...
+
+    int x;
+    int* p = &x; //& is the address of operator.
+
+---------------------------------------------------
+
+Try running the following code...
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 0;
+    cout << x << '\n'; //print the value stored in x
+    cout << &x; //print the address of x
+}
+~~~
+
+###Output (run 1)
+
+    0
+    0x7fffeee11fcc
+
+###Output (run 2)
+
+    0
+    0x7fff68318f4c
+
+You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with `0x`. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal.
+
+Pointers behave slightly differently...
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int x = 3;
+    int* p = &x;
+    cout << &x << " - &x\n"; //Addess of x
+    cout << p << " - p\n";   //Value of p
+    cout << &p << " - &p\n"; //Address of p
+    cout << *p << " - *p\n"; //Value at address stored in p
+}
+~~~
+
+When you are working with pointers, the `*` operator prefixing the variable name is the "value-stored-in" operator. It captures the value stored in the address pointed to by `p`, in this case the value of `x`.
+
+###Run 1
+
+    0x7fff501ebb34 - &x
+    0x7fff501ebb34 - p
+    0x7fff501ebb38 - &p
+    3 - *p
+
+###Run 2
+
+    0x7fffb017f9d4 - &x
+    0x7fffb017f9d4 - p
+    0x7fffb017f9d8 - &p
+    3 - *p
+
+Note that the value of `p` and the address of `x` are the same. That is because we have assigned `p` to store the address of `x`.
+
+`p` can also be reassigned. For instance, if we create another variable later, `y`, we can point `p` to `y`.
+
+For instance,
+~~~
+int x = 42;
+int* p = &x;
+int y = 34;
+p = &y;
+~~~
+is valid.
+
+\warning **Do not under any circumstances forget the `&` operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.** For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it certainly cause your program to crash.
+
+\note Segmentation faults can be very difficult to find and debug.
+
+
+-------------------------------------------------------
+
+You can't initialize a pointer like you can another variable. If you don't have something you immediately want to point it to, it will have whatever value the memory used last. This could cause problems. Trying to access a memory address outside of the space the operating system has given your program will cause it to crash (some systems call this a *Segmentation Fault*). It is generally a good idea to assign the pointer to be NULL if it contains an address you are no longer using.
+
+    int* p = NULL;
+
+\section cppmemptrscope Scope Issues
+A pointer can be used to access values outside of their scope, but be very careful when doing this. The code below gives an example of a scope pitfall...
+
+~~~
+#include <iostream>
+using namespace std;
+
+int* bad_idea(int value);
+
+int main() {
+    int* p = bad_idea(3);
+    cout << *p << '\n';
+    p = bad_idea(5432);
+    bad_idea(312);
+    cout << *p << '\n';
+}
+
+int* bad_idea(int value) {
+    int x = value;
+    return &x;
+}
+~~~
+
+For the above code, which is intentionally bad, my compiler gave me a warning...
+
+    -*- mode: compilation; default-directory: "~/Documents/FRC2550-Git/Team2550.github.io/source/Documentation/cpp/test/" -*-
+    Compilation started at Tue Sep  9 14:21:50
+
+    g++ test.cc
+    test.cc: In function ‘int* bad_idea(int)’:
+    test.cc:14:9: warning: address of local variable ‘x’ returned [-Wreturn-local-addr]
+    int x = value;
+    ^
+
+    Compilation finished at Tue Sep  9 14:21:50
+
+In this situation, the function was repeatedly called and stored values in the same address, but this is not always the case. If for any reason that address is later used for something else, the value will be lost, and the program will likely crash due to a segmentation fault. Without understanding the addresses, you would think that `*p == 5142`.
+
+\warning Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer.
+    
+\section cppmemptrarray Arrays
+Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, *an array is a pointer that cannot change address*.
+
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[5] = {1, 2, 3, 4, 5};
+    int* p = a;
+    cout << *a << '\n';
+    cout << *p << '\n';
+}
+~~~
+
+###Output
+
+    1
+    1
+
+\note I did not use the address-of operator on the second line (`&a`). That is because a is already considered a pointer.
+
+You can also access elements using the subscript operators `[]`...
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[5] = {1, 2, 3, 4, 5};
+    int* p = a;
+    for (int i = 0; i < 5; ++i)
+        cout << p[i] << '\n';
+}
+~~~
+
+###Output
+
+    1
+    2
+    3
+    4
+    5
+
+\section cppmemptrmath Pointer Arithmetic
+Pointers also have their own mathematical operations rules. You can add to and subtract from a pointer and it will add or subtract the amount of memory for the data type it points to. For instance, if it an int pointer, it will move 4 bytes in memory forward or backward.
+
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int a[5] = {123, 3423, 213, 4234, 5512};
+    int* p = a;
+    cout << *p << '\n';
+    p++;
+    cout << *p << '\n';
+    p += 3;
+    cout << *p << '\n';
+}
+~~~
+
+###Output
+
+    123
+    3423
+    5512
+
+\warning Be careful not to confuse operations on the value of the pointer and operations on the pointer itself. If you forget the `*` before you change the value, it will add to the address of the pointer. `p++` and `*p++` are completely different. Precedence is important here, as `*p` is evaluated before arithmetic operations. For instance, `*(p + 3)` adds to the pointer and `*p + 3` adds to the destination.
+
+\section cppmemptrptr Pointers to Pointers
+Although pointers to pointers are a fairly rare necessity, it is still good to know that they exist. `int**` is a pointer to a pointer to an int.
+
+~~~
+int x = 10;
+int* p = &x;
+int** pp = &p;
+**pp = 4; //Same as x = 4.
+*pp++;    //Advances p by 4 bytes. In this case, it probably leads to a segmentation fault.
+~~~
+
+Although you rarely need pointers or pointers (or pointers to pointers to pointers, there is no limit to the depth), they can sometimes be useful for managing normal pointers along with the values they point to.
+
+\section cppmemptrvoid The void*
+The type `void*` has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.
+
+\note `void*` has largely been replaced with C++ templates (except in a few rare cases). C++ templates can handle multiple data types but are type-safe. In other words, templates prevent trivial but hard-to-find errors that are likely to arise due to `void` pointers.
 */

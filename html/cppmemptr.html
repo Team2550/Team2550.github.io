@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: Pointers</title>
+<title>Team 2550: Pointer</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -119,10 +119,179 @@ $(document).ready(function(){initNavTree('cppmemptr.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Pointers </div>  </div>
+<div class="title">Pointer </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#cppmemptrscope">Scope Issues</a></li>
+<li class="level1"><a href="#cppmemptrarray">Arrays</a></li>
+<li class="level1"><a href="#cppmemptrmath">Pointer Arithmetic</a></li>
+<li class="level1"><a href="#cppmemptrptr">Pointers to Pointers</a></li>
+<li class="level1"><a href="#cppmemptrvoid">The void*</a></li>
+</ul>
+</div>
+<div class="textblock"><p>Before we dive into pointers, it may be useful to know about the <code>sizeof</code> operator. <code>sizeof(datatype)</code> is a built in function that returns the size of a given datatype in bytes. See <a href="http://en.cppreference.com/w/cpp/language/sizeof">cppreference.com</a> for more information. </p>
+<hr/>
+<p>A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. At this point, we will work with pointers on the stack.</p>
+<p>In order to declare a pointer, you just have to append a <code>*</code> to the type name. </p>
+<pre class="fragment">int* p; //This variable stores the address of an int.
+double* d; //This points to a double.
+</pre><dl class="section note"><dt>Note</dt><dd><code>int*</code> is treated as an entirely different datatype than int.</dd></dl>
+<p>In order to assign a pointer to the address of another variable, you use the <b>address of operator</b>... </p>
+<pre class="fragment">int x;
+int* p = &amp;x; //&amp; is the address of operator.
+</pre><hr/>
+<p>Try running the following code... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> x = 0;</div>
+<div class="line">    cout &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//print the value stored in x</span></div>
+<div class="line">    cout &lt;&lt; &amp;x; <span class="comment">//print the address of x</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output (run 1)</h3>
+<pre class="fragment">0
+0x7fffeee11fcc
+</pre><h3>Output (run 2)</h3>
+<pre class="fragment">0
+0x7fff68318f4c
+</pre><p>You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with <code>0x</code>. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal.</p>
+<p>Pointers behave slightly differently... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> x = 3;</div>
+<div class="line">    <span class="keywordtype">int</span>* p = &amp;x;</div>
+<div class="line">    cout &lt;&lt; &amp;x &lt;&lt; <span class="stringliteral">&quot; - &amp;x\n&quot;</span>; <span class="comment">//Addess of x</span></div>
+<div class="line">    cout &lt;&lt; p &lt;&lt; <span class="stringliteral">&quot; - p\n&quot;</span>;   <span class="comment">//Value of p</span></div>
+<div class="line">    cout &lt;&lt; &amp;p &lt;&lt; <span class="stringliteral">&quot; - &amp;p\n&quot;</span>; <span class="comment">//Address of p</span></div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="stringliteral">&quot; - *p\n&quot;</span>; <span class="comment">//Value at address stored in p</span></div>
+<div class="line">}</div>
+</div><!-- fragment --><p>When you are working with pointers, the <code>*</code> operator prefixing the variable name is the "value-stored-in" operator. It captures the value stored in the address pointed to by <code>p</code>, in this case the value of <code>x</code>.</p>
+<h3>Run 1</h3>
+<pre class="fragment">0x7fff501ebb34 - &amp;x
+0x7fff501ebb34 - p
+0x7fff501ebb38 - &amp;p
+3 - *p
+</pre><h3>Run 2</h3>
+<pre class="fragment">0x7fffb017f9d4 - &amp;x
+0x7fffb017f9d4 - p
+0x7fffb017f9d8 - &amp;p
+3 - *p
+</pre><p>Note that the value of <code>p</code> and the address of <code>x</code> are the same. That is because we have assigned <code>p</code> to store the address of <code>x</code>.</p>
+<p><code>p</code> can also be reassigned. For instance, if we create another variable later, <code>y</code>, we can point <code>p</code> to <code>y</code>.</p>
+<p>For instance, </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> x = 42;</div>
+<div class="line"><span class="keywordtype">int</span>* p = &amp;x;</div>
+<div class="line"><span class="keywordtype">int</span> y = 34;</div>
+<div class="line">p = &amp;y;</div>
+</div><!-- fragment --><p> is valid.</p>
+<dl class="section warning"><dt>Warning</dt><dd><b>Do not under any circumstances forget the <code>&amp;</code> operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.</b> For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it certainly cause your program to crash.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Segmentation faults can be very difficult to find and debug.</dd></dl>
+<hr/>
+<p>You can't initialize a pointer like you can another variable. If you don't have something you immediately want to point it to, it will have whatever value the memory used last. This could cause problems. Trying to access a memory address outside of the space the operating system has given your program will cause it to crash (some systems call this a <em>Segmentation Fault</em>). It is generally a good idea to assign the pointer to be NULL if it contains an address you are no longer using. </p>
+<pre class="fragment">int* p = NULL;
+</pre><h1><a class="anchor" id="cppmemptrscope"></a>
+Scope Issues</h1>
+<p>A pointer can be used to access values outside of their scope, but be very careful when doing this. The code below gives an example of a scope pitfall...</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span>* bad_idea(<span class="keywordtype">int</span> value);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span>* p = bad_idea(3);</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    p = bad_idea(5432);</div>
+<div class="line">    bad_idea(312);</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span>* bad_idea(<span class="keywordtype">int</span> value) {</div>
+<div class="line">    <span class="keywordtype">int</span> x = value;</div>
+<div class="line">    <span class="keywordflow">return</span> &amp;x;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>For the above code, which is intentionally bad, my compiler gave me a warning... </p>
+<pre class="fragment">-*- mode: compilation; default-directory: "~/Documents/FRC2550-Git/Team2550.github.io/source/Documentation/cpp/test/" -*-
+Compilation started at Tue Sep  9 14:21:50
+
+g++ test.cc
+test.cc: In function ‘int* bad_idea(int)’:
+test.cc:14:9: warning: address of local variable ‘x’ returned [-Wreturn-local-addr]
+int x = value;
+^
+
+Compilation finished at Tue Sep  9 14:21:50
+</pre><p>In this situation, the function was repeatedly called and stored values in the same address, but this is not always the case. If for any reason that address is later used for something else, the value will be lost, and the program will likely crash due to a segmentation fault. Without understanding the addresses, you would think that <code>*p == 5142</code>.</p>
+<dl class="section warning"><dt>Warning</dt><dd>Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer.</dd></dl>
+<h1><a class="anchor" id="cppmemptrarray"></a>
+Arrays</h1>
+<p>Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, <em>an array is a pointer that cannot change address</em>.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[5] = {1, 2, 3, 4, 5};</div>
+<div class="line">    <span class="keywordtype">int</span>* p = a;</div>
+<div class="line">    cout &lt;&lt; *a &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">1
+1
+</pre><dl class="section note"><dt>Note</dt><dd>I did not use the address-of operator on the second line (<code>&amp;a</code>). That is because a is already considered a pointer.</dd></dl>
+<p>You can also access elements using the subscript operators <code>[]</code>... </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[5] = {1, 2, 3, 4, 5};</div>
+<div class="line">    <span class="keywordtype">int</span>* p = a;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 5; ++i)</div>
+<div class="line">        cout &lt;&lt; p[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">1
+2
+3
+4
+5
+</pre><h1><a class="anchor" id="cppmemptrmath"></a>
+Pointer Arithmetic</h1>
+<p>Pointers also have their own mathematical operations rules. You can add to and subtract from a pointer and it will add or subtract the amount of memory for the data type it points to. For instance, if it an int pointer, it will move 4 bytes in memory forward or backward.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> a[5] = {123, 3423, 213, 4234, 5512};</div>
+<div class="line">    <span class="keywordtype">int</span>* p = a;</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    p++;</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    p += 3;</div>
+<div class="line">    cout &lt;&lt; *p &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">123
+3423
+5512
+</pre><dl class="section warning"><dt>Warning</dt><dd>Be careful not to confuse operations on the value of the pointer and operations on the pointer itself. If you forget the <code>*</code> before you change the value, it will add to the address of the pointer. <code>p++</code> and <code>*p++</code> are completely different. Precedence is important here, as <code>*p</code> is evaluated before arithmetic operations. For instance, <code>*(p + 3)</code> adds to the pointer and <code>*p + 3</code> adds to the destination.</dd></dl>
+<h1><a class="anchor" id="cppmemptrptr"></a>
+Pointers to Pointers</h1>
+<p>Although pointers to pointers are a fairly rare necessity, it is still good to know that they exist. <code>int**</code> is a pointer to a pointer to an int.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> x = 10;</div>
+<div class="line"><span class="keywordtype">int</span>* p = &amp;x;</div>
+<div class="line"><span class="keywordtype">int</span>** pp = &amp;p;</div>
+<div class="line">**pp = 4; <span class="comment">//Same as x = 4.</span></div>
+<div class="line">*pp++;    <span class="comment">//Advances p by 4 bytes. In this case, it probably leads to a segmentation fault.</span></div>
+</div><!-- fragment --><p>Although you rarely need pointers or pointers (or pointers to pointers to pointers, there is no limit to the depth), they can sometimes be useful for managing normal pointers along with the values they point to.</p>
+<h1><a class="anchor" id="cppmemptrvoid"></a>
+The void*</h1>
+<p>The type <code>void*</code> has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.</p>
+<dl class="section note"><dt>Note</dt><dd><code>void*</code> has largely been replaced with C++ templates (except in a few rare cases). C++ templates can handle multiple data types but are type-safe. In other words, templates prevent trivial but hard-to-find errors that are likely to arise due to <code>void</code> pointers. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->

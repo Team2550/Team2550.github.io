@@ -20,7 +20,7 @@ It is important to observe that the place values of binary numbers are powers of
     2^power = result
 
 Power | Result
----- -|--------
+------|--------
 1 | 2
 2 | 4
 3 | 8
