@@ -122,7 +122,81 @@ $(document).ready(function(){initNavTree('cppmemarr.html','');});
 <div class="title">Dynamic Arrays </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"></div></div><!-- contents -->
+<div class="toc"><h3>Table of Contents</h3>
+<ul><li class="level1"><a href="#cppmemnew">The new Operator</a></li>
+<li class="level1"><a href="#cppmemdel">The delete Operator</a></li>
+</ul>
+</div>
+<div class="textblock"><p>At some point, arrays become too big to store on the stack. This is called stack overflow.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> overflow(<span class="keywordtype">double</span> x);</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    overflow(0);</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="comment">//For demonstration purposes, this function uses recusion.</span></div>
+<div class="line"><span class="keywordtype">void</span> overflow(<span class="keywordtype">double</span> x) {</div>
+<div class="line">    <span class="keywordtype">int</span> a[1000][500];</div>
+<div class="line">    cout &lt;&lt; x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    overflow(x + 1);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">0
+1
+2
+3
+Segmentation fault (core dumped)
+</pre><dl class="section note"><dt>Note</dt><dd>A recursive function is a function that calls itself in order to reduce the complexity of a problem. They can take up a lot of stack space as every function call is placed on the stack. The video below explains recursion fairly well.  
+<iframe width="560" height="315" src="http://www.youtube.com/embed/Mv9NEXX1VHc" frameborder="0" allowfullscreen></iframe>
+</dd></dl>
+<h1><a class="anchor" id="cppmemnew"></a>
+The new Operator</h1>
+<p>In order to dynamically allocate a value, you have to use the <code>new</code> operator &ndash; it dynamically allocates a block of memory and then returns a pointer to that location.</p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span>* x = <span class="keyword">new</span> int;</div>
+<div class="line">*x = 73;</div>
+<div class="line">cout &lt;&lt; &amp;x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">0x7fff82376378 73
+</pre><dl class="section warning"><dt>Warning</dt><dd>Every <code>new</code> operation must have a corresponding <code>delete</code>. Read about that in the next section.</dd></dl>
+<h1><a class="anchor" id="cppmemdel"></a>
+The delete Operator</h1>
+<p>The <code>delete</code> operator de-allocates memory.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span>* x = <span class="keyword">new</span> int;</div>
+<div class="line">    *x = 38;</div>
+<div class="line">    cout &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keyword">delete</span> x;</div>
+<div class="line">    cout &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">38
+0
+</pre><p>There is one problem in the above code. Look at the output, the second value is 0. However, this could easily be something else. <code>delete</code> de-allocates the memory so that it can be overwritten by the operating system. It is always best to assign the pointer to some other location of <code>NULL</code>.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span>* x = <span class="keyword">new</span> int;</div>
+<div class="line">    *x = 38;</div>
+<div class="line">    cout &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keyword">delete</span> x;</div>
+<div class="line">    cout &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    x = NULL;</div>
+<div class="line">    cout &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">38
+0
+Segmentation fault (core dumped)
+</pre><dl class="section note"><dt>Note</dt><dd>The segmentation fault is good in this case &ndash; it allows for easier debugging.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><code>delete</code> is necessary when working with dynamic memory. Failure to do so will a <b>memory leak</b>. A memory leak occurs when a pointer pointing to dynamic memory is changed or inaccessible. For instance, a function that does not use the delete operator on an internal pointer. You can no longer access that value, and the system cannot take it back. This can cause problems if your program uses a large amount of memory. </dd></dl>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->

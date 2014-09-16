@@ -11,6 +11,5 @@ var cppmem =
       [ "The void*", "cppmemptr.html#cppmemptrvoid", null ],
       [ "Pointers & Objects", "cppmemptr.html#cppmemptrobj", null ]
     ] ],
-    [ "Dynamic Arrays", "cppmemarr.html", null ],
     [ "Dynamic Objects", "cppmemobj.html", null ]
 ];

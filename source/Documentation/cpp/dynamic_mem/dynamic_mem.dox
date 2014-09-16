@@ -1,0 +1,106 @@
+/** \page cppmemdynamic Dynamic Arrays
+\tableofcontents
+
+At some point, arrays become too big to store on the stack. This is called stack overflow.
+
+~~~
+#include <iostream>
+using namespace std;
+
+void overflow(double x);
+
+int main() {
+    overflow(0);
+}
+
+//For demonstration purposes, this function uses recusion.
+void overflow(double x) {
+    int a[1000][500];
+    cout << x << '\n';
+    overflow(x + 1);
+}
+~~~
+
+###Output
+
+    0
+    1
+    2
+    3
+    Segmentation fault (core dumped)
+
+\note A recursive function is a function that calls itself in order to reduce the complexity of a problem. They can take up a lot of stack space as every function call is placed on the stack. The video below explains recursion fairly well.
+\htmlonly
+<iframe width="560" height="315" src="http://www.youtube.com/embed/Mv9NEXX1VHc" frameborder="0" allowfullscreen></iframe>
+\endhtmlonly
+
+\section cppmemnew The new Operator
+In order to dynamically allocate a value, you have to use the `new` operator -- it dynamically allocates a block of memory and then returns a pointer to that location.
+
+~~~
+int* x = new int;
+*x = 73;
+cout << &x << ' ' << *x << '\n';
+~~~
+
+###Output
+
+    0x7fff82376378 73
+
+\warning Every `new` operation must have a corresponding `delete`. Read about that in the next section.
+
+\section cppmemdel The delete Operator
+The `delete` operator de-allocates memory.
+
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int* x = new int;
+    *x = 38;
+    cout << *x << '\n';
+    delete x;
+    cout << *x << '\n';
+}
+~~~
+
+###Output
+
+    38
+    0
+
+There is one problem in the above code. Look at the output, the second value is 0. However, this could easily be something else. `delete` de-allocates the memory so that it can be overwritten by the operating system. It is always best to assign the pointer to some other location of `NULL`.
+
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int* x = new int;
+    *x = 38;
+    cout << *x << '\n';
+    delete x;
+    cout << *x << '\n';
+    x = NULL;
+    cout << *x << '\n';
+}
+~~~
+
+###Output
+
+    38
+    0
+    Segmentation fault (core dumped)
+
+\note The segmentation fault is good in this case -- it allows for easier debugging.
+
+\warning `delete` is necessary when working with dynamic memory. Failure to do so will a **memory leak**. A memory leak occurs when a pointer pointing to dynamic memory is changed or inaccessible. For instance, a function that does not use the delete operator on an internal pointer. You can no longer access that value, and the system cannot take it back. This can cause problems if your program uses a large amount of memory.
+
+\section cppmemarralloc Array Allocation
+Arrays can be allocated easily. Just use the `new` and `delete` operators.
+
+~~~
+int* x = new int[10000];
+~~~
+*/
