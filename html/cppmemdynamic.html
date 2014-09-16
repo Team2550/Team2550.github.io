@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: Dynamic Arrays</title>
+<title>Team 2550: Dynamic Allocation</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -119,7 +119,7 @@ $(document).ready(function(){initNavTree('cppmemdynamic.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Dynamic Arrays </div>  </div>
+<div class="title">Dynamic Allocation </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
@@ -200,13 +200,32 @@ Segmentation fault (core dumped)
 <h1><a class="anchor" id="cppmemarralloc"></a>
 Array Allocation</h1>
 <p>Arrays can be allocated easily. Just use the <code>new</code> and <code>delete</code> operators.</p>
-<div class="fragment"><div class="line"><span class="keywordtype">int</span>* x = <span class="keyword">new</span> <span class="keywordtype">int</span>[10000][100];</div>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span>* x = <span class="keyword">new</span> <span class="keywordtype">int</span>[10000]; <span class="comment">//Allocates</span></div>
+<div class="line"><span class="keyword">delete</span> [] x;             <span class="comment">//De-allocates</span></div>
+</div><!-- fragment --><p>You can access the elements of the array using the standard array subscript notation. </p>
+<pre class="fragment">x[103] = 32;
+</pre><hr/>
+<p>Allocating a multidimensional array is more complex. You have to loop through each additional level and use pointers to pointers. </p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span>** x = <span class="keyword">new</span> <span class="keywordtype">int</span>*[100]; <span class="comment">//Allocate array of pointers to pointers</span></div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
+<div class="line">        x[i] = <span class="keyword">new</span> <span class="keywordtype">int</span>[1000]; <span class="comment">//Allocate array of pointers</span></div>
+<div class="line">    x[10][300] = 30;</div>
+<div class="line">    cout &lt;&lt; x[10][300] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
+<div class="line">        <span class="keyword">delete</span> [] x[i]; <span class="comment">//De-allocate array of pointers</span></div>
+<div class="line">    <span class="keyword">delete</span> [] x; <span class="comment">//De-allocate array of pointers</span></div>
+<div class="line">}</div>
 </div><!-- fragment --> </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <ul>
+        <li class="navelem"><a class="el" href="cpp.html">C++</a></li><li class="navelem"><a class="el" href="cppmem.html">Dynamic Memory</a></li>
         <li class="footer">
             <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:7px 0px" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
         </li>

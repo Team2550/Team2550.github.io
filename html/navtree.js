@@ -2,12 +2,7 @@ var NAVTREE =
 [
   [ "Team 2550", "index.html", [
     [ "Team 2550 Website", "^http://team2550.blogspot.com/", null ],
-    [ "C++", "cpp.html", "cpp" ],
-    [ "Dynamic Arrays", "cppmemdynamic.html", [
-      [ "The new Operator", "cppmemdynamic.html#cppmemnew", null ],
-      [ "The delete Operator", "cppmemdynamic.html#cppmemdel", null ],
-      [ "Array Allocation", "cppmemdynamic.html#cppmemarralloc", null ]
-    ] ]
+    [ "C++", "cpp.html", "cpp" ]
   ] ]
 ];
 

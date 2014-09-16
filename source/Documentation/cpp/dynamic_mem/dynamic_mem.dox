@@ -1,4 +1,4 @@
-/** \page cppmemdynamic Dynamic Arrays
+/** \page cppmemdynamic Dynamic Allocation
 \tableofcontents
 
 At some point, arrays become too big to store on the stack. This is called stack overflow.
@@ -101,6 +101,30 @@ int main() {
 Arrays can be allocated easily. Just use the `new` and `delete` operators.
 
 ~~~
-int* x = new int[10000];
+int* x = new int[10000]; //Allocates
+delete [] x;             //De-allocates
+~~~
+
+You can access the elements of the array using the standard array subscript notation.
+
+    x[103] = 32;
+
+-------------------------------------------------
+
+Allocating a multidimensional array is more complex. You have to loop through each additional level and use pointers to pointers.
+~~~
+#include <iostream>
+using namespace std;
+
+int main() {
+    int** x = new int*[100]; //Allocate array of pointers to pointers
+    for (int i = 0; i < 100; ++i)
+        x[i] = new int[1000]; //Allocate array of pointers
+    x[10][300] = 30;
+    cout << x[10][300] << '\n';
+    for (int i = 0; i < 100; ++i)
+        delete [] x[i]; //De-allocate array of pointers
+    delete [] x; //De-allocate array of pointers
+}
 ~~~
 */

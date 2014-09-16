@@ -66,6 +66,5 @@ Sections
 ==========
 - \subpage cppmembinhex "Binary and Hexadecimal Numbers"
 - \subpage cppmemptr "Pointers"
-- \subpage cppmemarr "Dynamic Arrays"
-- \subpage cppmemobj "Dynamic Objects"
+- \subpage cppmemdynamic
 */
