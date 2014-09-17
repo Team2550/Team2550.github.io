@@ -11,9 +11,13 @@ var cppmem =
       [ "The void*", "cppmemptr.html#cppmemptrvoid", null ],
       [ "Pointers & Objects", "cppmemptr.html#cppmemptrobj", null ]
     ] ],
-    [ "Dynamic Allocation", "cppmemdynamic.html", [
+    [ "Dynamic Memory", "cppmemdynamic.html", [
       [ "The new Operator", "cppmemdynamic.html#cppmemnew", null ],
       [ "The delete Operator", "cppmemdynamic.html#cppmemdel", null ],
-      [ "Array Allocation", "cppmemdynamic.html#cppmemarralloc", null ]
+      [ "Array Allocation", "cppmemdynamic.html#cppmemarralloc", null ],
+      [ "Dynamic Objects", "cppmemdynamic.html#cppmemobj", [
+        [ "Pointers as Members", "cppmemdynamic.html#cppmemobjcwp", null ],
+        [ "Dynamic Objects", "cppmemdynamic.html#cppmemdynclass", null ]
+      ] ]
     ] ]
 ];

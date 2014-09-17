@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.0//EN" "http://www.w3.org/TR/2001/PR-SVG-20010719/DTD/svg10.dtd">
+<svg width="17cm" height="14cm" viewBox="339 139 340 266" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <g>
+    <rect style="fill: #ffffff" x="340" y="261" width="65.65" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="340" y="261" width="65.65" height="36"/>
+    <text font-size="12.7998" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:normal" x="372.825" y="282.9">
+      <tspan x="372.825" y="282.9">int** a;</tspan>
+    </text>
+    <line style="fill: none; fill-opacity:0; stroke-width: 1; stroke: #000000" x1="350" y1="285.95" x2="395.65" y2="285.95"/>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="460" y="240" width="85.5" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="240" width="85.5" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="502.75" y="259">new int*</text>
+    <rect style="fill: #ffffff" x="460" y="268" width="85.5" height="52"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="460" y="268" width="85.5" height="52"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="463" y="282"> a[0]</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="463" y="298"> a[1]</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="463" y="314"> a[2]</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="600" y="140" width="77.15" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="140" width="77.15" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="638.575" y="159">new int</text>
+    <rect style="fill: #ffffff" x="600" y="168" width="77.15" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="168" width="77.15" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="182"> a[0][0]</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="198"> a[0][1]</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="600" y="241" width="77.15" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="241" width="77.15" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="638.575" y="260">new int</text>
+    <rect style="fill: #ffffff" x="600" y="269" width="77.15" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="269" width="77.15" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="283"> a[1][0]</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="299"> a[1][1]</text>
+  </g>
+  <g>
+    <rect style="fill: #ffffff" x="600" y="340" width="77.15" height="28"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="340" width="77.15" height="28"/>
+    <text font-size="16" style="fill: #000000;text-anchor:middle;font-family:sans-serif;font-style:normal;font-weight:700" x="638.575" y="359">new int</text>
+    <rect style="fill: #ffffff" x="600" y="368" width="77.15" height="36"/>
+    <rect style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x="600" y="368" width="77.15" height="36"/>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="382"> a[2][0]</text>
+    <text font-size="12.8" style="fill: #000000;text-anchor:start;font-family:monospace;font-style:normal;font-weight:normal" x="603" y="398"> a[2][1]</text>
+  </g>
+  <g>
+    <line style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" x1="442.001" y1="279.532" x2="406.646" y2="279.26"/>
+    <polygon style="fill: #000000" points="441.962,284.532 458,279.656 442.039,274.533 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="441.962,284.532 458,279.656 442.039,274.533 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="546.505,280 572.748,280 572.748,172 589.254,172 "/>
+    <polygon style="fill: #000000" points="596.754,172 586.754,177 589.254,172 586.754,167 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="596.754,172 586.754,177 589.254,172 586.754,167 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="546.505,280 573.253,280 573.253,279 590.264,279 "/>
+    <polygon style="fill: #000000" points="597.764,279 587.764,284 590.264,279 587.764,274 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="597.764,279 587.764,284 590.264,279 587.764,274 "/>
+  </g>
+  <g>
+    <polyline style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="546.505,280 572.748,280 572.748,372 589.254,372 "/>
+    <polygon style="fill: #000000" points="596.754,372 586.754,377 589.254,372 586.754,367 "/>
+    <polygon style="fill: none; fill-opacity:0; stroke-width: 2; stroke: #000000" points="596.754,372 586.754,377 589.254,372 586.754,367 "/>
+  </g>
+</svg>

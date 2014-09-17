@@ -1,4 +1,4 @@
-/** \page cppmem Dynamic Memory
+/** \page cppmem Memory Allocation
 \tableofcontents
 
 \section cppmemstack The Stack
@@ -66,5 +66,5 @@ Sections
 ==========
 - \subpage cppmembinhex "Binary and Hexadecimal Numbers"
 - \subpage cppmemptr "Pointers"
-- \subpage cppmemdynamic
+- \subpage cppmemdynamic "Dynamic Memory"
 */

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: Dynamic Allocation</title>
+<title>Team 2550: Dynamic Memory</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -119,13 +119,17 @@ $(document).ready(function(){initNavTree('cppmemdynamic.html','');});
 
 <div class="header">
   <div class="headertitle">
-<div class="title">Dynamic Allocation </div>  </div>
+<div class="title">Dynamic Memory </div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="toc"><h3>Table of Contents</h3>
 <ul><li class="level1"><a href="#cppmemnew">The new Operator</a></li>
 <li class="level1"><a href="#cppmemdel">The delete Operator</a></li>
 <li class="level1"><a href="#cppmemarralloc">Array Allocation</a></li>
+<li class="level1"><a href="#cppmemobj">Dynamic Objects</a><ul><li class="level2"><a href="#cppmemobjcwp">Pointers as Members</a></li>
+<li class="level2"><a href="#cppmemdynclass">Dynamic Objects</a></li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="textblock"><p>At some point, arrays become too big to store on the stack. This is called stack overflow.</p>
@@ -205,6 +209,60 @@ Array Allocation</h1>
 </div><!-- fragment --><p>You can access the elements of the array using the standard array subscript notation. </p>
 <pre class="fragment">x[103] = 32;
 </pre><hr/>
+<p>Large arrays are not the only benefit of dynamic arrays. The size of stack-allocated arrays has to be determined at compile-time. Dynamic arrays have their size determined at runtime.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span> s;</div>
+<div class="line">    cin &gt;&gt; s;</div>
+<div class="line">    <span class="keywordtype">int</span> x[s];</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; s; ++i)</div>
+<div class="line">        x[i] = i;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; s; ++i)</div>
+<div class="line">        cout &lt;&lt; x[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>The above code should give a compiler error. Stack-allocated memory is allocated at compile-time, while dynamically allocated memory sends a message to the operating system saying that the program would like more memory. In most situations, the operating system accepts, but there is a speed penalty.</p>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    <span class="keywordtype">int</span>* x;</div>
+<div class="line">    <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> x_size;</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Enter the array size: &quot;</span>;</div>
+<div class="line">    cin &gt;&gt; x_size;</div>
+<div class="line">    x = <span class="keyword">new</span> <span class="keywordtype">int</span>[x_size];</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; x_size; ++i)</div>
+<div class="line">    {</div>
+<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;Input x[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;]: &quot;</span>;</div>
+<div class="line">        cin &gt;&gt; x[i];</div>
+<div class="line">    }</div>
+<div class="line">    cout &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> i = 0; i &lt; x_size; ++i)</div>
+<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;x[&quot;</span> &lt;&lt; i &lt;&lt; <span class="stringliteral">&quot;] = &quot;</span> &lt;&lt; x[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
+<div class="line">    <span class="keyword">delete</span> [] x;</div>
+<div class="line">    x = NULL;</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Input/Output</h3>
+<pre class="fragment">Enter the array size: 8
+Input x[0]: 431
+Input x[1]: 541
+Input x[2]: 63
+Input x[3]: 1
+Input x[4]: 34
+Input x[5]: 63524
+Input x[6]: 1543155
+Input x[7]: 6513
+
+x[0] = 431
+x[1] = 541
+x[2] = 63
+x[3] = 1
+x[4] = 34
+x[5] = 63524
+x[6] = 1543155
+x[7] = 6513
+</pre><hr/>
 <p>Allocating a multidimensional array is more complex. You have to loop through each additional level and use pointers to pointers. </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
@@ -217,15 +275,203 @@ Array Allocation</h1>
 <div class="line">    cout &lt;&lt; x[10][300] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
 <div class="line">        <span class="keyword">delete</span> [] x[i]; <span class="comment">//De-allocate array of pointers</span></div>
-<div class="line">    <span class="keyword">delete</span> [] x; <span class="comment">//De-allocate array of pointers</span></div>
+<div class="line">    <span class="keyword">delete</span> [] x; <span class="comment">//De-allocate array of pointers to pointers</span></div>
 <div class="line">}</div>
-</div><!-- fragment --> </div></div><!-- contents -->
+</div><!-- fragment --><p>It is important to realize that allocating a multi-dimensional array to the heap is significantly different from the stack. Instead of the allocation in the <a class="el" href="cppmdarray.html">multidimensional arrays</a> section, heap-allocated memory can be wherever the system finds free space. This results in a speed reduction.</p>
+<p>Instead of a table like this...</p>
+<table class="doxtable">
+<tr>
+<th colspan="2">x[3][2] in Memory  </th></tr>
+<tr>
+<th>Address </th><th>Name  </th></tr>
+<tr>
+<td>1000 </td><td rowspan="4">x[0][0]  </td></tr>
+<tr>
+<td>1001  </td></tr>
+<tr>
+<td>1002  </td></tr>
+<tr>
+<td>1003  </td></tr>
+<tr>
+<td>1004 </td><td rowspan="4">x[0][1]  </td></tr>
+<tr>
+<td>1005  </td></tr>
+<tr>
+<td>1006  </td></tr>
+<tr>
+<td>1007  </td></tr>
+<tr>
+<td>1008 </td><td rowspan="4">x[1][0]  </td></tr>
+<tr>
+<td>1009  </td></tr>
+<tr>
+<td>1010  </td></tr>
+<tr>
+<td><p class="starttd">1011</p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td>1012 </td><td rowspan="4">x[1][1]  </td></tr>
+<tr>
+<td>1013  </td></tr>
+<tr>
+<td><p class="starttd">1014</p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td><p class="starttd">1015</p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td>1016 </td><td rowspan="4">x[2][0]  </td></tr>
+<tr>
+<td>1017  </td></tr>
+<tr>
+<td><p class="starttd">1018</p>
+<p class="endtd"></p>
+</td></tr>
+<tr>
+<td>1019  </td></tr>
+<tr>
+<td>1020 </td><td rowspan="4">x[2][1]  </td></tr>
+<tr>
+<td>1021  </td></tr>
+<tr>
+<td>1022  </td></tr>
+<tr>
+<td>1023  </td></tr>
+</table>
+<p>A dynamically allocated array with the same dimensions would look more like this...</p>
+<div class="image">
+<img src="dynamicmdarray.svg"  style="width:40%;"/>
+</div>
+<h1><a class="anchor" id="cppmemobj"></a>
+Dynamic Objects</h1>
+<p>Objects can be dynamically allocated as well. Here, we will cover two situations: classes containing pointers and dynamically-allocated classes.</p>
+<h2><a class="anchor" id="cppmemobjcwp"></a>
+Pointers as Members</h2>
+<p>Classes containing pointers typically allocate memory in the constructor and de-allocate using the <b>destructor</b>. Let's create a dummy class to demonstrate this.</p>
+<h3>FILE: Dummy.hh</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef DUMMY_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define DUMMY_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Dummy {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> s;</div>
+<div class="line">    <span class="keywordtype">int</span>* a;</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Dummy();  <span class="comment">//The constructor</span></div>
+<div class="line">    ~Dummy(); <span class="comment">//The destructor</span></div>
+<div class="line">    <span class="keywordtype">bool</span> setElement(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> v);</div>
+<div class="line">    <span class="keywordtype">int</span> getElement(<span class="keywordtype">int</span> i);</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><h3>FILE: Dummy.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Dummy.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keyword">const</span> <span class="keywordtype">int</span> Dummy::s = 1000000;</div>
+<div class="line"></div>
+<div class="line">Dummy::Dummy() {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Dummy constructor run.\n&quot;</span>;</div>
+<div class="line">    a = <span class="keyword">new</span> <span class="keywordtype">int</span>[s];</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Dummy::~Dummy() {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Dummy destructor run.\n&quot;</span>;</div>
+<div class="line">    <span class="keyword">delete</span> [] a;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">bool</span> Dummy::setElement(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> v) {</div>
+<div class="line">    <span class="keywordflow">if</span> (i &gt;= s)</div>
+<div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line">    a[i] = v;</div>
+<div class="line">    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Dummy::getElement(<span class="keywordtype">int</span> i) {</div>
+<div class="line">    <span class="keywordflow">return</span> a[i];</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>FILE: test.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Dummy.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Dummy test;</div>
+<div class="line">    test.setElement(1000, 43125);</div>
+<div class="line">    test.setElement(13, 15);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">Dummy constructor run.
+Dummy destructor run.
+</pre><h2><a class="anchor" id="cppmemdynclass"></a>
+Dynamic Objects</h2>
+<p>Every time you create a class, you actually create two data types: the class datatype and the class pointer datatype. In other words, you create <code>DummyClass</code> and <code>DummyClass*</code>. <b>When using a pointer to a class,</b> <code>new</code> <b>calls the constructor and</b> <code>delete</code> <b>calls the destructor.</b> The files below demonstrate how class pointers work.</p>
+<h3>FILE: Dummy.hh</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#ifndef DUMMY_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#define DUMMY_HH</span></div>
+<div class="line"><span class="preprocessor"></span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"></div>
+<div class="line"><span class="keyword">class </span>Dummy {</div>
+<div class="line"><span class="keyword">private</span>:</div>
+<div class="line">    <span class="keywordtype">int</span> a[100];</div>
+<div class="line"><span class="keyword">public</span>:</div>
+<div class="line">    Dummy();  <span class="comment">//The constructor</span></div>
+<div class="line">    ~Dummy(); <span class="comment">//The destructor</span></div>
+<div class="line">    <span class="keywordtype">void</span> setElement(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> v);</div>
+<div class="line">    <span class="keywordtype">int</span> getElement(<span class="keywordtype">int</span> i);</div>
+<div class="line">};</div>
+<div class="line"></div>
+<div class="line"><span class="preprocessor">#endif</span></div>
+</div><!-- fragment --><h3>FILE: Dummy.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &quot;Dummy.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line">Dummy::Dummy() {</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
+<div class="line">    {</div>
+<div class="line">        a[i] = 0;</div>
+<div class="line">    }</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Dummy constructor run.\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line">Dummy::~Dummy() {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Dummy destructor run.\n&quot;</span>;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> Dummy::setElement(<span class="keywordtype">int</span> i, <span class="keywordtype">int</span> v) {</div>
+<div class="line">    a[i] = v;</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> Dummy::getElement(<span class="keywordtype">int</span> i) {</div>
+<div class="line">    <span class="keywordflow">return</span> a[i];</div>
+<div class="line">}</div>
+</div><!-- fragment --><h3>FILE: test.cc</h3>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><span class="preprocessor">#include &quot;Dummy.hh&quot;</span></div>
+<div class="line"><span class="keyword">using namespace </span>std;</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    Dummy* test = <span class="keyword">new</span> Dummy;</div>
+<div class="line">    test-&gt;setElement(10, 43125);</div>
+<div class="line">    test-&gt;setElement(13, 15);</div>
+<div class="line">    <span class="keyword">delete</span> test;</div>
+<div class="line">    test = NULL;</div>
+<div class="line">}</div>
+</div><!-- fragment --><p>Although the above class is basically useless, it does demonstrate how class pointers work. There are certain situations where a particular class stores a lot of information but you need a very large number of them. This is the kind of situation where it could be useful to store an array of class pointers or a dynamically allocated array of class pointers.</p>
+<dl class="section note"><dt>Note</dt><dd>Again, you have to use the <code>-&gt;</code> operator as opposed to the dot operator.</dd></dl>
+<h1>Further Research </h1>
+<p>Dynamic memory has many practical uses. I would encourage you to research data structures, as they use dynamic memory to organize large amounts of data efficiently. </p>
+</div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <ul>
-        <li class="navelem"><a class="el" href="cpp.html">C++</a></li><li class="navelem"><a class="el" href="cppmem.html">Dynamic Memory</a></li>
+        <li class="navelem"><a class="el" href="cpp.html">C++</a></li><li class="navelem"><a class="el" href="cppmem.html">Memory Allocation</a></li>
         <li class="footer">
             <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:7px 0px" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
         </li>
