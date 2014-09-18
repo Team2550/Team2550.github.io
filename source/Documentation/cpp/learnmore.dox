@@ -1,0 +1,11 @@
+/** \page cpplearn Learn More
+This tutorial was meant to scratch the surface of C++. The intent of this tutorial is to give you enough background knowledge to be capable of programming a robot. If you are interested in learning more about C++, the list below provides some concepts that you can research.
+
+- Using 3rd party libraries
+- Recursion
+- Linked lists
+- Doubly linked lists
+- Stacks and queues
+- Searching and sorting algorithms
+- Binary trees
+*/

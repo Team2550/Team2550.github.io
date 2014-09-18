@@ -81,3 +81,4 @@ If you don't include this, two lines will be seen as the same line (which can be
 - \subpage cppclass "Classes"
 - \subpage cppmdarray "Multidimensional Arrays"
 - \subpage cppmem "Memory Allocation"
+- \subpage cpplearn "Learn More"

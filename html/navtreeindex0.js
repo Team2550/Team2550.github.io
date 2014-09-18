@@ -74,6 +74,7 @@ var NAVTREEINDEX0 =
 "cppif.html#cppelse":[1,4,1,0],
 "cppif.html#cppswitch":[1,4,1,2],
 "cpplayout.html":[1,2],
+"cpplearn.html":[1,15],
 "cpploop.html":[1,4,2],
 "cpploop.html#dowhile":[1,4,2,0,0],
 "cpploop.html#for":[1,4,2,1],
