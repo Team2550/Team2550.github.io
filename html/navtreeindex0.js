@@ -127,5 +127,6 @@ var NAVTREEINDEX0 =
 "cppstruct.html#structfn":[1,11,2],
 "cppstruct.html#structuse":[1,11,1],
 "index.html":[],
-"pages.html":[]
+"pages.html":[],
+"wpilib.html":[2]
 };

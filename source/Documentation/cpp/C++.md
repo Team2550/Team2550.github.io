@@ -20,6 +20,13 @@ C++ is the programming language we use to program the robot and one of the most 
 - How programs are structured
 - Algebra
 
+###What You Need
+
+- A computer
+- The [CodeBlocks](http://www.codeblocks.org/downloads/26) (or equivalent) IDE with a compiler
+  - For Windows, choose the file with "mingw-setup" in the name. You will most likely need MinGW in order to compile the code you write.
+- Time
+
 ###About C++
 C++ was created by a man named Bjarne Stoustrup as an upgrade to C that fixed many of the issues and complaints. There are many C-based languages, but C++ is one of the most popular. C was created in order to write the Unix operating system, the mainstay of the computing industry since the 1970's. C was created to be simple, fast, efficient, and powerful.
 
