@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['inheritance_20_26_20composition',['Inheritance &amp; Composition',['../cppclassinheritcomp.html',1,'cppclass']]],
-  ['if_20statements',['If Statements',['../cppif.html',1,'cppflow']]]
+  ['git',['Git',['../git.html',1,'editing']]],
+  ['github_20_26_20collaboration',['GitHub &amp; Collaboration',['../github.html',1,'editing']]]
 ];

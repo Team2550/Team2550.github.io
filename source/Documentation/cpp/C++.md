@@ -68,7 +68,7 @@ If you don't include this, two lines will be seen as the same line (which can be
 ###A few suggestions
 
 - **Always comment your code.** This will help a lot when someone (or you) tries to look at it in the future. It doesn't matter how self-explanatory your code is, comment it!
-- If you can't figure out what is wrong with your code, ask someone else. They will find the missing semicolon in 30 seconds that you didn't notice after five hours.
+- If you can't figure out what is wrong with your code, ask someone else.
 - Write self-documenting code. This means use names that make since and clearly show the logic that the program uses. Make it consistent.
 
 ##Pages

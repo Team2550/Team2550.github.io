@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['if_2edox',['if.dox',['../if_8dox.html',1,'']]],
-  ['inheritance_2dcomposition_2edox',['inheritance-composition.dox',['../inheritance-composition_8dox.html',1,'']]]
+  ['git_2edox',['git.dox',['../git_8dox.html',1,'']]],
+  ['github_2edox',['github.dox',['../github_8dox.html',1,'']]]
 ];

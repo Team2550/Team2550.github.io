@@ -1,0 +1,7 @@
+/** \page wpilib Robot Programming
+WPILib is the library used by FIRST robotics. It provides various classes that can be used to control every component of the robot. Currently, there is a version of it available in Java, C++, and LabView. In this documentation, we will focus on the C++ version.
+
+Pages
+------
+
+*/

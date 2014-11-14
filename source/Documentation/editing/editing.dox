@@ -1,0 +1,27 @@
+/** \page editing Editing this Documentation
+Eventually, it will be necessary for people besides me, the creator of this website, to edit the documentation. The following sections are a basic tutorial on how to do so.
+
+###You will need...
+- Git
+- Doxygen
+- A GitHub account
+- A good plain text editor
+- GNU Make (optional)
+
+\note All of these tools are free and open source.
+
+I generated this entire site using Doxygen, which is a popular tool for documenting source code. Each revision of this website is managed by Git, which also uploads the site to GitHub for viewing. In order to edit the contents of this site, you will learn some very basic HTML, the rest is written in a combination of Markdown and Doxygen's own special commands.
+
+###Pages
+- \subpage git "Git"
+- \subpage doxy "Doxygen"
+- \subpage mdhtml "Markdown & Basic HTML"
+- \subpage github "GitHub & Collaboration"
+
+###Useful Links
+- Git Pro (free online book)
+- Doxygen user manual
+- Doxygen downloads
+- Git downloads
+- GNU Make for Windows
+*/
