@@ -132,7 +132,7 @@ $(document).ready(function(){initNavTree('cppdata.html','');});
 </li>
 </ul>
 </div>
-<div class="textblock"><p>C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations you can subject them to.</p>
+<div class="textblock"><p>C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations.</p>
 <p>The data types are...</p>
 <ul>
 <li>Integer: data types that are stored as number with no decimal point<ul>
@@ -157,7 +157,7 @@ $(document).ready(function(){initNavTree('cppdata.html','');});
 <p>You can put an “unsigned” in front of any of these variable types in order to make the numbers positive only. This allows them to be twice as large, but be careful, if you do an operation that turns it into a negative value, it will turn into an extremely large number.</p>
 <p>Example: </p>
 <pre class="fragment">unsigned int num = 5; // creates a variable of type integer called num and sets it to 5
-</pre><dl class="section note"><dt>Note</dt><dd>As mentioned earlier, you a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as 'A'3. To see an ASCII table, go to <a href="http://en.cppreference.com/w/cpp/language/ascii">http://en.cppreference.com/w/cpp/language/ascii</a>.</dd></dl>
+</pre><dl class="section note"><dt>Note</dt><dd>As mentioned earlier, a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as <code>'A'</code>. To see an ASCII table, go to <a href="http://en.cppreference.com/w/cpp/language/ascii">http://en.cppreference.com/w/cpp/language/ascii</a>.</dd></dl>
 <h1><a class="anchor" id="cppvars"></a>
 Variables</h1>
 <p>You can create a variable in C++ by specifying the type and name. </p>
@@ -165,19 +165,20 @@ Variables</h1>
 </pre><p>The reason allocation without initialization is possible is because assigning a value to a variable takes a significant amount of time, so it is pointless to assign every variable you create to 0 if you are going to make it nonzero before it is used. For instance, if you are using a variable for user input, then you can create (allocate) it and give it a value later. Long story short, don't assign an initial value to a variable unless you are going to be doing calculations on it directly.</p>
 <dl class="section note"><dt>Note</dt><dd><ul>
 <li>It is customary to name variables using camelCase likeThis</li>
-<li>A variable name cannot include a space</li>
 <li>The variable name must start with either a letter of an underscore '_'</li>
 <li>You can only use letters, numbers, and underscores when naming variables</li>
-<li>Variables are typically declared as locally as possible for debugging reasons (I will explain this later)</li>
-<li><b>Name your variables something that makes sense!</b> Example: don't name a variable that holds user input x, call it something like userInput. Its name should be self-explanatory.</li>
+<li><b>Name your variables something that makes sense!</b> Example: don't name a variable that holds user input <code>x</code>, call it something like <code>userInput</code>. Its name should be self-explanatory.</li>
 </ul>
 </dd></dl>
 <h1><a class="anchor" id="cppconst"></a>
 Constants</h1>
-<p>Declaring a constant is almost the same as declaring a variable. Just put a “const” in front of the type. </p>
-<pre class="fragment">const float PI = 3.14f; //I put the f at the end because sometimes C++ associates 
-</pre><p> the float and double types, meaning that floats are treated as doubles when you declare them. The f tells the compiler that the value must have no more than 5 significant digits Unlike variables, you have to define constants when you create them.</p>
-<dl class="section note"><dt>Note</dt><dd><ul>
+<p>Declaring a constant is almost the same as declaring a variable. Just put a “const” in front of the type.</p>
+<div class="fragment"><div class="line"><span class="keyword">const</span> <span class="keywordtype">float</span> PI = 3.14f; <span class="comment">//I put the f at the end because sometimes C++ associates </span></div>
+<div class="line"><span class="comment">//the float and double types, meaning that floats are treated as doubles</span></div>
+<div class="line"><span class="comment">//when you declare them. The f tells the compiler that the value must have</span></div>
+<div class="line"><span class="comment">//no more than 5 significant digits</span></div>
+<div class="line"><span class="comment">//Unlike variables, you have to define constants when you create them.</span></div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><ul>
 <li>It is customary to name constants using ALL_CAPS, using underscores to separate words</li>
 <li>All of the naming restrictions for variables also apply to constants</li>
 <li>Typically constants are declared at the very top of your code, before anything else happens</li>
@@ -198,7 +199,7 @@ Arithmetic Operations</h1>
 <li><b>Logical operations</b></li>
 <li><b>Assignment operator</b></li>
 </ol>
-<p>Note that exponents are not on this list, that is because C++ does not have an operator for raising numbers to a power. However, there is a function called "pow" that fills this role.</p>
+<dl class="section note"><dt>Note</dt><dd>Exponents are not on this list, that is because C++ does not have an operator for raising numbers to a power. However, there is a function called <code>pow</code> (power) that fills this role.</dd></dl>
 <p>C++ Operators** </p>
 <table class="doxtable">
 <tr>
@@ -216,7 +217,7 @@ Arithmetic Operations</h1>
 <tr>
 <td>Modulus </td><td>% </td></tr>
 </table>
-<p>The mod[ulus] operator calculates the remainder. If you divide an equation with a decimal value using integer math (14/4 is a good example), you will end up with a whole number answer that is not estimated, it simply ignores any decimal digits.</p>
+<p>The mod[ulus] operator calculates the remainder. If the result of a division yields a decimal result when using integer math (14/4 is a good example), you will end up with a whole number answer that is not estimated, it simply ignores any decimal digits.</p>
 <p>We know:</p>
 <blockquote class="doxtable">
 <p>14/4 = 3.5</p>
@@ -224,13 +225,14 @@ Arithmetic Operations</h1>
 </blockquote>
 <p>However, using integer math, this expression evaluates to 3, but there is still a remainder of 2.</p>
 <p>In order to get the remainder, use the expression 14 % 4, the resulting value will be 2.</p>
-<p>The mod operator can be useful in many different situations... you can use it to...</p>
+<p>The mod operator can be useful in many different situations. You can use it to:</p>
 <ul>
 <li>Detect whether a number is odd or even: x % 2, if the mod is 0, then you know the number is even</li>
 <li>Look at only the last digit or digits of a number: x % 10 gets the last digit, x % 100 gets the last two digits, x % 1000 gets the last 3, and so on.</li>
 </ul>
 <p>When programming, you often want to add a certain value to a variable and store the result back into that same variable. C++ has a few operators to do that. These shorthand expressions can be seen to the left.</p>
-<p>One thing worth noting is that x++ and ++x evaluate to the same thing, but there is a difference in some cases, as shown in the code below.</p>
+<p>One thing worth noting is that <code>x++</code> and <code>++x</code> evaluate to the same thing, but there is a difference in some cases, as shown in the code below.</p>
+<dl class="section note"><dt>Note</dt><dd>In general, it is best to get into the habit using the <code>++x</code> operator instead of <code>x++</code>. Internally, <code>x++</code> may have an extra copy operation. Use <code>++x</code> if you can.</dd></dl>
 <p>Shorthand Operations** </p>
 <table class="doxtable">
 <tr>
@@ -286,7 +288,7 @@ Comparison Operators</h1>
 <tr>
 <td>!= </td><td>not equal </td></tr>
 </table>
-<dl class="section note"><dt>Note</dt><dd>! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true of false). <div class="fragment"><div class="line"><span class="comment">//Here is ! as a binary operator...</span></div>
+<dl class="section note"><dt>Note</dt><dd>! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true becomes false). <div class="fragment"><div class="line"><span class="comment">//Here is ! as a binary operator...</span></div>
 <div class="line">1&lt;2; <span class="comment">//evaluates to true</span></div>
 <div class="line">1&gt;2; <span class="comment">//false</span></div>
 <div class="line">!(1&lt;2); <span class="comment">//false</span></div>

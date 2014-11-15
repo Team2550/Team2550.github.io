@@ -1,7 +1,7 @@
 /** \page cppdata Simple Data Types
 \tableofcontents
 
-C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations you can subject them to.
+C++ has several types of data that you can store while the code is running. These include integer, floating point, character, and string. All of these have different mathematical and logical operations.
 
 The data types are...
 - Integer: data types that are stored as number with no decimal point
@@ -26,7 +26,7 @@ Example:
 
     unsigned int num = 5; // creates a variable of type integer called num and sets it to 5
 
-\note As mentioned earlier, you a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as 'A'3. To see an ASCII table, go to http://en.cppreference.com/w/cpp/language/ascii.
+\note As mentioned earlier, a char variable is a value between 0 and 127 that corresponds to a character on the ASCII character table. You can either feed it a numeric value (such as 65) or an actual character such as `'A'`. To see an ASCII table, go to http://en.cppreference.com/w/cpp/language/ascii.
 
 \section cppvars Variables
 You can create a variable in C++ by specifying the type and name.
@@ -37,20 +37,20 @@ The reason allocation without initialization is possible is because assigning a 
 
 \note
 - It is customary to name variables using camelCase likeThis
-- A variable name cannot include a space
 - The variable name must start with either a letter of an underscore '_'
 - You can only use letters, numbers, and underscores when naming variables
-- Variables are typically declared as locally as possible for debugging reasons (I will explain this later)
-- **Name your variables something that makes sense!** Example: don't name a variable that holds user input x, call it something like userInput. Its name should be self-explanatory.
+- **Name your variables something that makes sense!** Example: don't name a variable that holds user input `x`, call it something like `userInput`. Its name should be self-explanatory.
 
 \section cppconst Constants
 Declaring a constant is almost the same as declaring a variable. Just put a “const” in front of the type.
 
-    const float PI = 3.14f; //I put the f at the end because sometimes C++ associates 
-	//the float and double types, meaning that floats are treated as doubles
-	//when you declare them. The f tells the compiler that the value must have
-	//no more than 5 significant digits
-	//Unlike variables, you have to define constants when you create them.
+~~~
+const float PI = 3.14f; //I put the f at the end because sometimes C++ associates 
+//the float and double types, meaning that floats are treated as doubles
+//when you declare them. The f tells the compiler that the value must have
+//no more than 5 significant digits
+//Unlike variables, you have to define constants when you create them.
+~~~
 
 \note
 - It is customary to name constants using ALL_CAPS, using underscores to separate words
@@ -72,7 +72,7 @@ You can perform all of the basic math operations on numeric variables. The follo
 6. **Logical operations**
 7. **Assignment operator**
 
-Note that exponents are not on this list, that is because C++ does not have an operator for raising numbers to a power. However, there is a function called "pow" that fills this role.
+\note Exponents are not on this list, that is because C++ does not have an operator for raising numbers to a power. However, there is a function called `pow` (power) that fills this role.
 
 **C++ Operators**
 Name           | Symbol
@@ -85,7 +85,7 @@ Division       | /
 Modulus        | %
 
 
-The mod[ulus] operator calculates the remainder. If you divide an equation with a decimal value using integer math (14/4 is a good example), you will end up with a whole number answer that is not estimated, it simply ignores any decimal digits.
+The mod[ulus] operator calculates the remainder. If the result of a division yields a decimal result when using integer math (14/4 is a good example), you will end up with a whole number answer that is not estimated, it simply ignores any decimal digits.
 
 We know:
 
@@ -95,13 +95,15 @@ However, using integer math, this expression evaluates to 3, but there is still 
 
 In order to get the remainder, use the expression 14 % 4, the resulting value will be 2.
 
-The mod operator can be useful in many different situations... you can use it to...
+The mod operator can be useful in many different situations. You can use it to:
 - Detect whether a number is odd or even: x % 2, if the mod is 0, then you know the number is even
 - Look at only the last digit or digits of a number: x % 10 gets the last digit, x % 100 gets the last two digits, x % 1000 gets the last 3, and so on.
 
 When programming, you often want to add a certain value to a variable and store the result back into that same variable. C++ has a few operators to do that. These shorthand expressions can be seen to the left.
 
-One thing worth noting is that x++ and ++x evaluate to the same thing, but there is a difference in some cases, as shown in the code below.
+One thing worth noting is that `x++` and `++x` evaluate to the same thing, but there is a difference in some cases, as shown in the code below.
+
+\note In general, it is best to get into the habit using the `++x` operator instead of `x++`. Internally, `x++` may have an extra copy operation. Use `++x` if you can.
 
 **Shorthand Operations**
 Shorthand | Action
@@ -148,7 +150,7 @@ Operator | Action
 ==       | equal, evaluates to true if values are the same
 !=       | not equal
 
-\note ! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true of false).
+\note ! (the not operator) can also be used as a unary operation to a logical statement. It will always evaluate to the opposite of a logical value (true becomes false).
 ~~~{.cc}
 //Here is ! as a binary operator...
 1<2; //evaluates to true

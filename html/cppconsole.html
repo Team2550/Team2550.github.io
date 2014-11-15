@@ -135,10 +135,10 @@ $(document).ready(function(){initNavTree('cppconsole.html','');});
 </li>
 </ul>
 </div>
-<div class="textblock"><p>As you work with code, outputting information is critical. The console (aka: terminal, command line, command prompt) is the easiest way to do this - and C++ has a standard syntax for streaming I/O - including the console and files.</p>
+<div class="textblock"><p>As you work with code, outputting information is critical. The console (aka: terminal, command line, command prompt, or shell) is the easiest way to do this. C++ has a standard syntax for streaming I/O - including the console and files.</p>
 <h1><a class="anchor" id="output"></a>
 Output</h1>
-<p>You can output any single value by using the &lt;&lt; operator.</p>
+<p>You can output any single value by using the <code>&lt;&lt;</code> operator.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span> <span class="comment">//enables console I/O</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -149,10 +149,10 @@ Output</h1>
 <div class="line"><span class="comment">      The value of x is: 10</span></div>
 <div class="line"><span class="comment"></span></div>
 <div class="line"><span class="comment">}</span></div>
-</div><!-- fragment --> <dl class="section note"><dt>Note</dt><dd><code>using namespace std;</code> is important here. The namespace feature of C++ exists in order to prevent name conflicts. If that line is omitted, every instace of something within the <code>std</code> namespace must be prefixed with <code>std::</code>. For example, <code>std::cout &lt;&lt; x;</code>. For now, this is fairly insignificant, but namespaces become important when working with multiple files.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>using namespace std;</code> is important here. The namespace feature of C++ exists in order to prevent name conflicts. If that line is omitted, every instace of something within the <code>std</code> namespace must be prefixed with <code>std::</code>. For example, <code>std::cout &lt;&lt; x;</code>. For now, this is fairly insignificant, but namespaces become important when working with multiple files.</dd></dl>
 <p>Any operation that yields a simple data type (boolean, integer, float) will be evaluated before it is output, so, the <code>cout &lt;&lt; 2 + 2;</code> will output <code>4</code>. If you want a statement to be output literally (such as <code>2 + 2</code> instead of <code>4</code>), place the text in double quotes (<code>cout &lt;&lt; "2 + 2";</code>).</p>
-<p>Another feature worth noting is that the char datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast&lt;int&gt;('a')`.</p>
-<dl class="section note"><dt>Note</dt><dd>Single and double quotes are completely different. Single quotes allow only one character which it is treated as a char constant (<code>const char ...</code>). Double quotes allow entire for entire strings of text and are much more complex.</dd></dl>
+<p>Another feature worth noting is that the <code>char</code> datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast&lt;int&gt;('a')`.</p>
+<dl class="section note"><dt>Note</dt><dd>Single and double quotes are completely different. Single quotes allow only one character which is treated as a <code>char</code> constant (<code>const char ...</code>). Double quotes allow for entire strings of text and are much more complex.</dd></dl>
 <h2><a class="anchor" id="escape"></a>
 Escape Codes</h2>
 <p>Escape codes are single characters that allow you to output nonprinting characters. For example, in C++, strings are always enclosed in quotes. Placing a quote prematurely will terminate the string. Escape codes fix this.</p>
@@ -168,7 +168,7 @@ Escape Codes</h2>
 <tr>
 <td><code>\\</code> </td><td>backslash </td></tr>
 <tr>
-<td><code>\0</code> </td><td>null character, this is often used to denote the end of a transmission </td></tr>
+<td><code>\0</code> </td><td>null character, this is often used to denote the end of a transmission or string </td></tr>
 <tr>
 <td><code>\a</code> </td><td>audible bell - sends a system beep sound </td></tr>
 <tr>
@@ -187,7 +187,7 @@ Escape Codes</h2>
 <td><code>\unnnn</code> </td><td>outputs a unicode character </td></tr>
 </table>
 <blockquote class="doxtable">
-<p>"this string \"has a quotation" and make the computer beep<em></em> "</p>
+<p>"This string \"has a quotation" and makes the computer beep.<em></em> "</p>
 <p></p>
 </blockquote>
 <h1><a class="anchor" id="modify"></a>

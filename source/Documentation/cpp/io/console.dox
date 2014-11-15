@@ -1,10 +1,10 @@
 /** \page cppconsole Console I/O
 \tableofcontents
 
-As you work with code, outputting information is critical. The console (aka: terminal, command line, command prompt) is the easiest way to do this - and C++ has a standard syntax for streaming I/O - including the console and files.
+As you work with code, outputting information is critical. The console (aka: terminal, command line, command prompt, or shell) is the easiest way to do this. C++ has a standard syntax for streaming I/O - including the console and files.
 
 \section output Output
-You can output any single value by using the << operator.
+You can output any single value by using the `<<` operator.
 
 ~~~
 #include <iostream> //enables console I/O
@@ -18,13 +18,14 @@ int main() {
     */
 }
 ~~~
+
 \note `using namespace std;` is important here. The namespace feature of C++ exists in order to prevent name conflicts. If that line is omitted, every instace of something within the `std` namespace must be prefixed with `std::`. For example, `std::cout << x;`. For now, this is fairly insignificant, but namespaces become important when working with multiple files.
 
 Any operation that yields a simple data type (boolean, integer, float) will be evaluated before it is output, so, the `cout << 2 + 2;` will output `4`. If you want a statement to be output literally (such as `2 + 2` instead of `4`), place the text in double quotes (`cout << "2 + 2";`).
 
-Another feature worth noting is that the char datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast<int>('a')`.
+Another feature worth noting is that the `char` datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast<int>('a')`.
 
-\note Single and double quotes are completely different. Single quotes allow only one character which it is treated as a char constant (`const char ...`). Double quotes allow entire for entire strings of text and are much more complex.
+\note Single and double quotes are completely different. Single quotes allow only one character which is treated as a `char` constant (`const char ...`). Double quotes allow for entire strings of text and are much more complex.
 
 \subsection escape Escape Codes
 Escape codes are single characters that allow you to output nonprinting characters. For example, in C++, strings are always enclosed in quotes. Placing a quote prematurely will terminate the string. Escape codes fix this.
@@ -35,7 +36,7 @@ Escape Sequence | Output
 `\"` | double quote
 `\?` | question mark
 `\\` | backslash
-`\0` | null character, this is often used to denote the end of a transmission
+`\0` | null character, this is often used to denote the end of a transmission or string
 `\a` | audible bell - sends a system beep sound
 `\b` | backspace
 `\f` | form feed - new page
@@ -45,9 +46,8 @@ Escape Sequence | Output
 `\v` | vertical tab
 `\unnnn` | outputs a unicode character
 
-> "this string \"has a quotation\" and make the computer beep\a"
-
-\section modify I/O Manipulators
+> "This string \"has a quotation\" and makes the computer beep.\a"
+                                                                                       \section modify I/O Manipulators
 There are also several operations that you can run on the stream itslef. Assumes that the line `using namespace std;` is at the top of the file.
 
 Command | Action | Example
