@@ -71,7 +71,7 @@ Using Predefined Functions</h1>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>For documentation on these functions, I reccomend <a href="http://en.cppreference.com">en.cppreference.com</a> and <a href="http://www.cplusplus.com/reference">www.cplusplus.com/reference</a>.</dd></dl>
 <h1><a class="anchor" id="fnprototypes"></a>
 Defining Your Own Functions</h1>
-<p>You can also create your own functions. In order to do this, you need:</p>
+<p>You can also create your own functions. In order to do this, you need to:</p>
 <ul>
 <li>Write the prototype<ul>
 <li>The function name</li>
@@ -90,22 +90,21 @@ Defining Your Own Functions</h1>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> printHello(); <span class="comment">//This is the prototype. No arguments, returns nothing (void).</span></div>
-<div class="line"><span class="comment">/*The prototype needs to be placed somewhere at the top of the program. It tells</span></div>
-<div class="line"><span class="comment">    the compiler that the function is implemented later. This method has several</span></div>
-<div class="line"><span class="comment">    benefits that we will cover later.</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">  It is possible to implement the functions above main, however, this is not recommended.</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">int main() {</span></div>
-<div class="line"><span class="comment">    printHello();</span></div>
-<div class="line"><span class="comment">}</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">void printHello() {</span></div>
-<div class="line"><span class="comment">    cout &lt;&lt; &quot;Hello.\n&quot;;</span></div>
-<div class="line"><span class="comment">}</span></div>
+<div class="line"><span class="comment">//The prototype needs to be placed somewhere at the top of the program. It tells</span></div>
+<div class="line"><span class="comment">//    the compiler that the function is implemented later. This method has several</span></div>
+<div class="line"><span class="comment">//    benefits that we will cover later.</span></div>
+<div class="line"></div>
+<div class="line"><span class="comment">//It is possible to implement the functions above main, however, this is not recommended.</span></div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">int</span> main() {</div>
+<div class="line">    printHello();</div>
+<div class="line">}</div>
+<div class="line"></div>
+<div class="line"><span class="keywordtype">void</span> printHello() {</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Hello.\n&quot;</span>;</div>
+<div class="line">}</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Any variables instantiated (declared/defined/created) within a function are <b>local</b> to that function. In other words, they are deleted after the function exits.</dd></dl>
-<p>Practice:** Write a void function named printname that prints out your name. Call it from main 10 times using a loop.</p>
+<p><b>Practice:</b> Write a void function named printname that prints out your name. Call it from main 10 times using a loop.</p>
 <h1><a class="anchor" id="fnreturn"></a>
 Return Values</h1>
 <p>If you want your function to return something, change <code>void</code> to be a data type. <b>A function can only return one value.</b></p>

@@ -61,18 +61,18 @@ Scope</h1>
 <p>The scope of a variable is the block of code that has access to that variable...</p>
 <ul>
 <li><b>Global Variables</b> (i.e. variables with global scope) are...<ul>
-<li>declared <em>above</em> main</li>
+<li>declared <em>outside</em> <code>main</code> and any other function</li>
 <li><em>accessible and modifiable</em> by <em>any</em> routine in the current module (source file)</li>
-<li>to be avoided as they make problems more difficult to find since the variable could have been modifed anywhere</li>
+<li>to be avoided as they make problems more difficult to find since the variable could have been modified anywhere</li>
 </ul>
 </li>
-<li>Local Variables (i.e. variables with local scope)<ul>
+<li><b>Local Variables</b> (i.e. variables with local scope)<ul>
 <li>are <em>declared inside a block</em> (between { })</li>
 <li>are <em>only available within that block</em></li>
 <li>make errors easier to find because there's a smaller chunk of code in which the error can exist</li>
 </ul>
 </li>
-<li>Constants are typically declared globally but since they can't be modified, declaring them global is not a problem statement.</li>
+<li>Constants are typically declared globally but since they can't be modified, declaring them in global scope is not a problem.</li>
 </ul>
 <h1><a class="anchor" id="fnoverload"></a>
 Function Overloading</h1>
@@ -83,7 +83,7 @@ int add(int a, int b, int c);
 float add(int a, float b);
 float add(float a, float b);
 float add(int a, int b, float c);
-</pre><dl class="section note"><dt>Note</dt><dd>In this example, you have to add a decimal value (even if it is <code>x.0</code>) in order to trigger overloads involving float instead of int.</dd></dl>
+</pre><dl class="section note"><dt>Note</dt><dd>In this example, you have to add a decimal value (even if it is <code>x.0</code>) in order to trigger overloads involving <code>float</code> instead of <code>int</code>.</dd></dl>
 <p>The only illegal overloads are those that the compiler cannot tell the difference between. The next section can cause this problem.</p>
 <dl class="section note"><dt>Note</dt><dd>As convention, all function overloads should do basically the same thing. No overloaded functions should be substantially different.</dd></dl>
 <h1><a class="anchor" id="fndefparam"></a>
@@ -99,7 +99,7 @@ int add(int a); //The compiler can't tell the difference between a call to this 
 </pre></dd></dl>
 <h1><a class="anchor" id="fnstatic"></a>
 Static Variables</h1>
-<p>Variables can be either automatic or Static...</p>
+<p>Variables can be either automatic or static...</p>
 <ul>
 <li>Automatic Variables<ul>
 <li>are the most common</li>

@@ -9,11 +9,11 @@ One useful capability of almost any programming language is the ability to take 
 ###C++ Logic Gate Operators
 Operation | Symbol
 ----------|--------
-OR        | \|\|
+OR        | \|\| |
 AND       | &&
 NOT       | !
 
-An OR statement takes two values as input and, if either value is true, the or statement will be true. Note that "either" also includes both values as shown in the truth table below. An OR operation uses short-circuit evaluation, meaning that the computer will not run any more comparisons then necessary. For instance, if the first value in the OR statement is TRUE, then the output will be TRUE regardless of the second operand - the computer will skip the second comparison if it can.
+An OR statement takes two values as input and, if either value is true, the or statement will be true. Note that "either" also includes both values as shown in the truth table below. An OR operation uses short-circuit evaluation, meaning that the computer will not run any more comparisons than necessary. For instance, if the first value in the OR statement is TRUE, then the output will be TRUE regardless of the second operand - the computer will skip the second comparison if it can.
 
 \note 
 A truth table is a simple table which shows the behavior of a logic gate by showing the output for every possible value of inputs (in order to show the behavior in any situation, you only need two inputs).
@@ -32,10 +32,10 @@ The NOT operator returns the opposite of the actual result of an evaluation so t
  1 | 0 | 1        | 0
  1 | 1 | 1        | 1
 
-\note It is very important that you remember to type in "||" for "OR" and "&&" for "AND" - putting a single | or & character will use the logic gate in bitwise mode, which will mess up the results.
+\note It is very important that you remember to type in `||` for "OR" and `&&` for "AND" - putting a single `|` or `&` character will use the logic gate in bitwise mode, which is completely different.
 
 ###NOT Truth Table
-INPUT | !INPUT
+INPUT | !(INPUT)
 :----:|:------:
  0    | 1
  1    | 0
@@ -54,7 +54,7 @@ When evaluating an expression, C++ has a defined order of operations for logic g
 
 A more complete table can be found at [cppreference.com](http://en.cppreference.com/w/cpp/language/operator_precedence)
 
--*Even though C++ has a set order of operations, adding parenthesis often makes it easier to understand.** The table below demonstrates this.
+**Even though C++ has a set order of operations, adding parenthesis often makes it easier to understand.** The table below demonstrates this.
 <table>
     <tr>
         <th>Expression</th>

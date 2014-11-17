@@ -13,9 +13,8 @@ using namespace std;
 int main() {
     int x = 10;
     cout << "The value of x is: " << x; //outputs the value of x to the console
-    /*Final Output:
-      The value of x is: 10
-    */
+    //Final Output:
+    //  The value of x is: 10
 }
 ~~~
 

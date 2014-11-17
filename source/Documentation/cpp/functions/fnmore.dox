@@ -12,14 +12,14 @@ Long story short: make data (variables) as local as possible.
 The scope of a variable is the block of code that has access to that variable...
 
 - **Global Variables** (i.e. variables with global scope) are...
-	- declared *above* main
+	- declared *outside* `main` and any other function
 	- *accessible and modifiable* by *any* routine in the current module (source file)
-	- to be avoided as they make problems more difficult to find since the variable could have been modifed anywhere
-- Local Variables (i.e. variables with local scope)
+	- to be avoided as they make problems more difficult to find since the variable could have been modified anywhere
+- **Local Variables** (i.e. variables with local scope)
 	- are *declared inside a block* (between { })
 	- are *only available within that block*
 	- make errors easier to find because there's a smaller chunk of code in which the error can exist
-- Constants are typically declared globally but since they can't be modified, declaring them global is not a problem statement.
+- Constants are typically declared globally but since they can't be modified, declaring them in global scope is not a problem.
 
 \section fnoverload Function Overloading
 Function overloading allows for multiple functions to have the same name as long as the argument lists are different (this allows the compiler to tell them apart). The return type does not matter.
@@ -32,7 +32,7 @@ The following prototypes are all legal overloads:
     float add(float a, float b);
     float add(int a, int b, float c);
 
-\note In this example, you have to add a decimal value (even if it is `x.0`) in order to trigger overloads involving float instead of int.
+\note In this example, you have to add a decimal value (even if it is `x.0`) in order to trigger overloads involving `float` instead of `int`.
 
 The only illegal overloads are those that the compiler cannot tell the difference between. The next section can cause this problem.
 
@@ -58,7 +58,7 @@ As you can see, all default parameters do is provide a value for an argument not
 
 \section fnstatic Static Variables
 
-Variables can be either automatic or Static...
+Variables can be either automatic or static...
 
 - Automatic Variables
 	- are the most common

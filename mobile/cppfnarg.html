@@ -77,7 +77,7 @@ Pass by Value</h1>
 <div class="line">{</div>
 <div class="line">    <span class="keywordflow">return</span> num1 + num2;</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>If you give a function too many arguments or the wrong data types (a <code>float</code> instead of an <code>int</code>, for example), the code will not compile.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you give a function too many arguments or the wrong data types (a <code>float</code> instead of an <code>int</code>, for example), the code will not compile.</dd></dl>
 <h3>Practice</h3>
 <ul>
 <li>Write a function named isEven() that:<ul>
@@ -95,9 +95,13 @@ Pass by Value</h1>
 </ul>
 <h1><a class="anchor" id="byref"></a>
 Pass by Reference</h1>
-<p>Passing by reference sends the address of a variable into a function instead of a copy of the variable. In order to pass a parameter by reference, place a <code>&amp;</code> after the datatype of the parameter in the prototype and header. This small syntax detail can completely change the behavior of a program, so pay attention!</p>
+<p>Passing by reference sends the address of a variable into a function instead of a copy of the variable. In order to pass a parameter by reference, place a <code>&amp;</code> after the datatype of the parameter in the prototype and header. <b>This small syntax detail can completely change the behavior of a program, so pay attention!</b></p>
 <h3>Examples</h3>
-<p>Passing by value, outputs <code>1 1</code> </p>
+<p>Passing by value, outputs </p>
+<blockquote class="doxtable">
+<p>1 1</p>
+<p></p>
+</blockquote>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span> x);   </div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
@@ -111,7 +115,11 @@ Pass by Reference</h1>
 <div class="line">    cout &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot; &quot;</span>;</div>
 <div class="line">    x++;             <span class="comment">//modifies local variable x</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p> Passing by reference, outputs <code>1 2</code> </p>
+</div><!-- fragment --><p> Passing by reference, outputs </p>
+<blockquote class="doxtable">
+<p>1 2</p>
+<p></p>
+</blockquote>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> funcA(<span class="keywordtype">int</span>&amp; x);  <span class="comment">//&amp; makes is &quot;pass by ref&quot;</span></div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
@@ -126,12 +134,12 @@ Pass by Reference</h1>
 <div class="line">    x++;             <span class="comment">//modifies variable a in main</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><h3>When to use pass by reference</h3>
-<p>Pass by reference is used in two instances</p>
+<p>Pass by reference is used in two instances:</p>
 <ol type="1">
 <li>When you want to get more than one piece of data out of a function. Pass by reference allows you to get data out of a function without it being "returned" via the return statement, which is limited to returning one item.</li>
-<li>When you're passing in a LARGE piece of data (like an array of a zillion values) and don't want to have to copy it (which takes time and memory). For now, we focus on the first reason (getting more data out of function)</li>
+<li>When you're passing in a LARGE piece of data and don't want to have to copy it (which takes time and memory). For now, we focus on the first reason (getting more data out of function).</li>
 </ol>
-<dl class="section note"><dt>Note</dt><dd>The C language didn't have pass by reference, it used "pass by address", which is identical in concept to pass-by-reference but utilizes a different syntax. And this is also still supported in C++ as it's a superset of C, so beware of code you find on the internet.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>The C language didn't have pass by reference, it used "pass by address", which is identical in concept to pass-by-reference but utilizes a different syntax. This is also still supported in C++ as it's a superset of C, so beware of code you find on the internet.</dd></dl>
 <h3>Practice</h3>
 <p>Write a function that takes two variables by reference and swaps their contents. Call it <code>swapVars</code>. Test it to make sure it works. </p>
 </div></div><!-- contents -->

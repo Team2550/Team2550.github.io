@@ -59,13 +59,14 @@
 </div><!-- fragment --><p>The condition can be any logical expression or comparison.</p>
 <h1><a class="anchor" id="cppelse"></a>
 else</h1>
-<p>You can also add an "else" statement that runs if the condition is not met...</p>
+<p>You can also add an <code>else</code> statement that runs if the condition is not met...</p>
 <div class="fragment"><div class="line"><span class="keywordflow">if</span> (condition_is_met)</div>
 <div class="line">    <span class="comment">//do action</span></div>
 <div class="line"><span class="keywordflow">else</span></div>
 <div class="line">    <span class="comment">//do action</span></div>
 <div class="line"><span class="comment">//You don&#39;t need to add in curly brackets {} if only one line of code is being run after the if or else statement.</span></div>
-</div><!-- fragment --><h1><a class="anchor" id="cppelif"></a>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>In many cases, else statements can be simply omitted.</dd></dl>
+<h1><a class="anchor" id="cppelif"></a>
 else if</h1>
 <p>These are great for simple tests, but what if you want to check multiple conditions and run different actions based on those? The answer is the "else if" statement...</p>
 <div class="fragment"><div class="line"><span class="keywordflow">if</span> (condition)</div>
@@ -99,9 +100,9 @@ switch</h1>
 <div class="line"><span class="keywordflow">case</span> yet_another_value:</div>
 <div class="line">    <span class="comment">//do another thing</span></div>
 <div class="line">    <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="keywordflow">case</span> value:</div>
-<div class="line"><span class="keywordflow">case</span> value:</div>
-<div class="line"><span class="keywordflow">case</span> value:</div>
+<div class="line"><span class="keywordflow">case</span> value1:</div>
+<div class="line"><span class="keywordflow">case</span> value2:</div>
+<div class="line"><span class="keywordflow">case</span> value3:</div>
 <div class="line">    <span class="comment">//the above 3 conditions all execute here, this is the equivalent of an OR statement</span></div>
 <div class="line">    <span class="keywordflow">break</span>;</div>
 <div class="line"><span class="keywordflow">default</span>:</div>

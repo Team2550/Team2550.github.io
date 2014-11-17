@@ -14,7 +14,7 @@ if (condition_is_met)
 The condition can be any logical expression or comparison.
 
 \section cppelse else
-You can also add an "else" statement that runs if the condition is not met...
+You can also add an `else` statement that runs if the condition is not met...
 
 ~~~
 if (condition_is_met)
@@ -23,6 +23,8 @@ else
 	//do action
 //You don't need to add in curly brackets {} if only one line of code is being run after the if or else statement.
 ~~~
+
+\note In many cases, else statements can be simply omitted.
 
 \section cppelif else if
 These are great for simple tests, but what if you want to check multiple conditions and run different actions based on those? The answer is the "else if" statement...
@@ -61,9 +63,9 @@ case another_value:
 case yet_another_value:
 	//do another thing
 	break;
-case value:
-case value:
-case value:
+case value1:
+case value2:
+case value3:
 	//the above 3 conditions all execute here, this is the equivalent of an OR statement
 	break;
 default:

@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('cppconsole.html','');});
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Pages</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Pages</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -145,10 +145,9 @@ Output</h1>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    <span class="keywordtype">int</span> x = 10;</div>
 <div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;The value of x is: &quot;</span> &lt;&lt; x; <span class="comment">//outputs the value of x to the console</span></div>
-<div class="line">    <span class="comment">/*Final Output:</span></div>
-<div class="line"><span class="comment">      The value of x is: 10</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">}</span></div>
+<div class="line">    <span class="comment">//Final Output:</span></div>
+<div class="line">    <span class="comment">//  The value of x is: 10</span></div>
+<div class="line">}</div>
 </div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>using namespace std;</code> is important here. The namespace feature of C++ exists in order to prevent name conflicts. If that line is omitted, every instace of something within the <code>std</code> namespace must be prefixed with <code>std::</code>. For example, <code>std::cout &lt;&lt; x;</code>. For now, this is fairly insignificant, but namespaces become important when working with multiple files.</dd></dl>
 <p>Any operation that yields a simple data type (boolean, integer, float) will be evaluated before it is output, so, the <code>cout &lt;&lt; 2 + 2;</code> will output <code>4</code>. If you want a statement to be output literally (such as <code>2 + 2</code> instead of <code>4</code>), place the text in double quotes (<code>cout &lt;&lt; "2 + 2";</code>).</p>
 <p>Another feature worth noting is that the <code>char</code> datatype outputs the corresponding character. The value of the char variable is output as its corresponding character on the ASCII chart. In order to output the raw value of a character, use `static_cast&lt;int&gt;('a')`.</p>

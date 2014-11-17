@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>Team 2550: Enumeration</title>
+<title>Team 2550: File Members</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -69,7 +69,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="http://team2550.blogspot.com/"><span>Team&#160;2550&#160;Website</span></a></li>
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
-      <li class="current"><a href="pages.html"><span>Related&#160;Pages</span></a></li>
+      <li><a href="pages.html"><span>Related&#160;Pages</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -88,6 +88,12 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
       </li>
     </ul>
   </div>
+  <div id="navrow3" class="tabs2">
+    <ul class="tablist">
+      <li class="current"><a href="globals.html"><span>All</span></a></li>
+      <li><a href="globals_vars.html"><span>Variables</span></a></li>
+    </ul>
+  </div>
 </div><!-- top -->
 <div id="side-nav" class="ui-resizable side-nav-resizable">
   <div id="nav-tree">
@@ -100,7 +106,7 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
 </div>
 <script type="text/javascript">
-$(document).ready(function(){initNavTree('cppenum.html','');});
+$(document).ready(function(){initNavTree('globals.html','');});
 </script>
 <div id="doc-content">
 <!-- window showing the filter options -->
@@ -117,102 +123,33 @@ $(document).ready(function(){initNavTree('cppenum.html','');});
 </iframe>
 </div>
 
-<div class="header">
-  <div class="headertitle">
-<div class="title">Enumeration </div>  </div>
-</div><!--header-->
 <div class="contents">
-<div class="textblock"><p>An enumeration simply associates names with values. They can be used to make a program easier to read. The basic syntax is below. </p>
-<pre class="fragment">enum Color {RED, GREEN, BLUE, YELLOW, WHITE};
-</pre><p>All an enumeration does is assign names to integer values. The only difference is that an enumeration creates its own datatype (in the above example, the enumeration creates a <code>Color</code> datatype. See the example at the bottom of this page.</p>
-<dl class="section note"><dt>Note</dt><dd>Becuase all <code>enum</code> does is map words to an integer, you can also assign specific values to enumerations. <pre class="fragment">enum Distance {
-    TOO_CLOSE = 10,
-    TOO_FAR = 20
-};
-</pre></dd></dl>
-<p>Because they are easy to read and do not slow down the code, enumerations are great for <code>switch</code> statements.</p>
-<h3>Example</h3>
-<div class="fragment"><div class="line"><span class="comment">//This program performs actions based on user input, which can be a very good appliation for enumerations.</span></div>
-<div class="line"></div>
-<div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><span class="keyword">using namespace </span>std;</div>
-<div class="line"></div>
-<div class="line"><span class="keyword">enum</span> Distance {</div>
-<div class="line">    TOO_CLOSE = 10,</div>
-<div class="line">    TOO_FAR = 20,</div>
-<div class="line">    OK</div>
-<div class="line">};</div>
-<div class="line"></div>
-<div class="line">Distance checkDistance(<span class="keywordtype">int</span> input);</div>
-<div class="line"><span class="keywordtype">bool</span> userDone();</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    Distance checked;</div>
-<div class="line">    <span class="keywordflow">do</span> {</div>
-<div class="line">        <span class="keywordtype">int</span> input;</div>
-<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;Enter a distance: &quot;</span>;</div>
-<div class="line">        cin &gt;&gt; input;</div>
-<div class="line">        checked = checkDistance(input);</div>
-<div class="line">        <span class="keywordflow">switch</span> (checked) {</div>
-<div class="line">        <span class="keywordflow">case</span> OK:</div>
-<div class="line">            cout &lt;&lt; <span class="stringliteral">&quot;You chose wisely.\n&quot;</span>;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> TOO_FAR:</div>
-<div class="line">            cout &lt;&lt; <span class="stringliteral">&quot;You chose poorly: too far.\n&quot;</span>;</div>
-<div class="line">            <span class="keywordflow">break</span>;</div>
-<div class="line">        <span class="keywordflow">case</span> TOO_CLOSE:</div>
-<div class="line">            cout &lt;&lt; <span class="stringliteral">&quot;You chose poorly: too close.\n&quot;</span>;</div>
-<div class="line">        }</div>
-<div class="line">    } <span class="keywordflow">while</span> (checked != OK &amp;&amp; !userDone());</div>
-<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Goodbye.\n&quot;</span>;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line">Distance checkDistance(<span class="keywordtype">int</span> input) {</div>
-<div class="line">    <span class="keywordflow">if</span> (input &lt;= TOO_CLOSE) <span class="comment">//comparing an `int` and a `Distance`</span></div>
-<div class="line">        <span class="keywordflow">return</span> TOO_CLOSE;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="keywordflow">if</span> (input &gt;= TOO_FAR)</div>
-<div class="line">        <span class="keywordflow">return</span> TOO_FAR;</div>
-<div class="line">    <span class="keywordflow">else</span> <span class="comment">//OK does not have an associated value.</span></div>
-<div class="line">        <span class="keywordflow">return</span> OK;</div>
-<div class="line">}</div>
-<div class="line"></div>
-<div class="line"><span class="keywordtype">bool</span> userDone() {</div>
-<div class="line">    <span class="keywordtype">char</span> input;</div>
-<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Are you done? [y/n] &quot;</span>;</div>
-<div class="line">    cin &gt;&gt; input;</div>
-<div class="line">    cout &lt;&lt; endl;</div>
-<div class="line">    <span class="keywordflow">if</span> (input == <span class="charliteral">&#39;y&#39;</span>)</div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line">    <span class="keywordflow">else</span></div>
-<div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line">}</div>
-</div><!-- fragment --><h4>Example Input/Output</h4>
-<p>In order to demonstrate the capabilities of <code>cin</code>, I am am going to demonstrate this program. If you give it too much data, it just plugs it in in the future. </p>
-<pre class="fragment">Enter a distance: 10
-You chose poorly: too close.
-Are you done? [y/n] n
-
-Enter a distance: 20
-You chose poorly: too far.
-Are you done? [y/n] n
-
-Enter a distance: 15
-You chose wisely.
-Goodbye.
-</pre><p>This method, while not always apparent to the user, can be very useful for those who do know about it. You are actually able to provide a valid input set at the beginning of the program. </p>
-<pre class="fragment">Enter a distance: 10 n 20 n 15
-You chose poorly: too close.
-Are you done? [y/n] 
-Enter a distance: You chose poorly: too far.
-Are you done? [y/n] 
-Enter a distance: You chose wisely.
-Goodbye.</pre> </div></div><!-- contents -->
+<div class="textblock">Here is a list of all file members with links to the files they belong to:</div><ul>
+<li>ATTR
+: <a class="el" href="_8__flow_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._flow.dox</a>
+, <a class="el" href="_8__if_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._if.dox</a>
+, <a class="el" href="_8__loop_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._loop.dox</a>
+, <a class="el" href="_8__fn_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._fn.dox</a>
+, <a class="el" href="_8__fnarg_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._fnarg.dox</a>
+, <a class="el" href="_8__fnmore_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._fnmore.dox</a>
+, <a class="el" href="_8__console_8dox.html#aaa9aabb9bb1047b3aeda6033d520cc25">._console.dox</a>
+</li>
+<li>utf
+: <a class="el" href="_8__flow_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._flow.dox</a>
+, <a class="el" href="_8__if_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._if.dox</a>
+, <a class="el" href="_8__loop_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._loop.dox</a>
+, <a class="el" href="_8__fn_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._fn.dox</a>
+, <a class="el" href="_8__fnarg_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._fnarg.dox</a>
+, <a class="el" href="_8__fnmore_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._fnmore.dox</a>
+, <a class="el" href="_8__console_8dox.html#ab3bbb74a788b09d4347d5d5fbe272b1c">._console.dox</a>
+</li>
+</ul>
+</div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
     <ul>
-        <li class="navelem"><a class="el" href="cpp.html">C++</a></li>
         <li class="footer">
             <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0; margin:7px 0px" src="https://i.creativecommons.org/l/by-sa/4.0/80x15.png" /></a>
         </li>

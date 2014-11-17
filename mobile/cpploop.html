@@ -51,8 +51,7 @@
 <li class="level1"><a href="#loopproblems">Pitfalls</a></li>
 </ul>
 </div>
-<div class="textblock"><p>Iteration, or looping, refers to the repetition of a group of commands. Looping allows blocks of code to be repeated indefinately. This is especially useful for robotics - the code that runs is almost always some for of loop.</p>
-<dl class="section note"><dt>Note</dt><dd>The process of looping is known as iteration (or iterating).</dd></dl>
+<div class="textblock"><p>Iteration, or looping, refers to the repetition of a group of commands. Looping allows blocks of code to be repeated indefinitely. This is especially useful for robotics - the code that runs is almost always some form of loop.</p>
 <h1><a class="anchor" id="while"></a>
 while</h1>
 <p>A <code>while</code> loop allows you to repeat code until a condition is met. The basic layout follows... </p>
@@ -78,24 +77,24 @@ while</h1>
 <div class="line"></div>
 <div class="line">    <span class="keywordtype">int</span> i = 1;</div>
 <div class="line">    <span class="comment">//repeat until i = 0</span></div>
-<div class="line">    <span class="comment">/*This loop will continuously add to i while i is not 0. Once i reaches around 4 billion,</span></div>
-<div class="line"><span class="comment">      it will actually wrap around and become approximately -4 billion (4 billion is the</span></div>
-<div class="line"><span class="comment">      approximate size of a signed int on a 32 bit system). After wrapping, it will approach</span></div>
-<div class="line"><span class="comment">      0 and eventually reach it.</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">    while (i != 0)</span></div>
-<div class="line"><span class="comment">        i++; //like an if statement, a single-line while loop does not need brackets</span></div>
-<div class="line"><span class="comment"></span></div>
-<div class="line"><span class="comment">    //Here is a loop that relies on an external factor. It keeps repeating until the user provides valid input.</span></div>
-<div class="line"><span class="comment">    int answer;</span></div>
-<div class="line"><span class="comment">    cout &lt;&lt; &quot;Guess what number I am thinking of: &quot;;</span></div>
-<div class="line"><span class="comment">    cin &gt;&gt; answer;</span></div>
-<div class="line"><span class="comment">    while (answer != 42)</span></div>
-<div class="line"><span class="comment">    {</span></div>
-<div class="line"><span class="comment">        cout &lt;&lt; &quot;You answered incorrectly, please try again.\n&quot;</span></div>
-<div class="line"><span class="comment">        cin &gt;&gt; answer;</span></div>
-<div class="line"><span class="comment">    }</span></div>
-<div class="line"><span class="comment">}</span></div>
+<div class="line">    <span class="comment">//This loop will continuously add to i while i is not 0. Once i reaches around 4 billion,</span></div>
+<div class="line">    <span class="comment">//  it will actually wrap around and become approximately -4 billion (4 billion is the</span></div>
+<div class="line">    <span class="comment">//  approximate size of a signed int on a 32 bit system). After wrapping, it will approach</span></div>
+<div class="line">    <span class="comment">//  0 and eventually reach it.</span></div>
+<div class="line"></div>
+<div class="line">    <span class="keywordflow">while</span> (i != 0)</div>
+<div class="line">        i++; <span class="comment">//like an if statement, a single-line while loop does not need brackets</span></div>
+<div class="line"></div>
+<div class="line">    <span class="comment">//Here is a loop that relies on an external factor. It keeps repeating until the user provides valid input.</span></div>
+<div class="line">    <span class="keywordtype">int</span> answer;</div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;Guess what number I am thinking of: &quot;</span>;</div>
+<div class="line">    cin &gt;&gt; answer;</div>
+<div class="line">    <span class="keywordflow">while</span> (answer != 42)</div>
+<div class="line">    {</div>
+<div class="line">        cout &lt;&lt; <span class="stringliteral">&quot;You answered incorrectly, please try again.\n&quot;</span></div>
+<div class="line">        cin &gt;&gt; answer;</div>
+<div class="line">    }</div>
+<div class="line">}</div>
 </div><!-- fragment --><p>While loops can be especially useful for robotics. Here are a few more usage ideas.</p>
 <ul>
 <li>Move until a sensor's readings yield a certain value.</li>
@@ -111,8 +110,7 @@ do-while</h2>
     ...
     ...
 } while (condition_is_met);
-</pre><dl class="section note"><dt>Note</dt><dd>I do not think you can omit the braces for a <code>do... while</code>.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd><code>while (true)</code> creates in infinite loop, which is undesireable in most cases.</dd></dl>
+</pre><dl class="section warning"><dt>Warning</dt><dd><code>while (true)</code> creates in infinite loop, which is undesireable in most cases.</dd></dl>
 <p>The final example in the above section can be made more concise here.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> answer;</div>
 <div class="line">cout &lt;&lt; <span class="stringliteral">&quot;Guess what number I am thinking of: &quot;</span>;</div>
@@ -120,7 +118,7 @@ do-while</h2>
 <div class="line">{</div>
 <div class="line">    cin &gt;&gt; answer;</div>
 <div class="line">    <span class="stringliteral">&quot;You chose poorly. Try again.\n&quot;</span>;</div>
-<div class="line">}</div>
+<div class="line">} <span class="keywordflow">while</span> (answer != 42);</div>
 </div><!-- fragment --><h1><a class="anchor" id="for"></a>
 for</h1>
 <p>In most cases, you want to loop for a known number of times. This can be done with while loops (as was shown above), but <code>for</code> loops are much more concise and allow code to be more localized.</p>
@@ -161,10 +159,10 @@ Pitfalls</h1>
 <p>Floating point numbers in loops, while sometimes necessary, can cause problems. Many people are not aware of this, but the <code>float</code> and <code>double</code> datatypes always have a certain amount of inaccuracy. The reason has to do with the nature of decimal and binary numbers themselves, and cannot be remedied. (COMPUTERPHILE VIDEO)</p>
 <div class="fragment"><div class="line"><span class="comment">//This loop may be infinite on some systems. While we know `.1 * 10 = 1`, the computer does not.</span></div>
 <div class="line"><span class="comment">//Because certain decimal values are not possible to express exactly in binary, it is likely that the exact value of 1 will be missed (the result may actually be something like `1.0000000000001`).</span></div>
-<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">float</span> i = 0; i != 1; i += .1</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">float</span> i = 0; i != 1; i += .1)</div>
 <div class="line">    cout &lt;&lt; i &lt;&lt; endl;</div>
 <div class="line"></div>
-<div class="line"><span class="comment">//In order to get the desireable result, remove the equality comparison operator.</span></div>
+<div class="line"><span class="comment">//In order to get the desirable result, remove the equality comparison operator.</span></div>
 <div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">float</span> i = 0; i &lt; 1; i += .1)</div>
 <div class="line">    cout &lt;&lt; i &lt;&lt; endl;</div>
 <div class="line"></div>
@@ -183,7 +181,7 @@ Pitfalls</h1>
 <div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;looping\n&quot;</span>;</div>
 <div class="line">    result = read();</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>The general rule with anything floating-point related: <b>do not use <code>==</code> or <code>!=</code> when working with values such as these.</b> Doing so will often yield undesireable results. <b>Use a range like the above example.</b><br/>
+</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>The general rule with anything floating-point related: <b>do not use <code>==</code> or <code>!=</code> when working with floating point values.</b> Doing so will often yield undesirable results. <b>Use a range like the above example.</b><br/>
  Remember that the <code>!</code> operator can be placed at the beginning of a parenthesized expression and negate the answer <code>!(expression)</code>. </dd></dl>
 </div></div><!-- contents -->
 <!-- HTML footer for doxygen 1.8.7-->
