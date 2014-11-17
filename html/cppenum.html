@@ -122,10 +122,10 @@ $(document).ready(function(){initNavTree('cppenum.html','');});
 <div class="title">Enumeration </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>An enumeration simply associates names with values. They can be used to make a program easier to read. The basic syntax is below. </p>
+<div class="textblock"><p>Enumerations can make a program easier to read. </p>
 <pre class="fragment">enum Color {RED, GREEN, BLUE, YELLOW, WHITE};
-</pre><p>All an enumeration does is assign names to integer values. The only difference is that an enumeration creates its own datatype (in the above example, the enumeration creates a <code>Color</code> datatype. See the example at the bottom of this page.</p>
-<dl class="section note"><dt>Note</dt><dd>Becuase all <code>enum</code> does is map words to an integer, you can also assign specific values to enumerations. <pre class="fragment">enum Distance {
+</pre><p>All an enumeration does is assign names to integer values. The only difference between an enum and a variable is that an enumeration creates its own datatype (in the above example, the enumeration creates a <code>Color</code> datatype). When the program is compiled, the enum is converted to a plain integer.</p>
+<dl class="section note"><dt>Note</dt><dd>Becuase all <code>enum</code> does is map words to an integer value, you can also assign specific values to enumerations. <pre class="fragment">enum Distance {
     TOO_CLOSE = 10,
     TOO_FAR = 20
 };
@@ -187,8 +187,8 @@ $(document).ready(function(){initNavTree('cppenum.html','');});
 <div class="line">        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line">}</div>
 </div><!-- fragment --><h4>Example Input/Output</h4>
-<p>In order to demonstrate the capabilities of <code>cin</code>, I am am going to demonstrate this program. If you give it too much data, it just plugs it in in the future. </p>
-<pre class="fragment">Enter a distance: 10
+<p>In order to demonstrate the capabilities of <code>cin</code>, I am going to run the above program.</p>
+<dl class="section note"><dt>Note</dt><dd>If you give cin too much data, it will save the extra values and use them in future inputs. <pre class="fragment">Enter a distance: 10
 You chose poorly: too close.
 Are you done? [y/n] n
 
@@ -199,7 +199,8 @@ Are you done? [y/n] n
 Enter a distance: 15
 You chose wisely.
 Goodbye.
-</pre><p>This method, while not always apparent to the user, can be very useful for those who do know about it. You are actually able to provide a valid input set at the beginning of the program. </p>
+</pre></dd></dl>
+<p>This method, while not always apparent to the user, can be very useful for those who do know about it. You are actually able to provide a valid input set at the beginning of the program. </p>
 <pre class="fragment">Enter a distance: 10 n 20 n 15
 You chose poorly: too close.
 Are you done? [y/n] 

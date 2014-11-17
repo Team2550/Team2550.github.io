@@ -1,11 +1,11 @@
 /** \page cppenum Enumeration
-An enumeration simply associates names with values. They can be used to make a program easier to read. The basic syntax is below.
+Enumerations can make a program easier to read.
 
     enum Color {RED, GREEN, BLUE, YELLOW, WHITE};
 
-All an enumeration does is assign names to integer values. The only difference is that an enumeration creates its own datatype (in the above example, the enumeration creates a `Color` datatype. See the example at the bottom of this page.
+All an enumeration does is assign names to integer values. The only difference between an enum and a variable is that an enumeration creates its own datatype (in the above example, the enumeration creates a `Color` datatype). When the program is compiled, the enum is converted to a plain integer.
 
-\note Becuase all `enum` does is map words to an integer, you can also assign specific values to enumerations.
+\note Becuase all `enum` does is map words to an integer value, you can also assign specific values to enumerations.
 
     enum Distance {
         TOO_CLOSE = 10,
@@ -73,8 +73,9 @@ bool userDone() {
 ~~~
 
 ####Example Input/Output
-In order to demonstrate the capabilities of `cin`, I am am going to demonstrate this program.
-If you give it too much data, it just plugs it in in the future.
+In order to demonstrate the capabilities of `cin`, I am going to run the above program.
+
+\note If you give cin too much data, it will save the extra values and use them in future inputs.
 
     Enter a distance: 10
     You chose poorly: too close.
