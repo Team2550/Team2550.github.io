@@ -57,11 +57,11 @@
 Declaring Arrays</h1>
 <p>Declaring an array is almost the same as declaring any other variable. The only difference is that you put the number of items in the array in brackets. </p>
 <pre class="fragment">int numbers[10]; //holds 10 integers
-char letters[5]; //holds 5 chars
-</pre><dl class="section note"><dt>Note</dt><dd>You will often need to access the size of an array multiple times, so it is recommended that you store the size in a constant. <pre class="fragment">const int numbers_size = 10;
+char letters[5]; //holds 5 characters
+</pre><p>You will often need to access the size of an array multiple times, so it is recommended that you store the size in a constant in the same scope. </p>
+<pre class="fragment">const int numbers_size = 10;
 int numbers[numbers_size];
-</pre></dd></dl>
-<h1><a class="anchor" id="accessarray"></a>
+</pre><h1><a class="anchor" id="accessarray"></a>
 Accessing Elements</h1>
 <p>In order to access a value within an array, you have to provide an index. The index (of subscript) is a number enclosed in brackets tells the compiler which item in the array to access.</p>
 <dl class="section note"><dt>Note</dt><dd>The first element is index 0.</dd></dl>
@@ -71,17 +71,17 @@ Accessing Elements</h1>
 <div class="line">num[9] = num[0] + num[1];</div>
 <div class="line">cout &lt;&lt; num[9]; <span class="comment">//prints 15</span></div>
 <div class="line"></div>
-<div class="line"><span class="comment">//To process all the elements of an array use a loop</span></div>
-<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> index=0; index&lt;10; index++)</div>
+<div class="line"><span class="comment">//To process all the elements of an array, use a loop</span></div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> index = 0; index &lt; 10; ++index)</div>
 <div class="line">    num[x] = 42;</div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Specifying an index that is too large (or negative) results in an "out of bounds" error. The C++ compiler will <b>not</b> catch this, so it's up to you to make sure the array index is not out of bounds. <b>Writing to an array elment that is out-of-bounds can alter other variables! Don't do it.</b> <pre class="fragment">int num[5];
+</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>Specifying an index that is too large (or negative) results in an "out of bounds" error. The C++ compilation process will <b>not</b> catch this, so it's up to you to make sure the array index is not out of bounds. <b>Writing to an array elment that is out-of-bounds can alter other variables! Don't do it.</b> Use <code>assert()</code> to check the index if you suspect it is going out of bounds. <pre class="fragment">int num[5];
 num[0] = 7; //OK
 num[4] = 3; //OK
 num[5] = 4; //Out of bounds, remember that the 1st index is always 0.
 num[10] = 7; //out of bounds
 num[-1] = 8; //out of bounds
 </pre></dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Reading from an array can also result in an out of bounds error, but it is unpredictable. Your program may run without a problem, or behave erratically, or crash. It all depends on the state of the system at the time.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Reading from an array can also result in an out of bounds error, but it is unpredictable. Your program may run without a problem, behave erratically, or crash. It all depends on the state of the system at the time.</dd></dl>
 <h1><a class="anchor" id="arrayinit"></a>
 Initializing</h1>
 <p>Like all other variables, array elements are not given default values. There are several methods you can use for initializing arrays.</p>
@@ -102,20 +102,20 @@ Arrays as Function Parameters</h1>
 <li>Arrays can be very large, making them inefficient to copy.</li>
 <li>The compiler does not know the size of the array, so it has no way to copy it in a single operation.</li>
 </ol>
-<p>You do not have to use the <code>&amp;</code>. The prototype and header of a function that accepts an array looks like this: </p>
+<p>You do not have to use <code>&amp;</code> to denote that the array is passed by reference. The prototype of a function that accepts an array looks like this: </p>
 <pre class="fragment">void print(int array[], int size);
-</pre><dl class="section note"><dt>Note</dt><dd>The <code>[ ]</code> tells the function it will be recieving an array by reference. You do <b>not</b> specify the array size between the <code>[ ]</code> However, the function needs to know the size, so it's typically sent in as a separate variable.</dd></dl>
+</pre><dl class="section note"><dt>Note</dt><dd>The <code>[]</code> tells the function it will be recieving an array by reference. You do <b>not</b> specify the array size between the <code>[]</code>. However, the function needs to know the size, so it's typically sent in as a separate variable.</dd></dl>
 <p>Because the array and size are separate, the function can handle any size. In other words, you can use the same function for an array of 32, 67, 99, or 100 items without any problems.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> initialize(<span class="keywordtype">int</span> data[], <span class="keywordtype">int</span> size);</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">void</span> main() {</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> totals1_SIZE = 10;</div>
 <div class="line">    <span class="keyword">const</span> <span class="keywordtype">int</span> totals2_SIZE = 5;</div>
-<div class="line">    <span class="keywordtype">int</span> totals1[ARRAY_SIZE];</div>
-<div class="line">    <span class="keywordtype">int</span> totals2[ARRAY2_SIZE];</div>
+<div class="line">    <span class="keywordtype">int</span> totals1[totals1_SIZE];</div>
+<div class="line">    <span class="keywordtype">int</span> totals2[totals2_SIZE];</div>
 <div class="line">    <span class="comment">//...</span></div>
-<div class="line">    initialize(totals, ARRAY_SIZE);</div>
-<div class="line">    initialize(totals2, ARRAY2_SIZE);</div>
+<div class="line">    initialize(totals1, totals1_SIZE);</div>
+<div class="line">    initialize(totals2, totals2_SIZE);</div>
 <div class="line">    <span class="comment">//...</span></div>
 <div class="line">}</div>
 <div class="line"></div>
@@ -143,17 +143,17 @@ Arrays as Function Parameters</h1>
 Practice</h1>
 <p>Write a program that:</p>
 <ul>
-<li>declares an array of 5 ints called dataSet1</li>
-<li>calls a function to initialize them to their index * 2 (0, 2, 4, 6...)<ul>
-<li>You'll need to write that function it should recieve the array and the size as parameters</li>
+<li>Declares an array of 5 ints called <code>dataSet1</code></li>
+<li>Calls a function to initialize them to their <code>index * 2 (0, 2, 4, 6...)</code><ul>
+<li>You'll need to write that function: it should recieve the array and the size as parameters</li>
 </ul>
 </li>
-<li>calls a function to print them out, space delimited, with a endl at the end.<ul>
-<li>You'll need to write that function it should recieve the array and the size as parameters</li>
+<li>Calls a function to print them out, space delimited, with a endl at the end.<ul>
+<li>You'll need to write that function as well, its parameters will be the same.</li>
 </ul>
 </li>
-<li>Add another array of 100 ints to main called dataSet2.<ul>
-<li>initialize and print them using the exact same functions that were used to process dataset1.</li>
+<li>Add another array of 100 ints to main called <code>dataSet2</code>.<ul>
+<li>Initialize and print them using the same functions that were used to process <code>dataSet1</code>.</li>
 </ul>
 </li>
 <li>Write another function that computes and returns the average of the values in the given array.<ul>

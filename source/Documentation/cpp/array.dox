@@ -9,9 +9,9 @@ An array is a list of values that can all be accessed under a single variable na
 Declaring an array is almost the same as declaring any other variable. The only difference is that you put the number of items in the array in brackets.
 
     int numbers[10]; //holds 10 integers
-    char letters[5]; //holds 5 chars
+    char letters[5]; //holds 5 characters
 
-\note You will often need to access the size of an array multiple times, so it is recommended that you store the size in a constant.
+You will often need to access the size of an array multiple times, so it is recommended that you store the size in a constant in the same scope.
 
     const int numbers_size = 10;
     int numbers[numbers_size];
@@ -28,12 +28,12 @@ num[1] = 10;
 num[9] = num[0] + num[1];
 cout << num[9]; //prints 15
 
-//To process all the elements of an array use a loop
-for (int index=0; index<10; index++)
+//To process all the elements of an array, use a loop
+for (int index = 0; index < 10; ++index)
     num[x] = 42;
 ~~~
 
-\warning Specifying an index that is too large (or negative) results in an "out of bounds" error. The C++ compiler will **not** catch this, so it's up to you to make sure the array index is not out of bounds. **Writing to an array elment that is out-of-bounds can alter other variables! Don't do it.**
+\warning Specifying an index that is too large (or negative) results in an "out of bounds" error. The C++ compilation process will **not** catch this, so it's up to you to make sure the array index is not out of bounds. **Writing to an array elment that is out-of-bounds can alter other variables! Don't do it.** Use `assert()` to check the index if you suspect it is going out of bounds.
 
     int num[5];
     num[0] = 7; //OK
@@ -42,7 +42,7 @@ for (int index=0; index<10; index++)
     num[10] = 7; //out of bounds
     num[-1] = 8; //out of bounds
 
-\note Reading from an array can also result in an out of bounds error, but it is unpredictable. Your program may run without a problem, or behave erratically, or crash. It all depends on the state of the system at the time.
+\note Reading from an array can also result in an out of bounds error, but it is unpredictable. Your program may run without a problem, behave erratically, or crash. It all depends on the state of the system at the time.
 
 \section arrayinit Initializing
 Like all other variables, array elements are not given default values. There are several methods you can use for initializing arrays.
@@ -69,11 +69,11 @@ Arrays are passed into functions by reference for two reasons.
 1. Arrays can be very large, making them inefficient to copy.
 2. The compiler does not know the size of the array, so it has no way to copy it in a single operation.
 
-You do not have to use the `&`. The prototype and header of a function that accepts an array looks like this:
+You do not have to use `&` to denote that the array is passed by reference. The prototype of a function that accepts an array looks like this:
 
     void print(int array[], int size);
 
-\note The `[ ]` tells the function it will be recieving an array by reference. You do **not** specify the array size between the `[ ]` However, the function needs to know the size, so it's typically sent in as a separate variable.
+\note The `[]` tells the function it will be recieving an array by reference. You do **not** specify the array size between the `[]`. However, the function needs to know the size, so it's typically sent in as a separate variable.
 
 Because the array and size are separate, the function can handle any size. In other words, you can use the same function for an array of 32, 67, 99, or 100 items without any problems.
 
@@ -83,11 +83,11 @@ void initialize(int data[], int size);
 void main() {
     const int totals1_SIZE = 10;
     const int totals2_SIZE = 5;
-    int totals1[ARRAY_SIZE];
-    int totals2[ARRAY2_SIZE];
+    int totals1[totals1_SIZE];
+    int totals2[totals2_SIZE];
     //...
-    initialize(totals, ARRAY_SIZE);
-    initialize(totals2, ARRAY2_SIZE);
+    initialize(totals1, totals1_SIZE);
+    initialize(totals2, totals2_SIZE);
     //...
 }
 
@@ -120,13 +120,13 @@ void print(const int data[], int size) { //`const` makes absolutely sure that da
 \section arraypractice Practice
 Write a program that:
 
-- declares an array of 5 ints called dataSet1
-- calls a function to initialize them to their index * 2 (0, 2, 4, 6...)
-    - You'll need to write that function it should recieve the array and the size as parameters
-- calls a function to print them out, space delimited, with a endl at the end.
-    - You'll need to write that function it should recieve the array and the size as parameters
-- Add another array of 100 ints to main called dataSet2.
-    - initialize and print them using the exact same functions that were used to process dataset1.
+- Declares an array of 5 ints called `dataSet1`
+- Calls a function to initialize them to their `index * 2 (0, 2, 4, 6...)`
+    - You'll need to write that function: it should recieve the array and the size as parameters
+- Calls a function to print them out, space delimited, with a endl at the end.
+    - You'll need to write that function as well, its parameters will be the same.
+- Add another array of 100 ints to main called `dataSet2`.
+    - Initialize and print them using the same functions that were used to process `dataSet1`.
 - Write another function that computes and returns the average of the values in the given array.
 	- Add statements in main to call this and print out the results to cout for each of the arrays.
 */

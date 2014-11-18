@@ -67,35 +67,47 @@ C-strings</h1>
 <p>A c-string is simply a null-terminated array of characters. In other words, a c-string is an array of <code>char</code> variables containing an ASCII <code>\0</code> character at the end.</p>
 <h2><a class="anchor" id="cppcstrdeclare"></a>
 Declaration</h2>
-<p>You have actually used c-strings already. Any time you placed text in quotes, the compiler treats it as an (anonymous) c-string. However, there are also other ways.</p>
+<p>You have actually used c-strings already. Any time you placed text in quotes, the compiler treats it as an (anonymous) c-string. However, the C standard library also included some basic functions for manipulating such strings.</p>
 <div class="fragment"><div class="line"><span class="comment">//Length: 6</span></div>
 <div class="line"><span class="comment">//A null character is automatically inserted at the end.</span></div>
-<div class="line"><span class="keywordtype">char</span>[] str1 = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
+<div class="line"><span class="keywordtype">char</span> str1[] = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">//Length: 20</span></div>
 <div class="line"><span class="comment">//Be very careful, if you assign a string longer than 1 - length,</span></div>
 <div class="line"><span class="comment">//  you will overwrite memory outside of the array bounds.</span></div>
-<div class="line"><span class="keywordtype">char</span>[20] str2 = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
+<div class="line"><span class="keywordtype">char</span> str2[20] = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
 <div class="line"></div>
 <div class="line"><span class="comment">//Length: 10</span></div>
 <div class="line"><span class="comment">//This is another way to declare a c-string. It is not usually very useful.</span></div>
 <div class="line"><span class="comment">//  NOTE: using this method, you have to insert the null character.</span></div>
-<div class="line"><span class="keywordtype">char</span>[10] str3 = {<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>};</div>
+<div class="line"><span class="keywordtype">char</span> str3[10] = {<span class="charliteral">&#39;H&#39;</span>, <span class="charliteral">&#39;e&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;l&#39;</span>, <span class="charliteral">&#39;o&#39;</span>, <span class="charliteral">&#39;\0&#39;</span>};</div>
 <div class="line"></div>
 <div class="line"><span class="comment">//Initializing empty strings</span></div>
-<div class="line"><span class="keywordtype">char</span>[10] str4 = <span class="stringliteral">&quot;&quot;</span>;</div>
-<div class="line"><span class="keywordtype">char</span>[10] str5 = {0};</div>
-<div class="line"><span class="keywordtype">char</span>[10] str6 = {<span class="charliteral">&#39;\0&#39;</span>};</div>
+<div class="line"><span class="keywordtype">char</span> str4[10] = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="keywordtype">char</span> str5[10] = {0};</div>
+<div class="line"><span class="keywordtype">char</span> str6[10] = {<span class="charliteral">&#39;\0&#39;</span>};</div>
 </div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>You always want to initialize c-strings (even if it is only a null character). If you don't, there will be problems when you try to run the c-string-related functions.</dd></dl>
 <h2><a class="anchor" id="cppcstrprint"></a>
 Printing</h2>
-<p>You can output a c-string with <code>cout</code>. The null termination allows it to determine exactly how long it is.</p>
+<p>You can output a c-string with <code>cout</code>. The null termination allows it to determine exactly how long it is. </p>
+<pre class="fragment">char str[] = "This is a test";
+cout &lt;&lt; str;
+</pre><p>Outputs</p>
+<blockquote class="doxtable">
+<p>This is a test</p>
+<p></p>
+</blockquote>
 <h2><a class="anchor" id="cppcstrfn"></a>
 Functions</h2>
-<p><code>#include &lt;cstring&gt;</code> provides various functions that can be used to manipulated c-strings.</p>
+<p><code>#include &lt;cstring&gt;</code> provides various functions that can be used to manipulate c-strings.</p>
 <table class="doxtable">
 <tr>
-<th>Function </th><th>Action </th><th>Example  </th></tr>
+<th style="width:25%">Function </th><th style="width:30%%">Action </th><th style="width:45%">Example  </th></tr>
+<tr>
+<td><code>strlen(string)</code> </td><td>Returns the length of a c-string up to the first null character </td><td><div class="fragment"><div class="line"><span class="keywordtype">char</span> str[] = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
+<div class="line">strlen(str);</div>
+<div class="line"><span class="comment">//Result: 5</span></div>
+</div><!-- fragment -->   </td></tr>
 <tr>
 <td><code>strcpy(destination, source)</code> </td><td>Copies the contents of one c-string into another </td><td><div class="fragment"><div class="line"><span class="preprocessor">#include &lt;cstring&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
@@ -113,11 +125,6 @@ Functions</h2>
 <div class="line"><span class="comment">//Result: &quot;Hello world&quot;</span></div>
 </div><!-- fragment --> <dl class="section warning"><dt>Warning</dt><dd>Be very careful with the length of these strings. It can be very easy to go out of bounds. Use <code>strlen</code> to make sure you will not go out of bounds.   </dd></dl>
 </td></tr>
-<tr>
-<td><code>strlen(string)</code> </td><td>Returns the length of a c-string up to the first null character </td><td><div class="fragment"><div class="line"><span class="keywordtype">char</span> str[] = <span class="stringliteral">&quot;Hello&quot;</span>;</div>
-<div class="line">strlen(str);</div>
-<div class="line"><span class="comment">//Result: 5</span></div>
-</div><!-- fragment -->   </td></tr>
 <tr>
 <td><code>strcmp(string1, string2)</code> </td><td><p class="starttd">Compares <code>string1</code> and <code>string2</code> lexographically.</p>
 <dl class="section note"><dt>Note</dt><dd>Lexographic comparison is not important at this point.</dd></dl>
@@ -140,7 +147,7 @@ Functions</h2>
 <p class="endtd"><code>strrchr(string, character)</code>  </p>
 </td><td><p class="starttd"><code>strchr</code>: Finds the first occurence of a character in the string and returns the remaining substring.</p>
 <p><code>strrchr</code>: Finds the last occurence of a character in the string and returns the remaining substring.</p>
-<p class="endtd">Both return <code>NULL</code> if the substring was not found.  </p>
+<p class="endtd">Both return <code>NULL</code> if the character was not found.  </p>
 </td><td><p class="starttd"></p>
 <p><code>strchr</code> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> str[] = <span class="stringliteral">&quot;hello&quot;</span>;</div>
@@ -149,7 +156,8 @@ Functions</h2>
 </div><!-- fragment --><p><code>strrchr</code> </p>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> path[] = <span class="stringliteral">&quot;/this/is/a/file/path/to/file.txt&quot;</span>;</div>
 <div class="line">strchr(path, <span class="charliteral">&#39;/&#39;</span>); <span class="comment">//Result: /file.txt</span></div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd><code>NULL</code> cannot be printed via <code>cout</code>. Doing so will crash the program.   </dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>If you are working on a Windows machine <code>/</code> would have to be replaced with <code>\\</code></dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><code>NULL</code> cannot be printed via <code>cout</code>. Doing so will crash the program.   </dd></dl>
 </td></tr>
 <tr>
 <td><code>strstr(str, search)</code> </td><td>Searches for a substring in a string. </td><td><div class="fragment"><div class="line"><span class="keywordtype">char</span> str[] = <span class="stringliteral">&quot;this is a test string&quot;</span>;</div>
@@ -170,7 +178,7 @@ Functions</h2>
 <dl class="section warning"><dt>Warning</dt><dd>It is very important to make sure that c-strings are null terminated. All of the above functions use the null character in order to determine the length of the string. They iterate through the array until a null character is reached.</dd></dl>
 <h2><a class="anchor" id="cppcstrio"></a>
 I/O</h2>
-<p>The normal streaming operators work with c-strings. You can output with <code>cout &lt;&lt; ...</code> and input with <code>cin &gt;&gt; ...</code>.</p>
+<p>The normal streaming operators work with c-strings. You can output with <code>cout &lt;&lt;</code> and input with <code>cin &gt;&gt;</code>.</p>
 <dl class="section warning"><dt>Warning</dt><dd>Using <code>cin</code> has one major problem. It is whitespace-delimited. The following code illustrates the problem.</dd></dl>
 <div class="fragment"><div class="line"><span class="keywordtype">char</span> str[100];</div>
 <div class="line">cin &gt;&gt; str;</div>
@@ -182,8 +190,8 @@ I/O</h2>
 </div><!-- fragment --><p>The <code>cin.get(str, 100)</code> line accepts up to 99 characters from the user, whitespace included, and writes it all into <code>str</code>.</p>
 <h1><a class="anchor" id="cppstring"></a>
 std::string</h1>
-<p>C-strings work, but they can be complicated, so the C++ standard library (the built-in tools that come with every C++ compiler) has a string datatype that manages c-strings for you. It is much easier to use, so it is preferable over c-strings.</p>
-<dl class="section note"><dt>Note</dt><dd>The primary use for c-strings is compatibility with C (hence, the name).</dd></dl>
+<p>C-strings work, but they can get complicated. The C++ standard library (the built-in tools that come with every C++ compiler) has a string datatype that manages c-strings for you. It is much easier to use, but there are also times where it can be less efficient.</p>
+<dl class="section note"><dt>Note</dt><dd>If the code is not made significantly more difficult to manage and understand using c-strings, don't use <code>std::string</code>.</dd></dl>
 <p>A few of the benefits of <code>std::string</code>:</p>
 <ul>
 <li>The length is managed automatically, no bounding issues</li>
@@ -197,7 +205,7 @@ Basic String Manipulation</h2>
 <h3><a class="anchor" id="cppstringassign"></a>
 Re-assigning</h3>
 <p>You can use the assignment <code>=</code> operator to change the value of a string.</p>
-<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;string&gt;</span> <span class="comment">//defines the string datatype</span></div>
+<div class="fragment"><div class="line"><span class="preprocessor">#include &lt;string&gt;</span> <span class="comment">//defines the std::string datatype</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
@@ -208,9 +216,9 @@ Re-assigning</h3>
 <h3><a class="anchor" id="cppstringconcat"></a>
 Concatination</h3>
 <p>The <code>+</code> operator concatinates (combines) two strings. </p>
-<div class="fragment"><div class="line"><span class="keywordtype">string</span> str1 = <span class="stringliteral">&quot;he&quot;</span>;</div>
-<div class="line"><span class="keywordtype">string</span> str2 = <span class="stringliteral">&quot;llo&quot;</span>;</div>
-<div class="line"><span class="keywordtype">string</span> str3 = str1 + str2; <span class="comment">//str3 = &quot;hello&quot;</span></div>
+<div class="fragment"><div class="line"><span class="keywordtype">string</span> str1 = <span class="stringliteral">&quot;ha&quot;</span>;</div>
+<div class="line"><span class="keywordtype">string</span> str2 = <span class="stringliteral">&quot; ha&quot;</span>;</div>
+<div class="line"><span class="keywordtype">string</span> str3 = str1 + str2; <span class="comment">//str3 = &quot;ha ha&quot;</span></div>
 </div><!-- fragment --><p>You can also concatinate a string with a c-string. </p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> str = <span class="stringliteral">&quot;he&quot;</span>;</div>
 <div class="line">str += <span class="stringliteral">&quot;llo&quot;</span>; <span class="comment">//str = &quot;hello&quot;</span></div>
@@ -221,8 +229,8 @@ Comparison Operators</h3>
 <div class="line"><span class="keywordtype">string</span> str2 = <span class="stringliteral">&quot;true&quot;</span>;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">bool</span> equal = str1 == str2 ? <span class="keyword">true</span> : <span class="keyword">false</span>; <span class="comment">//Result: false</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The above code is the same as saying... <div class="fragment"><div class="line">...</div>
-<div class="line">bool equal;</div>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The above code is the same as saying... <div class="fragment"><div class="line"><span class="comment">//...</span></div>
+<div class="line"><span class="keywordtype">bool</span> equal;</div>
 <div class="line"><span class="keywordflow">if</span> (str1 == str2)</div>
 <div class="line">    equal = <span class="keyword">true</span>;</div>
 <div class="line"><span class="keywordflow">else</span></div>
@@ -230,7 +238,7 @@ Comparison Operators</h3>
 </div><!-- fragment --></dd></dl>
 <h2><a class="anchor" id="cppstringio"></a>
 I/O</h2>
-<p>Again, <code>cout &lt;&lt; ...</code> and <code>cin &gt;&gt; ...</code> both work with <code>std::string</code> variables. However, the same input problem exists when using <code>cin &gt;&gt; ...</code> (see <a class="el" href="cppstr.html#cppcstrio">c-string I/O</a>). However, the solution is slightly different.</p>
+<p>Again, <code>cout &lt;&lt; ...</code> and <code>cin &gt;&gt;</code> both work with <code>std::string</code> variables. However, the same input problem exists when using <code>cin &gt;&gt;</code> (see <a class="el" href="cppstr.html#cppcstrio">c-string I/O</a>). However, the solution is slightly different.</p>
 <div class="fragment"><div class="line"><span class="keywordtype">string</span> str;</div>
 <div class="line">getline(cin, str); <span class="comment">//Writes a line entered by the user to str</span></div>
 <div class="line">getline(cin, str, <span class="charliteral">&#39;,&#39;</span>); <span class="comment">//Changes the delimiter from a `\n` to a comma, allowing for the user to input multiple lines.</span></div>

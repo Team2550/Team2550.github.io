@@ -7,27 +7,27 @@ Strings are not as simple to use in C++ as they are in many other languages. Thi
 A c-string is simply a null-terminated array of characters. In other words, a c-string is an array of `char` variables containing an ASCII `\0` character at the end.
 
 \subsection cppcstrdeclare Declaration
-You have actually used c-strings already. Any time you placed text in quotes, the compiler treats it as an (anonymous) c-string. However, there are also other ways.
+You have actually used c-strings already. Any time you placed text in quotes, the compiler treats it as an (anonymous) c-string. However, the C standard library also included some basic functions for manipulating such strings.
 
 ~~~
 //Length: 6
 //A null character is automatically inserted at the end.
-char[] str1 = "Hello";
+char str1[] = "Hello";
 
 //Length: 20
 //Be very careful, if you assign a string longer than 1 - length,
 //  you will overwrite memory outside of the array bounds.
-char[20] str2 = "Hello";
+char str2[20] = "Hello";
 
 //Length: 10
 //This is another way to declare a c-string. It is not usually very useful.
 //  NOTE: using this method, you have to insert the null character.
-char[10] str3 = {'H', 'e', 'l', 'l', 'o', '\0'};
+char str3[10] = {'H', 'e', 'l', 'l', 'o', '\0'};
 
 //Initializing empty strings
-char[10] str4 = "";
-char[10] str5 = {0};
-char[10] str6 = {'\0'};
+char str4[10] = "";
+char str5[10] = {0};
+char str6[10] = {'\0'};
 ~~~
 
 \warning You always want to initialize c-strings (even if it is only a null character). If you don't, there will be problems when you try to run the c-string-related functions.
@@ -35,14 +35,32 @@ char[10] str6 = {'\0'};
 \subsection cppcstrprint Printing
 You can output a c-string with `cout`. The null termination allows it to determine exactly how long it is.
 
+    char str[] = "This is a test";
+    cout << str;
+
+Outputs
+
+> This is a test    
+
 \subsection cppcstrfn Functions
-`#include <cstring>` provides various functions that can be used to manipulated c-strings.
+`#include <cstring>` provides various functions that can be used to manipulate c-strings.
 
 <table>
     <tr>
-        <th>Function</th>
-        <th>Action</th>
-        <th>Example</th>
+        <th style="width:25%">Function</th>
+        <th style="width:30%%">Action</th>
+        <th style="width:45%">Example</th>
+    </tr>
+    <tr>
+        <td>`strlen(string)`</td>
+        <td>Returns the length of a c-string up to the first null character</td>
+        <td>
+~~~
+char str[] = "Hello";
+strlen(str);
+//Result: 5
+~~~
+        </td>
     </tr>
     <tr>
         <td>`strcpy(destination, source)`</td>
@@ -71,17 +89,6 @@ strcat(str1, str2);
 //Result: "Hello world"
 ~~~
 \warning Be very careful with the length of these strings. It can be very easy to go out of bounds. Use `strlen` to make sure you will not go out of bounds.
-        </td>
-    </tr>
-    <tr>
-        <td>`strlen(string)`</td>
-        <td>Returns the length of a c-string up to the first null character</td>
-        <td>
-~~~
-char str[] = "Hello";
-strlen(str);
-//Result: 5
-~~~
         </td>
     </tr>
     <tr>
@@ -119,7 +126,7 @@ strcmp(str1, str2); //Result: 6
 
             `strrchr`: Finds the last occurence of a character in the string and returns the remaining substring.
             
-            Both return `NULL` if the substring was not found.
+            Both return `NULL` if the character was not found.
         </td>
         <td>
 
@@ -135,6 +142,8 @@ strchr(str, '\n'); //Result: NULL
 char path[] = "/this/is/a/file/path/to/file.txt";
 strchr(path, '/'); //Result: /file.txt
 ~~~
+
+\note If you are working on a Windows machine `/` would have to be replaced with `\\`
 
 \warning `NULL` cannot be printed via `cout`. Doing so will crash the program.
         </td>
@@ -174,7 +183,7 @@ strlen(str2); //Result: 9
 \warning It is very important to make sure that c-strings are null terminated. All of the above functions use the null character in order to determine the length of the string. They iterate through the array until a null character is reached.
 
 \subsection cppcstrio I/O
-The normal streaming operators work with c-strings. You can output with `cout << ...` and input with `cin >> ...`.
+The normal streaming operators work with c-strings. You can output with `cout <<` and input with `cin >>`.
 
 \warning Using `cin` has one major problem. It is whitespace-delimited. The following code illustrates the problem.
 
@@ -197,9 +206,9 @@ cin.get(str, 100);
 The `cin.get(str, 100)` line accepts up to 99 characters from the user, whitespace included, and writes it all into `str`.
 
 \section cppstring std::string
-C-strings work, but they can be complicated, so the C++ standard library (the built-in tools that come with every C++ compiler) has a string datatype that manages c-strings for you. It is much easier to use, so it is preferable over c-strings.
+C-strings work, but they can get complicated. The C++ standard library (the built-in tools that come with every C++ compiler) has a string datatype that manages c-strings for you. It is much easier to use, but there are also times where it can be less efficient.
 
-\note The primary use for c-strings is compatibility with C (hence, the name).
+\note If the code is not made significantly more difficult to manage and understand using c-strings, don't use `std::string`.
 
 A few of the benefits of `std::string`:
 - The length is managed automatically, no bounding issues
@@ -214,7 +223,7 @@ You don't need functions to do basic operations with strings. The normal arithme
 You can use the assignment `=` operator to change the value of a string.
 
 ~~~
-#include <string> //defines the string datatype
+#include <string> //defines the std::string datatype
 using namespace std;
 
 int main() {
@@ -228,9 +237,9 @@ The above code is valid. This would cause problems with c-strings.
 \subsubsection cppstringconcat Concatination
 The `+` operator concatinates (combines) two strings.
 ~~~
-string str1 = "he";
-string str2 = "llo";
-string str3 = str1 + str2; //str3 = "hello"
+string str1 = "ha";
+string str2 = " ha";
+string str3 = str1 + str2; //str3 = "ha ha"
 ~~~
 
 You can also concatinate a string with a c-string.
@@ -251,7 +260,7 @@ bool equal = str1 == str2 ? true : false; //Result: false
 
 \note The above code is the same as saying...
 ~~~
-...
+//...
 bool equal;
 if (str1 == str2)
     equal = true;
@@ -260,7 +269,7 @@ else
 ~~~
 
 \subsection cppstringio I/O
-Again, `cout << ...` and `cin >> ...` both work with `std::string` variables. However, the same input problem exists when using `cin >> ...` (see [c-string I/O](@ref cppcstrio)). However, the solution is slightly different.
+Again, `cout << ...` and `cin >>` both work with `std::string` variables. However, the same input problem exists when using `cin >>` (see [c-string I/O](@ref cppcstrio)). However, the solution is slightly different.
 
 ~~~
 string str;
