@@ -162,7 +162,8 @@ Output</h1>
 256
 512
 1024
-</pre><dl class="section note"><dt>Note</dt><dd><code>file.txt</code> will be created in the working directory. The working directory is where the command line is looking when the file is executed. Typically, it will be either your home folder or the location that the file was executed.</dd></dl>
+</pre><dl class="section note"><dt>Note</dt><dd><code>file.txt</code> will be created in the working directory. The working directory is where the command line (console) is looking when the file is executed. Typically, it will be either your home folder or the location that the file was executed.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Every time you run the above code, the file will be overwritten if it already exists.</dd></dl>
 <h1><a class="anchor" id="cppfilein"></a>
 Input</h1>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -181,7 +182,7 @@ Input</h1>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 10; i++)</div>
 <div class="line">        cout &lt;&lt; input[i] &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>This page was created in order demonstrate the basics of file I/O. In robotics, file I/O is not extremely useful, so I have not covered it in much detail. </dd></dl>
+</div><!-- fragment --><dl class="section warning"><dt>Warning</dt><dd>This page was created in order demonstrate the basics of file I/O. In robotics, file I/O is not extremely useful, so I have not covered it in much detail. Google C++ file I/O for more information about the various modes you can use. </dd></dl>
 </div></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- HTML footer for doxygen 1.8.6-->

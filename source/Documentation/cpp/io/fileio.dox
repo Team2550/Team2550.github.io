@@ -42,7 +42,9 @@ The output file will look like this...
     512
     1024
 
-\note `file.txt` will be created in the working directory. The working directory is where the command line is looking when the file is executed. Typically, it will be either your home folder or the location that the file was executed.
+\note `file.txt` will be created in the working directory. The working directory is where the command line (console) is looking when the file is executed. Typically, it will be either your home folder or the location that the file was executed.
+
+\warning Every time you run the above code, the file will be overwritten if it already exists.
 
 \section cppfilein Input
 ~~~
@@ -64,5 +66,5 @@ int main() {
 }
 ~~~
 
-\warning This page was created in order demonstrate the basics of file I/O. In robotics, file I/O is not extremely useful, so I have not covered it in much detail.
+\warning This page was created in order demonstrate the basics of file I/O. In robotics, file I/O is not extremely useful, so I have not covered it in much detail. Google C++ file I/O for more information about the various modes you can use.
 */

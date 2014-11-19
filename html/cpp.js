@@ -54,10 +54,10 @@ var cpp =
       [ "Output", "cppfileio.html#cppfileout", null ],
       [ "Input", "cppfileio.html#cppfilein", null ]
     ] ],
-    [ "Namespaces & Headers", "cppnamespace.html", [
-      [ "Namespaces", "cppnamespace.html#cppnsdeclare", null ],
-      [ "Header Files", "cppnamespace.html#cppnsheader", null ],
-      [ "Preprocessor", "cppnamespace.html#cppnspreprocessor", null ]
+    [ "Project Management", "cppprojectmanage.html", [
+      [ "Namespaces", "cppprojectmanage.html#cppnsdeclare", null ],
+      [ "Header Files", "cppprojectmanage.html#cppnsheader", null ],
+      [ "Preprocessor", "cppprojectmanage.html#cppnspreprocessor", null ]
     ] ],
     [ "Structures", "cppstruct.html", [
       [ "Declaration", "cppstruct.html#structdeclare", null ],

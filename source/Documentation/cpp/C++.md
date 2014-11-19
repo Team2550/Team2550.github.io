@@ -83,7 +83,7 @@ If you don't include this, two lines will be seen as the same line (which can be
 - \subpage cpparray "Arrays"
 - \subpage cppstr "Strings"
 - \subpage cppfileio "File I/O"
-- \subpage cppnamespace "Namespaces & Headers"
+- \subpage cppprojectmanage "Project Management"
 - \subpage cppstruct "Structures"
 - \subpage cppclass "Classes"
 - \subpage cppmdarray "Multidimensional Arrays"

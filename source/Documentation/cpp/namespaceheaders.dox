@@ -1,5 +1,7 @@
-/**\page cppnamespace Namespaces & Headers
+/**\page cppprojectmanage Project Management
 \tableofcontents
+
+As you write larger amounts of code, it becomes useful to distribute it among various files. Header files can contain constants, function prototypes, and various other information that is not directly compiled. That way, you can easily tell the compiler that something exists without actually having the code. This is how libraries work. The object code for the library is stored in a special file that contains the bindings to the C or C++ header and the binary code. When you include the header and tell the compiler where to look for the library, you can write code that utilizes the library.
 
 Namespaces allow you to organize your code as if it were in a file system. The entire standard library of C++ has been placed within a namespace already: `std`. The idea is to allow naming conflicts: for instance, two graphics libraries may have the same function that does basically the same thing, but it was written by different people.
 
@@ -48,13 +50,13 @@ void mycode::more::print() {
 }
 ~~~
 
-\warning The above code is for example purposes only. It does work, but you should not attempt to create naming conflicts. The primary goal of namespaces is to allow libraries (developed by different people) to have naming conflicts.
+\note The above code is for example purposes only. It does work, but you should not attempt to create naming conflicts. The primary goal of namespaces is to allow libraries (developed by different people) to have naming conflicts.
 
 ###New operator!!!
 The `::` is called the scope resolution operator. A namespace creates a new scope that can be accessed from anywhere using the `::` operator (assuming that the namespace is defined in that file). `::` is run before all of the arithmetic operators. See the [Scope](@ref fnscope) for a refresher.
 
 \section cppnsheader Header Files
-If you had to put all of your code in a single file, things would get messy very quickly. In addition, all of your namespace declarations and function prototypes would have to go to the top of the file. This is very unwieldy and would make it very difficult to reuse code. Fortunately, that is not the case.
+If you had to put all of your code in a single file, things would get messy very quickly. In addition, all of your namespace declarations and function prototypes would have to go to the top of the file. This is very unwieldy and would make it difficult to reuse code. Fortunately, you can put this extra information in header files.
 
 You can move the namespace declaration and all of your function prototypes to a header file (like the ones that you `#include` from the standard library.
 ~~~
@@ -81,9 +83,9 @@ namespace mycode
 
 \warning It is generally a bad idea to put the `using namespace ...` line in a header. If you do, that setting will also apply to any file that includes the header. This can lead to naming conflicts.
 
-\note I used `std::string` here, the `string` datatype is a part of std and there is no `using namespace std;` line.
+\note I used `std::string` here, the `string` datatype is a part of `std` and there is no `using namespace std;` line.
 
-There would also be two other files. One that has the definitions for the functions in the namespace (`mycode.cc`) and one that contains the `main` function (`projectname.cc`). Both would have a line `#include "mycode.hh"`
+There would also be two other files. One that has the definitions for the functions in the namespace (`mycode.cc`) and one that contains the `main` function (`projectname.cc`). Both would have the line `#include "mycode.hh"` near the top.
 
 \note I enclosed the name of my header in quotes (as opposed to angle brackets). The difference is simple: `#include <header>` searches in the system location for headers and `#include "header"` searches in the location of the source file containing `main()`.
 
