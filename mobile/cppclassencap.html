@@ -45,15 +45,16 @@
 <div class="contents">
 <div class="textblock"><p>The protection of certain members of a class is called encapsulation.</p>
 <ul>
-<li>Often, you want the user of the class to be able to read the contents of a variable but not change it.</li>
+<li>Often, you want the user of the class to be able to read the contents of a variable but not change it directly.</li>
 <li>Some methods may be implementation details, useful for writing the class but not useful for using it.</li>
 <li>In many situations, you need to check a value before writing it to a variable (and notify the user if it is invalid). A setter method allows you to do this.</li>
 </ul>
 <p>You have already seen some encapsulation in action. Remember the <code>public</code> and <code>private</code> designations in the <code>Vector2d</code> class? Those are the primary means of encapsulation.</p>
 <ul>
-<li><code>private</code>: The user does not have access to the data, the must interact with that data via methods.</li>
+<li><code>private</code>: The user does not have access to the data, they must interact with that data via methods.</li>
 <li><code>public</code>: The user has full access to both read and change the variable.</li>
 </ul>
+<dl class="section note"><dt>Note</dt><dd>For future reference: "the user" is a programmer using the class you wrote. This is different from the "end user" (a.k.a. the consumer).</dd></dl>
 <p>Typically, you want to restrict direct variable access as much as possible. If encapsulation is not necessary, it is typically best to use a <code>struct</code>. Let's compare a struct and class implementation of a type called <code>ColorRGB</code>...</p>
 <p><b>Problem statement:</b> Implement an RGB color class or struct that will be fed into a multicolor LED light. The output on the computer can send unique sinals between 0 and 1023. Invalid output could damage the hardware.</p>
 <table class="doxtable">
@@ -73,13 +74,14 @@
 <td>In order to support multiple default values, there will have to be an additional value within the class that states the maximum value for any color. If you have an array with, say, 1000 objects, it will take a substantial amount of space. </td><td>Because the user will validate the value themselves, there is no need for the extra variable. </td></tr>
 </table>
 <dl class="section note"><dt>Note</dt><dd>In C++, the only technical difference between a struct and class is their default encapsulation level. Declarations within a struct not under encapsulation are automtically public, while a class makes them private. Although it is possible, it is generally not a good idea to place methods in a struct.</dd></dl>
-<p>For this particular application, it is difficult to know which to use. However, in the name of efficiency, I would probably use a struct.</p>
+<p>For this particular application, it is difficult to know which to use. I would probably use a class in this case.</p>
 <ul>
-<li>The extra variable in the class can add up very fast, and a color is simple enough that I can validate the values myself.</li>
-<li>I do not necessarily want every change I make to be output. I would normally make several changes and then output the result.</li>
-<li>There is no internal data for a color. There are no values that depend on something else.</li>
+<li>The likeliness of human error is fairly high. By validating the values, I will be guaranteed that the LED will not be damaged.</li>
+<li>The user does not need to manually validate the values, meaning that they can focus more on the logic of the program.</li>
+<li>The class is more intuitive, implementing a <code>send()</code> method could be very useful, and it will be easier to read later on.</li>
+<li>For any given project, the range of values for a single LED will not change, which omits the extra variable.</li>
 </ul>
-<dl class="section note"><dt>Note</dt><dd>This is not always the case, and you will see many situations in which a class is better than a struct in the future.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>This is not always the case, and you will see many situations in which a struct is better than a class in the future.</dd></dl>
 <p><b>As a rule of thumb, variables are usually <code>private</code> and methods are <code>public</code>.</b></p>
 <h3>Example</h3>
 <div class="fragment"><div class="line"><span class="keyword">class </span>DataType {</div>

@@ -57,12 +57,13 @@
 <li>In addition to storing data, classes can also hold functions (called methods) that operate on the data</li>
 <li>You can restrict access to variables (this does not sound good, but you will see the benefit shortly)</li>
 <li>You can assign default values to variables within a class</li>
-<li>You can extend a class based on another (inheritance).</li>
-<li>Operators can be overloaded in a very similar way to functions</li>
+<li>You can use one class to extend another (inheritance)</li>
+<li>Operators can be overloaded like functions</li>
 </ul>
+<p>Classes are used in object-oriented programming. An instance of a class is called an object, often corresponds to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.</p>
 <h1><a class="anchor" id="cppclassdeclare"></a>
 Declaration</h1>
-<p>Classes are declared in a very similar way to structs. </p>
+<p>Classes are declared in a very similar way to structs... </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef VECTOR_HH</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define VECTOR_HH</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -70,13 +71,13 @@ Declaration</h1>
 <div class="line"><span class="keyword">private</span>:</div>
 <div class="line">    <span class="keywordtype">double</span> x, y;</div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    Vector2d(); <span class="comment">//This is the default constructor I will explain this later</span></div>
+<div class="line">    Vector2d(); <span class="comment">//This is the default constructor; I will explain this later</span></div>
 <div class="line">    Vector2d(<span class="keywordtype">double</span> xValue, <span class="keywordtype">double</span> yValue); <span class="comment">//Another constructor</span></div>
 <div class="line">    <span class="keywordtype">void</span> setX(<span class="keywordtype">double</span> value);</div>
 <div class="line">    <span class="keywordtype">void</span> setY(<span class="keywordtype">double</span> value);</div>
 <div class="line">    <span class="keywordtype">void</span> chgX(<span class="keywordtype">double</span> add);</div>
 <div class="line">    <span class="keywordtype">void</span> chgY(<span class="keywordtype">double</span> add);</div>
-<div class="line">    <span class="keywordtype">double</span> getX();</div>
+<div class="line">    <span class="keywordtype">double</span> getX();xc</div>
 <div class="line">    <span class="keywordtype">double</span> getY();</div>
 <div class="line">    <span class="keywordtype">double</span> dist();</div>
 <div class="line">    <span class="keywordtype">double</span> angle();</div>
@@ -91,17 +92,16 @@ Member Access</h1>
 <div class="line">Vector2d v;</div>
 <div class="line">v.setX(1); <span class="comment">//calling a method</span></div>
 <div class="line">v.setY(3);</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Classes are used in object-oriented programming. An instance of a class is called an object, and classes often correspond to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.</dd></dl>
-<p>In order to declare a method, you use the scope resolution operator (<code>scope::item</code>). </p>
+</div><!-- fragment --><p>In order to declare a method (a function within the class), you use the scope resolution operator (<code>scope::item</code>). </p>
 <div class="fragment"><div class="line"><span class="keywordtype">void</span> Vector2d::setX(<span class="keywordtype">double</span> value) {</div>
 <div class="line">    x = value; <span class="comment">//x refers to x within the class, be careful not to give arguments the same names as members</span></div>
 <div class="line">}</div>
 </div><!-- fragment --><h1><a class="anchor" id="cppclassconstruct"></a>
 Constructors</h1>
-<p>Every class must have a <b>default constructor</b> even if it does nothing. A constructor is a function without a return type that is run when a class is instantiated. All constructors must have the same name as the class.</p>
+<p>Every class must have a <b>default constructor,</b> even if it does nothing. <b>A constructor is a function without a return type that is run when a class is instantiated.</b> All constructors must have the same name as the class.</p>
 <dl class="section note"><dt>Note</dt><dd>You instantiate a class when you use it as the datatype for a variable. An instance of the class is created when you write, for example <code>Vector v;</code>.</dd></dl>
 <p>For the vector class declared above, here is a possible implementation for the default constructor. </p>
-<div class="fragment"><div class="line"><span class="comment">//By convention, this code would go at or near the top of the implementation file (ClassName.cc).</span></div>
+<div class="fragment"><div class="line"><span class="comment">//By convention, this code would go near the top of the implementation file (ClassName.cc).</span></div>
 <div class="line">Vector2d::Vector2d() { <span class="comment">//The default constructor always has no arguments.</span></div>
 <div class="line">    x = 0;</div>
 <div class="line">    y = 0;</div>
@@ -193,12 +193,11 @@ Example: Vector2d</h1>
 <div class="line"><span class="keywordtype">void</span> Vector2d::print() {</div>
 <div class="line">    cout &lt;&lt; <span class="charliteral">&#39;&lt;&#39;</span> &lt;&lt; x &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; y &lt;&lt; &#39;&gt;<span class="stringliteral">&#39;;</span></div>
 <div class="line"><span class="stringliteral">}</span></div>
-</div><!-- fragment --><p>Here is an example usage of the class, this can be done in any function assuming that the header was included at the top of the file. </p>
-<div class="fragment"><div class="line"><span class="comment">//Here, I am putting the code in main()</span></div>
-<div class="line"><span class="keywordtype">int</span> main() {</div>
+</div><!-- fragment --><p>Here is an example usage of the class, this will work in any function assuming that the header was included at the top of the file. </p>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    Vector2d v(2, 2);</div>
 <div class="line">    v.print();</div>
-<div class="line">    cout &lt;&lt; endl               <span class="comment">//This is actually a single line to the compiler, remember that a line ending is denoted with a semicolon</span></div>
+<div class="line">    cout &lt;&lt; endl          <span class="comment">//This is actually a single line to the compiler, remember that a line ending is denoted with a semicolon</span></div>
 <div class="line">         &lt;&lt; v.dist() &lt;&lt; endl</div>
 <div class="line">         &lt;&lt; v.angle() &lt;&lt; endl;</div>
 <div class="line">}</div>

@@ -1,5 +1,5 @@
 /** \page cppclassmore More Information
-For the purposes of this documentation, it would be overkill to explain two closely-linked concepts: operator overloading and template metaprogramming. Operator overloading allows you to overload operators (such as `+`, `||`, and `--`) in the same way you overload functions. For instance, you can write an operator overload for `Point2d` that allows you to add two points together.
+For the purposes of this documentation, it would be overkill to explain two closely-related concepts: operator overloading and template metaprogramming. Operator overloading allows you to overload operators (such as `+`, `||`, `[]`, and `--`) in the same way you overload functions. For instance, you can write an operator overload for `Point2d` that allows you to add two points together.
 
 Template metaprogramming is also known as type-generic programming. In other words, it means writing code that can work with a variety of datatypes. You can write a class that works in the same way for integers, floats, and any other class. All you need is a datatype with the correct operators, and in some cases, methods.
 

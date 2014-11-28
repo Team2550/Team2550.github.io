@@ -1,7 +1,7 @@
 /** \page cppclassinheritcomp Inheritance & Composition
 \tableofcontents
 
-* **Inheritance creates an is-a relationship between classes, while composition creates a has-a relationship**. In other words, inheritance says, "I am this class with these other things," while composition says "This other class is one of my components."
+* **Inheritance creates an is-a relationship between classes, while composition creates a has-a relationship**. In other words, inheritance says, "I am extend class with these other things," while composition says "This other class is one of my components."
 
 \section cppclasscomp Composition
 Composition is the term used for placing an object within a class. Say there are two classes, A and B. If you place an object of type A into the declaration of B, that is composition.
@@ -45,11 +45,11 @@ Inheritance introduces the need for a new encapsulation level: `protected`. When
 \subsection cppclassinherituml UML Diagrams
 When you are developing an application that uses inheritance, you usually start with a **Universal Modeling Language (UML)** diagram. A UML diagram shows the relationship between classes within a program. In other words, it shows what classes are components (composition) or others and when classes inherit others.
 
-The UML syntax is slightly different from that of C++ due to the fact that it is designed to describe multiple programming languages.
+The UML syntax is slightly different from that of C++ due to the fact that it is designed to describe any programming language.
 
-\note I used [Dia](http://dia-installer.de/index.html.en) to create the diagrams in this section. It is fairly self-explanatory, but the terminology is slightly different. Notably, member variables are called "attributes" and methods are called "operations".
+\note I used [Dia](http://dia-installer.de/index.html.en) to create the diagrams in this section. It is fairly easy to use, but the terminology is slightly different. Notably, member variables are called "attributes" and methods are called "operations".
 
-Here is a sample class in UML.
+Here is a sample UML diagram...
 
 <img style="width: 40%;" src="ExampleClass.svg" alt="ExampleClass.svg">
 
@@ -66,7 +66,7 @@ Here is a sample class in UML.
     - The return type is shown after the name and parameters
 - As you will see below, classes that inherit another class are shown with an arrow pointing to the class they inherit
 
-\subsection Example
+\subsection cppclassinheritaex Advanced Example
 The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).
 
 \image html ShapeClass.svg "Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components."
@@ -140,6 +140,8 @@ Point2d::Point2d(int xValue, int yValue) {
     y = yValue;
 }
 
+//---------------------------------------------------------------------
+
 Shape::Shape() {
     layer = 0;
     angleDeg = 0;
@@ -210,6 +212,8 @@ Point2d Shape::getLocation() {
 }
 ~~~
 
+\note When programming, most angles are actually done in radians, which are fractions of a circle in multiples of pi (2*pi = 360 degrees).
+
 \subsection cppclassinheritchild1 Child Class: Rectangle
 Here is the declaration and implementation of a very simple child class, `Rectangle`. The only additional methods it supplies are `area()` and `perimeter()`.
 
@@ -231,7 +235,7 @@ public:
 #endif
 ~~~
 
-\note The encapsulation level before the name of the base class is important. It is the highest level that a member from `Shape` can be in a `Rectangle` object. In other words, if `public Shape` were changed to `private Shape`, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as public means that previously public members are public, protected members are protected, and private members are private.
+The encapsulation level before the name of the base class is important. It is the highest level that a member from `Shape` can be in a `Rectangle` object. In other words, if `public Shape` was changed to `private Shape`, all of the members that were previously public and protected would be private in the child class. Generally speaking, this is not what you want, and if you want to restrict the access to inherited members, composition is typically the way to go. This does not reduce the protection of any members - inheriting a class as `public` means that previously public members are public, protected members are protected, and private members are private.
 
 ###FILE: Rectangle.cc
 ~~~
@@ -260,7 +264,7 @@ int Rectangle::perimeter() {
 
 `: Shape(w, h, loc, angle)` bypasses the default constructor. In this case, the arguments of the `Rectangle` constructor are passed to the `Shape` constructor. This prevents members of the new class from being set twice.
 
-\note It is also possible to put `using Shape::Shape;` in the class declaration in order to inherit the constructors from Shape, but this is a relatively new feature of C++ and is not supported everywhere. For now, it is best to use the method shown above to pass arguments to non-default constructors.
+\note It is also possible to put "using Shape::Shape;" in the class declaration in order to inherit the constructors from Shape, but this is a relatively new feature of C++ and is not supported everywhere. For now, it is best to use the method shown above to pass arguments to non-default constructors.
 
 For demonstration purposes, here is a simple test file.
 ~~~
@@ -310,7 +314,7 @@ void printShape(Shape s) {
 
 Note that `r` is a `Rectangle` and the function's parameter type is a `Shape`. This would cause a compiler error if you set the encapsulation level when `Rectangle` inherited `Shape` were something other than `public`.
 
-\note There is a more efficient way to write this function. See \ref cppclassfnconst "const functions".
+\note There is a more efficient way to write this function. See \ref cppclassmembfnconst "const functions".
 
 \subsection cppclassinheritchild2 Child Class: EquilTriangle
 Unlike a rectangle (or most shapes, for that matter), an equilateral triangle has to have the same width and height. This presents a problem when inheriting from the `Shape` class: the user is able to set the width and height individually. Fortunately, we can redefine member functions within the base class in the child. Let's create an equilateral triangle class, called `EquilTriangle`, that makes sure the width and height maintain the correct ratio. First, we'll have to use some geometry/trigonometry to determine the ratio between the width and height of an equilateral triangle.
@@ -425,7 +429,7 @@ void printShape(Shape s) {
 As you can see, the program worked. However, running `Shape::setHeight` defeats the purpose of this class, to keep the width and height at a constant ratio. This is not always the case, and there are situations where accessing the original function (not the redefined version) can be useful.
 
 \subsection cppclassinheritvirtual Virtual Functions
-The more methods the base class has, the more powerful it is. The more methods the base class has, the more you can do in the functions that accept it as an argument. For instance, the `area` and `perimeter` methods are in every child class of `Shape` that we declared, and it is safe to say that every shape has both an area and perimeter (circumference in the case of circles, but it is still the same thing). The problem we encounter is that the means by which you calculate those values differ from shape to shape. Because of this, it doesn't make since to define the methods in the base class. This is where virtual methods come in. Basically, they make the base class incomplete. You can still call a virtual function, but unless the user (programmer) inherits the class and defines those functions, the class cannot be used. Let's take another look at the `printShape` function.
+It is best to put as many methods as possible in the base class. That way, functions that accept the base class are capable of doing more. For instance, the `area` and `perimeter` methods are in every child class of `Shape` that we declared, and it is safe to say that every shape has both an area and perimeter (circumference in the case of circles, but it is the same thing). The problem we encounter is that the means by which you calculate those values differ from shape to shape. Because of this, it doesn't make since to define the methods in the base class. This is where virtual methods become useful. Basically, they make the base class incomplete. You can still call a virtual function, but unless the user (programmer) inherits the class and defines those functions, the class cannot be used. Let's take another look at the `printShape` function.
 
 ~~~
 void printShape(Shape s) {
@@ -438,9 +442,7 @@ void printShape(Shape s) {
 
 There is no way to call the `area` and `perimeter methods` in the above function because they don't exist in the `Shape` class. The problem is that the base class cannot define them, and having them return a default value, such as 0, makes no since. In addition, the `Shape` class does not implement a specific shape. It is like a rectangle, but it does not define a rectangle any more than it defines any other shape. Let's modify the UML diagram we create earlier in order to deal with this shortcoming.
 
-\image html ShapeClassVirtual.svg
-
-\note The `area` and `perimeter` methods in the UML diagram above are italicized. This denotes that they are virtual functions.
+\image html ShapeClassVirtual.svg "The area and perimeter methods in the UML diagram above are italicized. This denotes that they are virtual functions."
 
 The declaration of `Shape` will now look like this...
 

@@ -180,7 +180,7 @@ const Functions</h1>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
 </div><!-- fragment --><p>All we did was append <code>const</code> to the end of the function prototypes we want to be able to call from a <code>const</code> object. If an object is constant, we want to be able to access the data, but not change it.</p>
-<dl class="section warning"><dt>Warning</dt><dd>A <code>const</code> at the end of the prototype and at the beginning are different. If <code>const</code> is at the beginning, the data it returns cannot be changed. If it is at the end, it determines whether the method can be called if it is a const object.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>A <code>const</code> at the end of the prototype and at the beginning are different. If <code>const</code> is at the beginning, the data it returns cannot be changed. If it is at the end, it determines whether the method can be called from a const object.</dd></dl>
 <p>The implementation has similar changes...</p>
 <h3>FILE: Shape.cc</h3>
 <div class="fragment"><div class="line">...</div>
@@ -204,7 +204,7 @@ const Functions</h1>
 <div class="line">Point2d Shape::getLocation()<span class="keyword"> const </span>{</div>
 <div class="line">    <span class="keywordflow">return</span> location;</div>
 <div class="line">}</div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The constructors don't need to be declared <code>const</code>, they can be run regardless.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The constructors don't need to be declared <code>const</code>.</dd></dl>
 <p>I used the class from the inheritance section here in order to show how to deal with const in virtual functions...</p>
 <h3>FILE: Rectangle.hh</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef RECTANGLE_HH</span></div>
@@ -268,7 +268,7 @@ Location: 0 0
 Width: 2 Height: 1
 Area: 2 Perimeter: 6
 </pre><p>The only difference in the above program is that <code>print</code> now does not have the ability to call methods that were not labeled <code>const</code>. This guarantees that the object will not change.</p>
-<p>In order to demonstrate this, consider the below code, that compiles and runs correctly...</p>
+<p>In order to demonstrate this, consider the code below. It compiles and runs correctly.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
@@ -277,7 +277,7 @@ Area: 2 Perimeter: 6
 <div class="line">    <span class="keyword">const</span> Rectangle r;</div>
 <div class="line">    cout &lt;&lt; r.getWidth();</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>...however, if we try to compile something that runs a method that was not labeled as <code>const</code>, we will run into trouble.</p>
+</div><!-- fragment --><p>If we try to compile something that runs a method that was not labeled as <code>const</code>, we will run into trouble.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="preprocessor">#include &quot;Rectangle.hh&quot;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
@@ -313,7 +313,7 @@ static Variables</h2>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The destructor is run automatically when the class goes out of scope. I will explain it in more detail later. A destructor is always named <code>~ClassName</code> and has no return type.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>The destructor is run automatically when the class goes out of scope. A destructor is always named <code>~ClassName</code> and has no return type. I will explain destructors in more detail later. For now, think of them as the opposite of constructors.</dd></dl>
 <h3>FILE: CountMe.cc</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &quot;CountMe.hh&quot;</span></div>
 <div class="line"></div>
@@ -355,7 +355,7 @@ static Variables</h2>
 static Functions</h2>
 <p><code>static</code> functions are methods that do not operate on a specific object. Also, they cannot access data that is object-specific (any members that are not <code>static</code>). This basically makes the class behave as if it were a namespace.</p>
 <h3>Example</h3>
-<p>The <code>getInstances</code> method is not useful for specific objects. It gets the total number of instances there are, which does not change based on the instance. </p>
+<p>The <code>getInstances</code> method is not useful for specific objects. It gets the total number of instances that exist. </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef COUNTME_HH</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define COUNTME_HH</span></div>
 <div class="line"><span class="preprocessor"></span></div>
@@ -369,13 +369,13 @@ static Functions</h2>
 <div class="line">};</div>
 <div class="line"></div>
 <div class="line"><span class="preprocessor">#endif</span></div>
-</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>static</code> methods cannot be delcared as <code>const</code> or <code>virtual</code>.</dd></dl>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd><code>static</code> methods cannot be declared as <code>const</code> or <code>virtual</code>.</dd></dl>
 <p>The implementation file does not change, but the way you call the method does. Both of the calls below work correctly. </p>
-<div class="fragment"><div class="line"><span class="keywordtype">object</span>.getInstance();</div>
-<div class="line">CountMe::getInstance();</div>
-</div><!-- fragment --><h1><a class="anchor" id="cppclassmembfriend"></a>
+<pre class="fragment">object.getInstance();
+CountMe::getInstance();
+</pre><h1><a class="anchor" id="cppclassmembfriend"></a>
 friend Functions</h1>
-<p><code>friend</code> functions have access to the private members of a class. They are useful when you are doing operations on multiple objects of the same class, and you need private member access. Here is a simple example of where this can be useful...</p>
+<p><code>friend</code> functions have access to the private members of a class. They are useful when you are doing operations on multiple objects of the same class, and you need private member access. Here is a simple example of where this can be useful.</p>
 <h3>FILE: Point2d.hh</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#ifndef POINT2D_HH</span></div>
 <div class="line"><span class="preprocessor"></span><span class="preprocessor">#define POINT2d_HH</span></div>

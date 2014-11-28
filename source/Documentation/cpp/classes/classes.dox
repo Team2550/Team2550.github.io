@@ -5,11 +5,13 @@ Classes are an extension of structs. Here a few useful features...
 - In addition to storing data, classes can also hold functions (called methods) that operate on the data
 - You can restrict access to variables (this does not sound good, but you will see the benefit shortly)
 - You can assign default values to variables within a class
-- You can extend a class based on another (inheritance).
-- Operators can be overloaded in a very similar way to functions
+- You can use one class to extend another (inheritance)
+- Operators can be overloaded like functions
+
+Classes are used in object-oriented programming. An instance of a class is called an object, often corresponds to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.
 
 \section cppclassdeclare Declaration
-Classes are declared in a very similar way to structs.
+Classes are declared in a very similar way to structs...
 ~~~
 #ifndef VECTOR_HH
 #define VECTOR_HH
@@ -18,13 +20,13 @@ class Vector2d {
 private:
     double x, y;
 public:
-    Vector2d(); //This is the default constructor I will explain this later
+    Vector2d(); //This is the default constructor; I will explain this later
     Vector2d(double xValue, double yValue); //Another constructor
     void setX(double value);
     void setY(double value);
     void chgX(double add);
     void chgY(double add);
-    double getX();
+    double getX();xc
     double getY();
     double dist();
     double angle();
@@ -43,9 +45,7 @@ v.setX(1); //calling a method
 v.setY(3);
 ~~~
 
-\note Classes are used in object-oriented programming. An instance of a class is called an object, and classes often correspond to real-life objects. On a robot, there may be an arm class, a drive class, and a launcher class.
-
-In order to declare a method, you use the scope resolution operator (`scope::item`).
+In order to declare a method (a function within the class), you use the scope resolution operator (`scope::item`).
 ~~~
 void Vector2d::setX(double value) {
     x = value; //x refers to x within the class, be careful not to give arguments the same names as members
@@ -53,13 +53,13 @@ void Vector2d::setX(double value) {
 ~~~
 
 \section cppclassconstruct Constructors
-Every class must have a **default constructor** even if it does nothing. A constructor is a function without a return type that is run when a class is instantiated. All constructors must have the same name as the class.
+Every class must have a **default constructor,** even if it does nothing. **A constructor is a function without a return type that is run when a class is instantiated.** All constructors must have the same name as the class.
 
 \note You instantiate a class when you use it as the datatype for a variable. An instance of the class is created when you write, for example `Vector v;`.
 
 For the vector class declared above, here is a possible implementation for the default constructor.
 ~~~
-//By convention, this code would go at or near the top of the implementation file (ClassName.cc).
+//By convention, this code would go near the top of the implementation file (ClassName.cc).
 Vector2d::Vector2d() { //The default constructor always has no arguments.
     x = 0;
     y = 0;
@@ -162,13 +162,12 @@ void Vector2d::print() {
 }
 ~~~
 
-Here is an example usage of the class, this can be done in any function assuming that the header was included at the top of the file.
+Here is an example usage of the class, this will work in any function assuming that the header was included at the top of the file.
 ~~~
-//Here, I am putting the code in main()
 int main() {
     Vector2d v(2, 2);
     v.print();
-    cout << endl               //This is actually a single line to the compiler, remember that a line ending is denoted with a semicolon
+    cout << endl          //This is actually a single line to the compiler, remember that a line ending is denoted with a semicolon
          << v.dist() << endl
          << v.angle() << endl;
 }

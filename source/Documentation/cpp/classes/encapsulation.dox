@@ -1,12 +1,14 @@
 /** \page cppclassencap Encapsulation
 The protection of certain members of a class is called encapsulation.
-- Often, you want the user of the class to be able to read the contents of a variable but not change it.
+- Often, you want the user of the class to be able to read the contents of a variable but not change it directly.
 - Some methods may be implementation details, useful for writing the class but not useful for using it.
 - In many situations, you need to check a value before writing it to a variable (and notify the user if it is invalid). A setter method allows you to do this.
 
 You have already seen some encapsulation in action. Remember the `public` and `private` designations in the `Vector2d` class? Those are the primary means of encapsulation.
-- `private`: The user does not have access to the data, the must interact with that data via methods.
+- `private`: The user does not have access to the data, they must interact with that data via methods.
 - `public`: The user has full access to both read and change the variable.
+
+\note For future reference: "the user" is a programmer using the class you wrote. This is different from the "end user" (a.k.a. the consumer).
 
 Typically, you want to restrict direct variable access as much as possible. If encapsulation is not necessary, it is typically best to use a `struct`. Let's compare a struct and class implementation of a type called `ColorRGB`...
 
@@ -23,12 +25,13 @@ In order to support multiple default values, there will have to be an additional
 
 \note In C++, the only technical difference between a struct and class is their default encapsulation level. Declarations within a struct not under encapsulation are automtically public, while a class makes them private. Although it is possible, it is generally not a good idea to place methods in a struct.
 
-For this particular application, it is difficult to know which to use. However, in the name of efficiency, I would probably use a struct.
-- The extra variable in the class can add up very fast, and a color is simple enough that I can validate the values myself.
-- I do not necessarily want every change I make to be output. I would normally make several changes and then output the result.
-- There is no internal data for a color. There are no values that depend on something else.
+For this particular application, it is difficult to know which to use. I would probably use a class in this case.
+- The likeliness of human error is fairly high. By validating the values, I will be guaranteed that the LED will not be damaged.
+- The user does not need to manually validate the values, meaning that they can focus more on the logic of the program.
+- The class is more intuitive, implementing a `send()` method could be very useful, and it will be easier to read later on.
+- For any given project, the range of values for a single LED will not change, which omits the extra variable.
 
-\note This is not always the case, and you will see many situations in which a class is better than a struct in the future.
+\note This is not always the case, and you will see many situations in which a struct is better than a class in the future.
 
 * **As a rule of thumb, variables are usually `private` and methods are `public`.**
 

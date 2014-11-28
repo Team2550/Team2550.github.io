@@ -56,7 +56,7 @@ public:
 
 All we did was append `const` to the end of the function prototypes we want to be able to call from a `const` object. If an object is constant, we want to be able to access the data, but not change it.
 
-\warning A `const` at the end of the prototype and at the beginning are different. If `const` is at the beginning, the data it returns cannot be changed. If it is at the end, it determines whether the method can be called if it is a const object.
+\warning A `const` at the end of the prototype and at the beginning are different. If `const` is at the beginning, the data it returns cannot be changed. If it is at the end, it determines whether the method can be called from a const object.
 
 The implementation has similar changes...
 
@@ -85,7 +85,7 @@ Point2d Shape::getLocation() const {
 }
 ~~~
 
-\note The constructors don't need to be declared `const`, they can be run regardless.
+\note The constructors don't need to be declared `const`.
 
 I used the class from the inheritance section here in order to show how to deal with const in virtual functions...
 
@@ -163,7 +163,7 @@ void print(const Shape& s) {
 
 The only difference in the above program is that `print` now does not have the ability to call methods that were not labeled `const`. This guarantees that the object will not change.
 
-In order to demonstrate this, consider the below code, that compiles and runs correctly...
+In order to demonstrate this, consider the code below. It compiles and runs correctly.
 
 ~~~
 #include <iostream>
@@ -176,7 +176,7 @@ int main() {
 }
 ~~~
 
-...however, if we try to compile something that runs a method that was not labeled as `const`, we will run into trouble.
+If we try to compile something that runs a method that was not labeled as `const`, we will run into trouble.
 
 ~~~
 #include <iostream>
@@ -221,7 +221,7 @@ public:
 #endif
 ~~~
 
-\note The destructor is run automatically when the class goes out of scope. I will explain it in more detail later. A destructor is always named `~ClassName` and has no return type.
+\note The destructor is run automatically when the class goes out of scope. A destructor is always named `~ClassName` and has no return type. I will explain destructors in more detail later. For now, think of them as the opposite of constructors.
 
 ###FILE: CountMe.cc
 ~~~
@@ -273,7 +273,7 @@ int main() {
 `static` functions are methods that do not operate on a specific object. Also, they cannot access data that is object-specific (any members that are not `static`). This basically makes the class behave as if it were a namespace.
 
 ###Example
-The `getInstances` method is not useful for specific objects. It gets the total number of instances there are, which does not change based on the instance.
+The `getInstances` method is not useful for specific objects. It gets the total number of instances that exist.
 ~~~
 #ifndef COUNTME_HH
 #define COUNTME_HH
@@ -290,16 +290,15 @@ public:
 #endif
 ~~~
 
-\note `static` methods cannot be delcared as `const` or `virtual`.
+\note `static` methods cannot be declared as `const` or `virtual`.
 
 The implementation file does not change, but the way you call the method does. Both of the calls below work correctly.
-~~~
-object.getInstance();
-CountMe::getInstance();
-~~~
+
+    object.getInstance();
+    CountMe::getInstance();
 
 \section cppclassmembfriend friend Functions
-`friend` functions have access to the private members of a class. They are useful when you are doing operations on multiple objects of the same class, and you need private member access. Here is a simple example of where this can be useful...
+`friend` functions have access to the private members of a class. They are useful when you are doing operations on multiple objects of the same class, and you need private member access. Here is a simple example of where this can be useful.
 
 ###FILE: Point2d.hh
 ~~~
