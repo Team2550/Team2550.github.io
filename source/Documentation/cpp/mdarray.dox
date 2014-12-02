@@ -248,7 +248,7 @@ It is important to note that the table is arranged so that the first index defin
 </tr>
 </table>
 
-The same concept applies to arrays of 3 or more dimensions. I won't show a table of these, as they would take up too much space.
+The same concept applies to arrays of 3 or more dimensions. I won't make a table of of a 3D array, they have a tendency to become very large...
 
     int a[4][5][6]; //A 4x5x6 3-dimensional array (120 places)
     float b[5][6][7][8]; //A 5x6x7x8 array (1680 places)
@@ -282,7 +282,7 @@ However, this does not work.
 
 * **You have to define every dimension except for the first.**
 
-\warning Declaring an array greater than 2 dimensions in this manner is not advised. It can become easily confusing.
+\warning Declaring an array greater than 2 dimensions in this manner is not advised. It will get confusing.
 
 \note You can only use these initializations for newly declared arrays. After declaration, you have to assign values individually by their index.
 
@@ -318,7 +318,7 @@ int main() {
     31 32 33 34 35 36 37 38 39 40 
     41 42 43 44 45 46 47 48 49 50 
 
-It is important that you are consistent with the dimensions, and it helps to make a comment saying what each index is. That way, you know that the loops don't get mixed up. In the case above, the x value had to be the second coordinate because the there is a newline for every y. Once you have printed a newline, you can't go back up.
+It is important that you are consistent with the dimensions, and it helps to make a comment saying what each index is. That way, you know that the loops don't get mixed up. In the case above, the X value had to be the second coordinate because the there is a newline for every change in Y. Once you have printed a newline, you can't go back up.
 
 Here is another example, this time using a 3D array...
 ~~~

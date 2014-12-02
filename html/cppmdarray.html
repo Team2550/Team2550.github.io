@@ -290,7 +290,7 @@ x[2][1] = 3;
 <tr>
 <td>1023  </td></tr>
 </table>
-<p>The same concept applies to arrays of 3 or more dimensions. I won't show a table of these, as they would take up too much space. </p>
+<p>The same concept applies to arrays of 3 or more dimensions. I won't make a table of of a 3D array, they have a tendency to become very large... </p>
 <pre class="fragment">int a[4][5][6]; //A 4x5x6 3-dimensional array (120 places)
 float b[5][6][7][8]; //A 5x6x7x8 array (1680 places)
 </pre><dl class="section note"><dt>Note</dt><dd>In general, it is best to declare the fastest changing (largest) index last.</dd></dl>
@@ -312,7 +312,7 @@ Initializing</h1>
              {5, 6, 7, 8},
              {9, 10, 11, 12}};
 </pre><p><b>You have to define every dimension except for the first.</b></p>
-<dl class="section warning"><dt>Warning</dt><dd>Declaring an array greater than 2 dimensions in this manner is not advised. It can become easily confusing.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Declaring an array greater than 2 dimensions in this manner is not advised. It will get confusing.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>You can only use these initializations for newly declared arrays. After declaration, you have to assign values individually by their index.</dd></dl>
 <h1><a class="anchor" id="cppmdarrayloop"></a>
 Looping</h1>
@@ -341,7 +341,7 @@ Looping</h1>
 21 22 23 24 25 26 27 28 29 30 
 31 32 33 34 35 36 37 38 39 40 
 41 42 43 44 45 46 47 48 49 50 
-</pre><p>It is important that you are consistent with the dimensions, and it helps to make a comment saying what each index is. That way, you know that the loops don't get mixed up. In the case above, the x value had to be the second coordinate because the there is a newline for every y. Once you have printed a newline, you can't go back up.</p>
+</pre><p>It is important that you are consistent with the dimensions, and it helps to make a comment saying what each index is. That way, you know that the loops don't get mixed up. In the case above, the X value had to be the second coordinate because the there is a newline for every change in Y. Once you have printed a newline, you can't go back up.</p>
 <p>Here is another example, this time using a 3D array... </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
