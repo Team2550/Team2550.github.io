@@ -5,19 +5,20 @@ Before we dive into pointers, it may be useful to know about the `sizeof` operat
 
 -----------------------------------------------------
 
-A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. At this point, we will work with pointers on the stack.
+A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. In order to introduce the idea, we will first work with pointers on the stack.
 
 In order to declare a pointer, you just have to append a `*` to the type name.
 
     int* p; //This variable stores the address of an int.
     double* d; //This points to a double.
 
-\note `int*` is treated as an entirely different datatype than int.
+\note `int*` is treated as an entirely different datatype than `int`.
 
 In order to assign a pointer to the address of another variable, you use the **address of operator**...
 
     int x;
     int* p = &x; //& is the address of operator.
+
 
 ---------------------------------------------------
 
@@ -43,9 +44,9 @@ int main() {
     0
     0x7fff68318f4c
 
-You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with `0x`. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal.
+You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with `0x`. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal. Whenever you run a program, the operating system assigns a range of addresses your program is allowed to manage itself. This address changes as the operating system starts and stops processes.
 
-Pointers behave slightly differently...
+###Pointers behave slightly differently from normal variables...
 ~~~
 #include <iostream>
 using namespace std;
@@ -76,7 +77,7 @@ When you are working with pointers, the `*` operator prefixing the variable name
     0x7fffb017f9d8 - &p
     3 - *p
 
-Note that the value of `p` and the address of `x` are the same. That is because we have assigned `p` to store the address of `x`.
+Note that the value of `p` and the address of `x` are the same in both runs. That is because we have assigned `p` to store the address of `x`.
 
 `p` can also be reassigned. For instance, if we create another variable later, `y`, we can point `p` to `y`.
 
@@ -89,7 +90,7 @@ p = &y;
 ~~~
 is valid.
 
-\warning **Do not under any circumstances forget the `&` operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.** For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it certainly cause your program to crash.
+\warning **Do not under any circumstances forget the `&` operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.** For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it will definitely cause your program to crash.
 
 \note Segmentation faults can be very difficult to find and debug.
 
@@ -100,6 +101,14 @@ You can't initialize a pointer like you can another variable. If you don't have 
 
     int* p = NULL;
 
+\note If you try to print the value of a NULL pointer, the program will crash with a segmentation fault. It is common to check that a pointer is not NULL before printing its value. The `assert(condition)` function provided in `<cassert>` is also very useful when working with pointers because it tells you exactly where the program failed.
+~~~
+if (p != NULL)
+    //print something
+else
+    cout << "NULL\n";
+~~~
+    
 \section cppmemptrscope Scope Issues
 A pointer can be used to access values outside of their scope, but be very careful when doing this. The code below gives an example of a scope pitfall...
 
@@ -138,10 +147,10 @@ For the above code, which is intentionally bad, my compiler gave me a warning...
 
 In this situation, the function was repeatedly called and stored values in the same address, but this is not always the case. If for any reason that address is later used for something else, the value will be lost, and the program will likely crash due to a segmentation fault. Without understanding the addresses, you would think that `*p == 5142`.
 
-\warning Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer.
+\warning Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer. The only exception (which is still a bad idea), is if you point to a static variable within a function. Static variables should not change address while the program is running.
     
 \section cppmemptrarray Arrays
-Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, *an array is a pointer that cannot change address*.
+Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, *an array is a pointer that cannot change the address it stores*.
 
 ~~~
 #include <iostream>
@@ -160,9 +169,16 @@ int main() {
     1
     1
 
-\note I did not use the address-of operator on the second line (`&a`). That is because a is already considered a pointer.
+\note I did not use the address-of operator on the second line (`&a`). That is because a is already a pointer. Assigning a pointer to the value of another pointer of the same type is the same as assigning one variable to the value of another.
+~~~
+int x = 3;
+int y = x;
+//is the same as
+int* p1 = &x;
+int* p2 = p1; //p2 = &x
+~~~
 
-You can also access elements using the subscript operators `[]`...
+You can also access elements using the subscript operator `[]` on a pointer...
 ~~~
 #include <iostream>
 using namespace std;
@@ -183,6 +199,8 @@ int main() {
     4
     5
 
+\warning The subscript operator will work on any data type, whether or not it is an array.
+    
 \section cppmemptrmath Pointer Arithmetic
 Pointers also have their own mathematical operations rules. You can add to and subtract from a pointer and it will add or subtract the amount of memory for the data type it points to. For instance, if it an int pointer, it will move 4 bytes in memory forward or backward.
 
@@ -220,7 +238,9 @@ int** pp = &p;
 *pp++;    //Advances p by 4 bytes. In this case, it probably leads to a segmentation fault.
 ~~~
 
-Although you rarely need pointers or pointers (or pointers to pointers to pointers, there is no limit to the depth), they can sometimes be useful for managing normal pointers along with the values they point to.
+Although you rarely need pointers to pointers (or pointers to pointers to pointers), they can sometimes be useful for managing normal pointers along with the values they point to.
+
+\note There is no limit to the depth of a pointer. You can easily create a pointer to a pointer to a pointer to a pointer to a pointer to an int. `int*****;`.
 
 \section cppmemptrvoid The void*
 The type `void*` has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.
@@ -245,8 +265,8 @@ struct Point {
 int main() {
     Point loc;
     Point* p = &loc;
-    cout << p.x << '\n';  //Compilation error
-    cout << *p.x << '\n'; //Compilation error
+    cout << p.x << '\n';  //error
+    cout << *p.x << '\n'; //error
     cout << (*p).x << '\n'; //OK
     cout << p->x << '\n';   //OK
 }

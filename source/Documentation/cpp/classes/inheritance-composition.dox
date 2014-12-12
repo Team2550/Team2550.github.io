@@ -66,7 +66,7 @@ Here is a sample UML diagram...
     - The return type is shown after the name and parameters
 - As you will see below, classes that inherit another class are shown with an arrow pointing to the class they inherit
 
-\subsection cppclassinheritaex Advanced Example
+\subsection cppclassinheritaex Example
 The best way to show how inheritance works is to use it. For this reason, we will implement a class that contains shape properties, and then use inheritance to create classes that correspond to specific shapes. Many graphics libraries (often used to create games) have something similar to this. Note that this example will require basic trigonometry skills (applications of sine, cosine, and tangent).
 
 \image html ShapeClass.svg "Here is the UML inheritance diagram showing the relation between the Shape class and its decedents and components."

@@ -133,11 +133,11 @@ $(document).ready(function(){initNavTree('cppmemptr.html','');});
 </div>
 <div class="textblock"><p>Before we dive into pointers, it may be useful to know about the <code>sizeof</code> operator. <code>sizeof(datatype)</code> is a built in function that returns the size of a given datatype in bytes. See <a href="http://en.cppreference.com/w/cpp/language/sizeof">cppreference.com</a> for more information. </p>
 <hr/>
-<p>A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. At this point, we will work with pointers on the stack.</p>
+<p>A pointer is a variable that stores the address of another variable. At first, this appears to be useless, but pointers are also your means of interacting with the heap, allowing your program to handle (from the perspective of the computer) infinite amounts of data. In order to introduce the idea, we will first work with pointers on the stack.</p>
 <p>In order to declare a pointer, you just have to append a <code>*</code> to the type name. </p>
 <pre class="fragment">int* p; //This variable stores the address of an int.
 double* d; //This points to a double.
-</pre><dl class="section note"><dt>Note</dt><dd><code>int*</code> is treated as an entirely different datatype than int.</dd></dl>
+</pre><dl class="section note"><dt>Note</dt><dd><code>int*</code> is treated as an entirely different datatype than <code>int</code>.</dd></dl>
 <p>In order to assign a pointer to the address of another variable, you use the <b>address of operator</b>... </p>
 <pre class="fragment">int x;
 int* p = &amp;x; //&amp; is the address of operator.
@@ -157,8 +157,8 @@ int* p = &amp;x; //&amp; is the address of operator.
 </pre><h3>Output (run 2)</h3>
 <pre class="fragment">0
 0x7fff68318f4c
-</pre><p>You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with <code>0x</code>. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal.</p>
-<p>Pointers behave slightly differently... </p>
+</pre><p>You probably recognize the values above as hexadecimal numbers. It is common convention to prefix hex numbers with <code>0x</code>. Also, if you run the program repeatedly, you will notice that the variable gets a new address almost every time it is run. This is normal. Whenever you run a program, the operating system assigns a range of addresses your program is allowed to manage itself. This address changes as the operating system starts and stops processes.</p>
+<h3>Pointers behave slightly differently from normal variables...</h3>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -181,7 +181,7 @@ int* p = &amp;x; //&amp; is the address of operator.
 0x7fffb017f9d4 - p
 0x7fffb017f9d8 - &amp;p
 3 - *p
-</pre><p>Note that the value of <code>p</code> and the address of <code>x</code> are the same. That is because we have assigned <code>p</code> to store the address of <code>x</code>.</p>
+</pre><p>Note that the value of <code>p</code> and the address of <code>x</code> are the same in both runs. That is because we have assigned <code>p</code> to store the address of <code>x</code>.</p>
 <p><code>p</code> can also be reassigned. For instance, if we create another variable later, <code>y</code>, we can point <code>p</code> to <code>y</code>.</p>
 <p>For instance, </p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span> x = 42;</div>
@@ -189,12 +189,17 @@ int* p = &amp;x; //&amp; is the address of operator.
 <div class="line"><span class="keywordtype">int</span> y = 34;</div>
 <div class="line">p = &amp;y;</div>
 </div><!-- fragment --><p> is valid.</p>
-<dl class="section warning"><dt>Warning</dt><dd><b>Do not under any circumstances forget the <code>&amp;</code> operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.</b> For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it certainly cause your program to crash.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd><b>Do not under any circumstances forget the <code>&amp;</code> operator when you assign pointers. It will assign the pointer to be the actual value stored in the variable.</b> For instance, if you have an int with the value of 37, it will store the binary value of 37 into the pointer. Note that this is especially bad in cases where an int and int* are not the same size. On my system, an int* takes 64 bits and an int variable is 32 bits. The result: you would assign the first half of the int* to be 37, and the rest would be whatever was left over from the last time the memory space was used. At worst, your system will crash, and it will definitely cause your program to crash.</dd></dl>
 <dl class="section note"><dt>Note</dt><dd>Segmentation faults can be very difficult to find and debug.</dd></dl>
 <hr/>
 <p>You can't initialize a pointer like you can another variable. If you don't have something you immediately want to point it to, it will have whatever value the memory used last. This could cause problems. Trying to access a memory address outside of the space the operating system has given your program will cause it to crash (some systems call this a <em>Segmentation Fault</em>). It is generally a good idea to assign the pointer to be NULL if it contains an address you are no longer using. </p>
 <pre class="fragment">int* p = NULL;
-</pre><h1><a class="anchor" id="cppmemptrscope"></a>
+</pre><dl class="section note"><dt>Note</dt><dd>If you try to print the value of a NULL pointer, the program will crash with a segmentation fault. It is common to check that a pointer is not NULL before printing its value. The <code>assert(condition)</code> function provided in <code>&lt;cassert&gt;</code> is also very useful when working with pointers because it tells you exactly where the program failed. <div class="fragment"><div class="line"><span class="keywordflow">if</span> (p != NULL)</div>
+<div class="line">    <span class="comment">//print something</span></div>
+<div class="line"><span class="keywordflow">else</span></div>
+<div class="line">    cout &lt;&lt; <span class="stringliteral">&quot;NULL\n&quot;</span>;</div>
+</div><!-- fragment --></dd></dl>
+<h1><a class="anchor" id="cppmemptrscope"></a>
 Scope Issues</h1>
 <p>A pointer can be used to access values outside of their scope, but be very careful when doing this. The code below gives an example of a scope pitfall...</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -226,10 +231,10 @@ int x = value;
 
 Compilation finished at Tue Sep  9 14:21:50
 </pre><p>In this situation, the function was repeatedly called and stored values in the same address, but this is not always the case. If for any reason that address is later used for something else, the value will be lost, and the program will likely crash due to a segmentation fault. Without understanding the addresses, you would think that <code>*p == 5142</code>.</p>
-<dl class="section warning"><dt>Warning</dt><dd>Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer.</dd></dl>
+<dl class="section warning"><dt>Warning</dt><dd>Do not assign a pointer to the address of a variable in a scope that will not exist as long as the pointer. The only exception (which is still a bad idea), is if you point to a static variable within a function. Static variables should not change address while the program is running.</dd></dl>
 <h1><a class="anchor" id="cppmemptrarray"></a>
 Arrays</h1>
-<p>Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, <em>an array is a pointer that cannot change address</em>.</p>
+<p>Arrays have a special relation to pointers. When you create an array of any data type, you are actually creating a pointer to the first item in that array. You can then access other items by their index. In other words, <em>an array is a pointer that cannot change the address it stores</em>.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -242,8 +247,13 @@ Arrays</h1>
 </div><!-- fragment --><h3>Output</h3>
 <pre class="fragment">1
 1
-</pre><dl class="section note"><dt>Note</dt><dd>I did not use the address-of operator on the second line (<code>&amp;a</code>). That is because a is already considered a pointer.</dd></dl>
-<p>You can also access elements using the subscript operators <code>[]</code>... </p>
+</pre><dl class="section note"><dt>Note</dt><dd>I did not use the address-of operator on the second line (<code>&amp;a</code>). That is because a is already a pointer. Assigning a pointer to the value of another pointer of the same type is the same as assigning one variable to the value of another. <div class="fragment"><div class="line"><span class="keywordtype">int</span> x = 3;</div>
+<div class="line"><span class="keywordtype">int</span> y = x;</div>
+<div class="line"><span class="comment">//is the same as</span></div>
+<div class="line"><span class="keywordtype">int</span>* p1 = &amp;x;</div>
+<div class="line"><span class="keywordtype">int</span>* p2 = p1; <span class="comment">//p2 = &amp;x</span></div>
+</div><!-- fragment --></dd></dl>
+<p>You can also access elements using the subscript operator <code>[]</code> on a pointer... </p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -259,7 +269,8 @@ Arrays</h1>
 3
 4
 5
-</pre><h1><a class="anchor" id="cppmemptrmath"></a>
+</pre><dl class="section warning"><dt>Warning</dt><dd>The subscript operator will work on any data type, whether or not it is an array.</dd></dl>
+<h1><a class="anchor" id="cppmemptrmath"></a>
 Pointer Arithmetic</h1>
 <p>Pointers also have their own mathematical operations rules. You can add to and subtract from a pointer and it will add or subtract the amount of memory for the data type it points to. For instance, if it an int pointer, it will move 4 bytes in memory forward or backward.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
@@ -287,7 +298,8 @@ Pointers to Pointers</h1>
 <div class="line"><span class="keywordtype">int</span>** pp = &amp;p;</div>
 <div class="line">**pp = 4; <span class="comment">//Same as x = 4.</span></div>
 <div class="line">*pp++;    <span class="comment">//Advances p by 4 bytes. In this case, it probably leads to a segmentation fault.</span></div>
-</div><!-- fragment --><p>Although you rarely need pointers or pointers (or pointers to pointers to pointers, there is no limit to the depth), they can sometimes be useful for managing normal pointers along with the values they point to.</p>
+</div><!-- fragment --><p>Although you rarely need pointers to pointers (or pointers to pointers to pointers), they can sometimes be useful for managing normal pointers along with the values they point to.</p>
+<dl class="section note"><dt>Note</dt><dd>There is no limit to the depth of a pointer. You can easily create a pointer to a pointer to a pointer to a pointer to a pointer to an int. <code>int*****;</code>.</dd></dl>
 <h1><a class="anchor" id="cppmemptrvoid"></a>
 The void*</h1>
 <p>The type <code>void*</code> has a special meaning: it can point to any datatype. This can sometimes be useful, but it is mainly a flaw in history leftover from C. Be very careful with it. Never attempt to run arithmetic operations on it.</p>
@@ -308,8 +320,8 @@ Pointers &amp; Objects</h1>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
 <div class="line">    Point loc;</div>
 <div class="line">    Point* p = &amp;loc;</div>
-<div class="line">    cout &lt;&lt; p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;  <span class="comment">//Compilation error</span></div>
-<div class="line">    cout &lt;&lt; *p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//Compilation error</span></div>
+<div class="line">    cout &lt;&lt; p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;  <span class="comment">//error</span></div>
+<div class="line">    cout &lt;&lt; *p.x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//error</span></div>
 <div class="line">    cout &lt;&lt; (*p).x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>; <span class="comment">//OK</span></div>
 <div class="line">    cout &lt;&lt; p-&gt;x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;   <span class="comment">//OK</span></div>
 <div class="line">}</div>

@@ -26,17 +26,18 @@ Type | Value
 int  | x
 char | c
 
-In order to access the memory, the CPU pops the value off the stack and reads it into the **cache** (a very small amount of memory that the CPU has built in). There, the necessary operations are performed and it is pushed back onto the stack.
+In order to access the memory, the CPU **pops** the value off the stack and reads it into the cache (a very small amount of memory that the CPU has built in). There, the necessary operations are performed and it is pushed back onto the stack.
 
-In some cases, it is necessary for the CPU to access multiple values, or values that are not on top of the stack. This process is slightly more complex. Let's try reading c, which is on the bottom...
+In some cases, it is necessary for the CPU to access multiple values, or values that are not on top of the stack. This process is slightly more complex. Let's try reading `c`, which is at the bottom of the stack.
 
-First, we have to pop both of the int values off of the stack and onto a temporary stack.
+First, we have to pop both of the int values off of the stack and **push** (add) them to a temporary stack. In order to do this efficiently, there is a "cursor" (`->`) that moves up and down, anything above that cursor is considered to be on the temporary stack.
 
-Top | Type | Name
-----|------|------
-->  | int  | y
--   | int  | x
--   | char | c
+###Starting layout
+Cursor | Type | Name
+-------|------|------
+->     | int  | y
+-      | int  | x
+-      | char | c
 
 Pop both int values...
 
@@ -51,6 +52,13 @@ Type | Value
 int  | x
 int  | y
 
+###Final layout
+Cursor | Type | Name
+-------|------|------
+-      | int  | y
+-      | int  | x
+->     | char | c
+
 Now the CPU is able to operate on c and then push x and y back onto the stack.
 
 \section cppmemheap The Heap
@@ -58,7 +66,7 @@ The heap is more complex than the stack, but it is not important to know how it 
 
 \note You can allocate up to 4GB on a 32-bit system *if there is nothing else running*. In other words, only the operating system can actually use the full 4GB.
 
-Different operating systems have different policies regarding how much a single program you can allocate, but you can still allocate much more than is available on the stack.
+Different operating systems have different policies regarding how much a single program can allocate, but you can still allocate much more than is available on the stack.
 
 Because heap storage is allocated at runtime, it is known as dynamic memory.
 

@@ -11,7 +11,7 @@ var cppclass =
       [ "Composition", "cppclassinheritcomp.html#cppclasscomp", null ],
       [ "Inheritance", "cppclassinheritcomp.html#cppclassinherit", [
         [ "UML Diagrams", "cppclassinheritcomp.html#cppclassinherituml", null ],
-        [ "Advanced Example", "cppclassinheritcomp.html#cppclassinheritaex", null ],
+        [ "Example", "cppclassinheritcomp.html#cppclassinheritaex", null ],
         [ "The Base Class: Shape", "cppclassinheritcomp.html#cppclassinheritbase", null ],
         [ "Child Class: Rectangle", "cppclassinheritcomp.html#cppclassinheritchild1", null ],
         [ "Inheritance & Functions", "cppclassinheritcomp.html#cppclassinheritfn", null ],
