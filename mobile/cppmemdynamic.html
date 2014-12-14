@@ -75,21 +75,22 @@
 2
 3
 Segmentation fault (core dumped)
-</pre><dl class="section note"><dt>Note</dt><dd>A recursive function is a function that calls itself in order to reduce the complexity of a problem. They can take up a lot of stack space as every function call is placed on the stack. The video below explains recursion fairly well.  
+</pre><p>The sole purpose of the function above is to allocate a lot of memory. As programs get larger and more complex, it becomes increasingly difficult to stay within the bounds of the memory that the operating system gives your program when it is launched. In order to use more memory, you have to manually allocate it as needed at runtime. This is where dynamic memory comes in. C++ has some special built-in functions that request more memory from the operating system and return pointers to that extra space. The cost of dynamic memory is that it is much slower: by using it, you sacrifice speed for flexibility.</p>
+<dl class="section note"><dt>Note</dt><dd>A recursive function is a function that calls itself in order to reduce the complexity of a problem. They can take up a lot of stack space as every function call is placed on the stack. The video below explains recursion fairly well.  
 <iframe width="560" height="315" src="http://www.youtube.com/embed/Mv9NEXX1VHc" frameborder="0" allowfullscreen></iframe>
 </dd></dl>
 <h1><a class="anchor" id="cppmemnew"></a>
 The new Operator</h1>
-<p>In order to dynamically allocate a value, you have to use the <code>new</code> operator &ndash; it dynamically allocates a block of memory and then returns a pointer to that location.</p>
+<p>In order to dynamically allocate a value, you have to use the <code>new</code> operator &ndash; it requests the operating system for a block of memory and then returns a pointer to that location. </p>
 <div class="fragment"><div class="line"><span class="keywordtype">int</span>* x = <span class="keyword">new</span> int;</div>
-<div class="line">*x = 73;</div>
+<div class="line">*x = 73; <span class="comment">//Note the * before the x. It is very easy to forget to add that.</span></div>
 <div class="line">cout &lt;&lt; &amp;x &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; *x &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 </div><!-- fragment --><h3>Output</h3>
 <pre class="fragment">0x7fff82376378 73
 </pre><dl class="section warning"><dt>Warning</dt><dd>Every <code>new</code> operation must have a corresponding <code>delete</code>. Read about that in the next section.</dd></dl>
 <h1><a class="anchor" id="cppmemdel"></a>
 The delete Operator</h1>
-<p>The <code>delete</code> operator de-allocates memory.</p>
+<p>The <code>delete</code> operator de-allocates memory so that the operating system can use it again.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -121,7 +122,8 @@ The delete Operator</h1>
 0
 Segmentation fault (core dumped)
 </pre><dl class="section note"><dt>Note</dt><dd>The segmentation fault is good in this case &ndash; it allows for easier debugging.</dd></dl>
-<dl class="section warning"><dt>Warning</dt><dd><code>delete</code> is necessary when working with dynamic memory. Failure to do so will a <b>memory leak</b>. A memory leak occurs when a pointer pointing to dynamic memory is changed or inaccessible. For instance, a function that does not use the delete operator on an internal pointer. You can no longer access that value, and the system cannot take it back. This can cause problems if your program uses a large amount of memory.</dd></dl>
+<p>The use of the <code>delete</code> operator is necessary when working with dynamic memory. Failure to do so will create a <b>memory leak</b>. A memory leak occurs when a pointer pointing to dynamic memory is changed or inaccessible. For instance, a function that does not use the delete operator on an internal pointer. You can no longer access that value, and the system cannot take it back. This can cause problems if your program uses a large amount of memory.</p>
+<dl class="section note"><dt>Note</dt><dd>Sometimes you will see calls to the <code>malloc()</code> and <code>free()</code> functions in older code. These functions are the equivalent to <code>new</code> and <code>delete</code> in C. C++ still supports them for historical reasons. <b>Do not use them in your code. They completely ignore constructors and destructors.</b></dd></dl>
 <h1><a class="anchor" id="cppmemarralloc"></a>
 Array Allocation</h1>
 <p>Arrays can be allocated easily. Just use the <code>new</code> and <code>delete</code> operators.</p>
@@ -130,7 +132,7 @@ Array Allocation</h1>
 </div><!-- fragment --><p>You can access the elements of the array using the standard array subscript notation. </p>
 <pre class="fragment">x[103] = 32;
 </pre><hr/>
-<p>Large arrays are not the only benefit of dynamic arrays. The size of stack-allocated arrays has to be determined at compile-time. Dynamic arrays have their size determined at runtime.</p>
+<p>Large arrays are not the only benefit of dynamic arrays. The size of a stack-allocated array is set at compile-time, however, the size of a dynamic array can be determined at runtime. The code below should result in a compiler error.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -143,7 +145,8 @@ Array Allocation</h1>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; s; ++i)</div>
 <div class="line">        cout &lt;&lt; x[i] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>The above code should give a compiler error. Stack-allocated memory is allocated at compile-time, while dynamically allocated memory sends a message to the operating system saying that the program would like more memory. In most situations, the operating system accepts, but there is a speed penalty.</p>
+</div><!-- fragment --><dl class="section note"><dt>Note</dt><dd>Some compilers extend the C++ standard to allow a variable to define the length of a stack-allocated array. Even though it is techincally possible, the use of features such as this is dicouraged because it reduces the portability of the code.</dd></dl>
+<p>The following code shows one example where you would want to use a dynamic array. It prompts the user to put in an array size, requests a value for each element, and then prints the final array.</p>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
@@ -189,16 +192,16 @@ x[7] = 6513
 <div class="line"><span class="keyword">using namespace </span>std;</div>
 <div class="line"></div>
 <div class="line"><span class="keywordtype">int</span> main() {</div>
-<div class="line">    <span class="keywordtype">int</span>** x = <span class="keyword">new</span> <span class="keywordtype">int</span>*[100]; <span class="comment">//Allocate array of pointers to pointers</span></div>
+<div class="line">    <span class="keywordtype">int</span>** x = <span class="keyword">new</span> <span class="keywordtype">int</span>*[100]; <span class="comment">//Allocate an array of pointers to pointers</span></div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
-<div class="line">        x[i] = <span class="keyword">new</span> <span class="keywordtype">int</span>[1000]; <span class="comment">//Allocate array of pointers</span></div>
+<div class="line">        x[i] = <span class="keyword">new</span> <span class="keywordtype">int</span>[1000]; <span class="comment">//Allocate an array of pointers</span></div>
 <div class="line">    x[10][300] = 30;</div>
 <div class="line">    cout &lt;&lt; x[10][300] &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 100; ++i)</div>
-<div class="line">        <span class="keyword">delete</span> [] x[i]; <span class="comment">//De-allocate array of pointers</span></div>
-<div class="line">    <span class="keyword">delete</span> [] x; <span class="comment">//De-allocate array of pointers to pointers</span></div>
+<div class="line">        <span class="keyword">delete</span> [] x[i]; <span class="comment">//De-allocate the array of pointers</span></div>
+<div class="line">    <span class="keyword">delete</span> [] x; <span class="comment">//De-allocate the array of pointers to pointers</span></div>
 <div class="line">}</div>
-</div><!-- fragment --><p>It is important to realize that allocating a multi-dimensional array to the heap is significantly different from the stack. Instead of the allocation in the <a class="el" href="cppmdarray.html">multidimensional arrays</a> section, heap-allocated memory can be wherever the system finds free space. This results in a speed reduction.</p>
+</div><!-- fragment --><p>It is important to realize that allocating a multi-dimensional array to the heap is significantly different from the stack. Instead of the allocation in the <a class="el" href="cppmdarray.html">multidimensional arrays</a> section, heap-allocated memory can be wherever the system finds free space. This results in a noticeable speed reduction.</p>
 <p>Instead of a table like this...</p>
 <table class="doxtable">
 <tr>
@@ -379,10 +382,15 @@ Dynamic Objects</h2>
 <div class="line">    Dummy* test = <span class="keyword">new</span> Dummy;</div>
 <div class="line">    test-&gt;setElement(10, 43125);</div>
 <div class="line">    test-&gt;setElement(13, 15);</div>
+<div class="line">    cout &lt;&lt; test-&gt;getElement(10) &lt;&lt; <span class="charliteral">&#39; &#39;</span> &lt;&lt; test-&gt;getElement(13) &lt;&lt; <span class="charliteral">&#39;\n&#39;</span>;</div>
 <div class="line">    <span class="keyword">delete</span> test;</div>
 <div class="line">    test = NULL;</div>
 <div class="line">}</div>
-</div><!-- fragment --><p>Although the above class is basically useless, it does demonstrate how class pointers work. There are certain situations where a particular class stores a lot of information but you need a very large number of them. This is the kind of situation where it could be useful to store an array of class pointers or a dynamically allocated array of class pointers.</p>
+</div><!-- fragment --><h3>Output</h3>
+<pre class="fragment">Dummy constructor run.
+43125 15
+Dummy destructor run.
+</pre><p>Although the above class is basically useless, it does demonstrate how class pointers work. There are certain situations where a particular class stores a lot of information but you need a very large number of them. This is the kind of situation where it could be useful to store an array of class pointers or a dynamically allocated array of class pointers.</p>
 <dl class="section note"><dt>Note</dt><dd>Again, you have to use the <code>-&gt;</code> operator as opposed to the dot operator.</dd></dl>
 <h1>Further Research </h1>
 <p>Dynamic memory has many practical uses. I would encourage you to research data structures, as they use dynamic memory to organize large amounts of data efficiently. </p>
